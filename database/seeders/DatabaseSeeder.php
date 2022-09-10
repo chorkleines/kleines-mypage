@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'role' => Role::MASTER,
         ]);
 
-        echo 'Email: admin@chorkleines.com' . PHP_EOL;
-        echo 'Password: password' . PHP_EOL;
+        echo 'Email: admin@chorkleines.com'.PHP_EOL;
+        echo 'Password: password'.PHP_EOL;
     }
 }
