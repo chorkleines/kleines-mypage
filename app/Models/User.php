@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,5 +55,15 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'user_id');
+    }
+
+    public function is_admin($value)
+    {
+        return $this->admin->role->value === $value;
     }
 }
