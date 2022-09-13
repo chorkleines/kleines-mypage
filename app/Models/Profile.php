@@ -34,4 +34,15 @@ class Profile extends Model
     {
         return $this->hasOne(User::class, 'user_id');
     }
+
+    public function display_name()
+    {
+        $display_name = str_pad($this->grade, 2, 0, STR_PAD_LEFT).
+            $this->part->value.
+            ' '.
+            $this->last_name.
+            $this->first_name;
+
+        return $display_name;
+    }
 }
