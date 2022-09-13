@@ -29,6 +29,15 @@
 
 -   [PHP | Progate](https://prog-8.com/courses/php)
 
+### MySQL 入門
+
+-   [MySQL の開発環境を用意しよう (mac) | Progate](https://prog-8.com/docs/mysql-env)
+-   [MySQL の開発環境を用意しよう (Windows) | Progate](https://prog-8.com/docs/mysql-env-win)
+-   [MySQL でデータベースを作成しよう | Progate](https://prog-8.com/docs/mysql-database-setup)
+-   [MySQL 入門 | Qiita](https://qiita.com/okamuuu/items/c4efb7dc606d9efe4282)
+
+[MAMP](https://www.mamp.info/en/mamp) を使うと楽に環境構築ができます。
+
 ### Laravel 入門
 
 -   [Laravel 入門 | Qiita](https://qiita.com/sano1202/items/6021856b70e4f8d3dc3d)
