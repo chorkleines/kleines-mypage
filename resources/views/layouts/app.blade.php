@@ -52,7 +52,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="sidebarDropdownMenuLink"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="me-2"><i
-                                        class="fa-solid fa-user me-2"></i>{{ Auth::user()->profile->last_name }}</span>
+                                        class="fa-solid fa-user me-2"></i>{{ Auth::user()->profile->display_name() }}</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="sidebarDropdownMenuLink">
                                 <li>
