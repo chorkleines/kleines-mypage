@@ -156,6 +156,7 @@ PR を作成する際には、[chorkleines/kleines-mypage](https://github.com/ch
 
 ```sh
 ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -v
+./node_modules/blade-formatter/bin/blade-formatter --write ./resources/**/*.blade.php
 ```
 
 PR を作成すると GitHub Actions が起動し、フォーマットのチェックが行われます。
