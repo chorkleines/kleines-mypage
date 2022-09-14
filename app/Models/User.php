@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Role;
 use App\Enums\UserStatus;
+use App\Models\AccountingRecord;
 use App\Models\IndividualAccountingRecord;
 use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,6 +67,16 @@ class User extends Authenticatable
     public function is_admin($value)
     {
         return $this->admin->role->value === $value;
+    }
+
+    public function accountingRecords()
+    {
+        return $this->hasMany(AccountingRecord::class, 'user_id');
+    }
+
+    public function getArrears()
+    {
+        return $this->accountingRecords->where('datetime', null)->sum('price');
     }
 
     public function individualAccountingRecords()
