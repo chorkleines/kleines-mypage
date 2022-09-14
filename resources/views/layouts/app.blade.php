@@ -38,12 +38,7 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
-                                <span class="me-2"><i class="fa-solid fa-house me-2"></i>Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="me-2"><i class="fa-solid fa-clipboard me-2"></i>Bulletin Board</span>
+                                <span class="me-2"><i class="fa-solid fa-house me-2"></i>{{ __('home') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -52,19 +47,13 @@
                             <a class="nav-link dropdown-toggle" href="#" id="sidebarDropdownMenuLink"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="me-2"><i
-                                        class="fa-solid fa-user me-2"></i>{{ Auth::user()->profile->last_name }}</span>
+                                        class="fa-solid fa-user me-2"></i>{{ Auth::user()->profile->display_name() }}</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="sidebarDropdownMenuLink">
                                 <li>
-                                    <a class="dropdown-item" href="#">Setting</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </li>
-                                <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                                             document.getElementById('logout-form').submit();">{{ __('logout') }}</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -74,7 +63,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-0 py-4">
                 <main>
                     @yield('content')
                 </main>

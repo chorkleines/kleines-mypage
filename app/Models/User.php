@@ -5,7 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Role;
 use App\Enums\UserStatus;
+use App\Models\AccountingRecord;
+use App\Models\IndividualAccountingRecord;
 use App\Models\Profile;
+use Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,5 +68,25 @@ class User extends Authenticatable
     public function is_admin($value)
     {
         return $this->admin->role->value === $value;
+    }
+
+    public function accountingRecords()
+    {
+        return $this->hasMany(AccountingRecord::class, 'user_id');
+    }
+
+    public function getArrears()
+    {
+        return Helper::formatPrice($this->accountingRecords->where('datetime', null)->sum('price'));
+    }
+
+    public function individualAccountingRecords()
+    {
+        return $this->hasMany(IndividualAccountingRecord::class, 'user_id');
+    }
+
+    public function getBalance()
+    {
+        return Helper::formatPrice($this->individualAccountingRecords->sum('price'));
     }
 }

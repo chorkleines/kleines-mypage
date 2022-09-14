@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\IndividualAccountingList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,4 +29,9 @@ class IndividualAccountingRecord extends Model
     protected $primaryKey = null;
 
     public $incrementing = false;
+
+    public function individualAccountingList()
+    {
+        return $this->belongsTo(IndividualAccountingList::class, 'list_id');
+    }
 }
