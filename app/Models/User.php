@@ -8,6 +8,7 @@ use App\Enums\UserStatus;
 use App\Models\AccountingRecord;
 use App\Models\IndividualAccountingRecord;
 use App\Models\Profile;
+use Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -76,7 +77,7 @@ class User extends Authenticatable
 
     public function getArrears()
     {
-        return $this->accountingRecords->where('datetime', null)->sum('price');
+        return Helper::formatPrice($this->accountingRecords->where('datetime', null)->sum('price'));
     }
 
     public function individualAccountingRecords()
@@ -86,6 +87,6 @@ class User extends Authenticatable
 
     public function getBalance()
     {
-        return $this->individualAccountingRecords->sum('price');
+        return Helper::formatPrice($this->individualAccountingRecords->sum('price'));
     }
 }
