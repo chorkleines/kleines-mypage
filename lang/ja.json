@@ -1,0 +1,8 @@
+{
+    "home": "ホーム",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "balance": "個別会計総額",
+    "arrears": "滞納額",
+    "EOF": "EOF"
+}
