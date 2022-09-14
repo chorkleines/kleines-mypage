@@ -38,12 +38,7 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
-                                <span class="me-2"><i class="fa-solid fa-house me-2"></i>Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="me-2"><i class="fa-solid fa-clipboard me-2"></i>Bulletin Board</span>
+                                <span class="me-2"><i class="fa-solid fa-house me-2"></i>{{ __('home') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -56,15 +51,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="sidebarDropdownMenuLink">
                                 <li>
-                                    <a class="dropdown-item" href="#">Setting</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </li>
-                                <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                                             document.getElementById('logout-form').submit();">{{ __('logout') }}</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
