@@ -6,7 +6,7 @@
             <div class="col-lg-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">個別会計残高</h5>
+                        <h5 class="card-title">{{ __('balance') }}</h5>
                         <p class="card-text">
                             {{ Auth::user()->getBalance() }}
                         </p>
@@ -16,7 +16,7 @@
             <div class="col-lg-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">個別会計残高</h5>
+                        <h5 class="card-title">{{ __('arrears') }}</h5>
                         <p class="card-text">
                             {{ Auth::user()->getArrears() }}
                         </p>
