@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\HomeController;
+use App\Models\AccountingList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- use App\Http\Controllers\HomeController;
-
 Auth::routes([
     'register' => false,
 ]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/accounts', [AccountsController::class, 'list'])->name('accounts_list');
