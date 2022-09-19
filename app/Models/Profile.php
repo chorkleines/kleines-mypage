@@ -6,10 +6,11 @@ use App\Enums\Part;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Profile extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'user_id',
@@ -29,6 +30,12 @@ class Profile extends Model
     ];
 
     protected $primaryKey = 'user_id';
+
+    public $sortable = [
+        'name_kana',
+        'grade',
+        'part',
+    ];
 
     public function user()
     {
