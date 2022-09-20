@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\HomeController;
+use App\Models\AccountingList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes([
     'register' => false,
 ]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'accounts', 'as' => 'accounts.'], function () {
+    Route::get('/', [AccountsController::class, 'list'])->name('list');
+});
