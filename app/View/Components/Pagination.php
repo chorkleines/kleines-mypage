@@ -15,6 +15,7 @@ class Pagination extends Component
      */
     public function __construct($paginator)
     {
+        $paginator->appends(\Request::except('page'));
         $this->paginator = $paginator;
     }
 
