@@ -4,5 +4,7 @@
     "logout": "ログアウト",
     "balance": "個別会計総額",
     "arrears": "滞納額",
+    "previous": "前",
+    "next": "次",
     "EOF": "EOF"
 }
