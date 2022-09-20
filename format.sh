@@ -12,4 +12,12 @@ echo ""
 echo "${ESC}[36;1m╭─────────────────────────╮${ESC}[m"
 echo "${ESC}[36;1m│ Running Blade Formatter │${ESC}[m"
 echo "${ESC}[36;1m╰─────────────────────────╯${ESC}[m"
-./node_modules/blade-formatter/bin/blade-formatter --write ./resources/**/*.blade.php
+./node_modules/blade-formatter/bin/blade-formatter --write ./resources/\*\*/\*.blade.php
+
+echo ""
+echo "${ESC}[36;1m╭──────────────────╮${ESC}[m"
+echo "${ESC}[36;1m│ Running Prettier │${ESC}[m"
+echo "${ESC}[36;1m╰──────────────────╯${ESC}[m"
+./node_modules/prettier/bin-prettier.js --write resources/css/*.css
+./node_modules/prettier/bin-prettier.js --write resources/js/*.js
+./node_modules/prettier/bin-prettier.js --write resources/sass/*.scss
