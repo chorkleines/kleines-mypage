@@ -37,8 +37,16 @@
                 <div class="position-sticky h-100 d-flex flex-column">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link {{ request()->route()->named('home')? 'active': '' }}"
+                                aria-current="page" href="{{ route('home') }}">
                                 <span class="me-2"><i class="fa-solid fa-house me-2"></i>{{ __('home') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->route()->named('accounts.*')? 'active': '' }}"
+                                aria-current="page" href="{{ route('accounts.list') }}">
+                                <span class="me-2"><i
+                                        class="fa-solid fa-users me-2"></i>{{ __('accounts_list') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -54,7 +62,8 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">{{ __('logout') }}</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
                                 </li>
