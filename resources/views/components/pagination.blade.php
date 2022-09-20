@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     <nav>
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled">
                     <a class="page-link">{{ __('previous') }}</a>

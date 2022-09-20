@@ -18,3 +18,13 @@
 body {
     font-family: "Noto Sans JP", sans-serif;
 }
+
+.pagination {
+    .page-item {
+        &.disabled {
+            .page-link {
+                background-color: transparent;
+            }
+        }
+    }
+}
