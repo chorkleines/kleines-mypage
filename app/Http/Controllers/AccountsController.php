@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class AccountsController extends Controller
@@ -24,6 +25,8 @@ class AccountsController extends Controller
      */
     public function list()
     {
-        return view('accounts.list');
+        $profiles = Profile::sortable(['grade', 'part', 'name_kana'])->paginate(20);
+
+        return view('accounts.list')->with('profiles', $profiles);
     }
 }
