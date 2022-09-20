@@ -21,4 +21,7 @@ Auth::routes([
 ]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/accounts', [AccountsController::class, 'list'])->name('accounts_list');
+
+Route::group(['prefix' => 'accounts', 'as' => 'accounts.'], function () {
+    Route::get('/', [AccountsController::class, 'list'])->name('list');
+});
