@@ -40,10 +40,10 @@ class DatabaseSeeder extends Seeder
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
 
-        # create random users
+        // create random users
         \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();
 
-        # create accounting records
+        // create accounting records
         $individual_accounting_list = \App\Models\IndividualAccountingList::create(
             [
                 'name' => '2020年度引き継ぎ',
@@ -101,7 +101,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        # create bulletin board
+        // create bulletin board
         $bulletin_board = \App\Models\BulletinBoard::create([
             'user_id' => $user->user_id,
             'title' => 'test',
