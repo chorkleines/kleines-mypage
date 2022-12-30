@@ -2,7 +2,9 @@
 name: 機能追加・修正
 about: 機能の追加・修正のためのIssue
 title: ''
-labels: 'enhancement'
+labels: enhancement
+assignees: ''
+
 ---
 
 ## 機能の内容
