@@ -2,7 +2,9 @@
 name: バグ報告
 about: バグ修正のためのIssue
 title: ''
-labels: 'bug'
+labels: bug
+assignees: ''
+
 ---
 
 ## バグの内容
