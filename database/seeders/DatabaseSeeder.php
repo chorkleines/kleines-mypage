@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
 
-        \App\Models\Profile::factory(100)->create();
+        \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();
 
         $accounting_list = \App\Models\AccountingList::create([
             'name' => 'テスト集金',
