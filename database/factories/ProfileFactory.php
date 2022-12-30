@@ -27,10 +27,7 @@ class ProfileFactory extends Factory
         $isFemale = (bool) random_int(0, 1);
         $partIndex = random_int(0, 1) + ($isFemale ? 0 : 2);
 
-        $user = \App\Models\User::factory()->create();
-
         return [
-            'user_id' => $user->user_id,
             'grade' => $grade,
             'part' => Part::getValues()[$partIndex],
             'last_name' => fake()->lastName(),
