@@ -28,3 +28,10 @@ body {
         }
     }
 }
+
+body {
+    > .container-fluid {
+        // padding of navbar height
+        padding-top: 56.03px;
+    }
+}
