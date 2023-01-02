@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -31,11 +31,11 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid vh-100">
+        <div class="row h-100">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
                 <div class="position-sticky h-100 d-flex flex-column">
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column mt-3">
                         <li class="nav-item">
                             <a class="nav-link {{ request()->route()->named('home')? 'active': '' }}"
                                 aria-current="page" href="{{ route('home') }}">
