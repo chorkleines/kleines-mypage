@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -31,7 +31,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 56.03px!important;">
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
                 <div class="position-sticky h-100 d-flex flex-column">
