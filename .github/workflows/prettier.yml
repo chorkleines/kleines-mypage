@@ -20,7 +20,9 @@ jobs:
         run: ./node_modules/prettier/bin-prettier.js --version
       - name: prettier Dry Run (css)
         run: ./node_modules/prettier/bin-prettier.js --check resources/css/*.css
-      - name: prettier Dry Run (js)
-        run: ./node_modules/prettier/bin-prettier.js --check resources/js/*.js
+      - name: prettier Dry Run (ts)
+        run: ./node_modules/prettier/bin-prettier.js --check resources/js/*.ts
+      - name: prettier Dry Run (vue)
+        run: ./node_modules/prettier/bin-prettier.js --check resources/js/*.vue resources/js/**/*.vue
       - name: pr  ettier Dry Run (scss)
         run: ./node_modules/prettier/bin-prettier.js --check resources/sass/*.scss
