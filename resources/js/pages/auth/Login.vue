@@ -16,16 +16,24 @@
                                 <div class="row mb-3">
                                     <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" name="email" required
-                                            autocomplete="email" autofocus v-model="email" />
+                                        <input id="email" type="email" class="form-control" required :class="{
+                                            'is-invalid': failedLogin,
+                                        }" autocomplete="email" autofocus v-model="email" />
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control" name="password"
-                                            required autocomplete="current-password" v-model="password" />
+                                        <input id="password" type="password" class="form-control" required :class="{
+                                            'is-invalid': failedLogin,
+                                        }" autocomplete="current-password" v-model="password"
+                                            @keyup.enter="getBearerToken" />
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{
+                                                loginFailureMessage
+                                            }}</strong>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -43,7 +51,10 @@
 
                                 <div class="row mb-0">
                                     <div class="col-md-8 offset-md-4">
-                                        <button class="btn btn-primary" @click="getBearerToken">
+                                        <button class="btn btn-primary" @click="getBearerToken"
+                                            v-bind:disabled="isLoadingLogin">
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true" v-if="isLoadingLogin"></span>
                                             Login
                                         </button>
                                         <!-- <a class="btn btn-link" href=""> -->
@@ -72,10 +83,15 @@ export default defineComponent({
             email: "",
             password: "",
             bearerToken: "",
+            isLoadingLogin: false,
+            loginFailureMessage: "",
+            failedLogin: false,
         };
     },
     methods: {
         getBearerToken() {
+            this.isLoadingLogin = true;
+            // this.failedLogin = false;
             let data: LoginRequest = {
                 email: this.email,
                 password: this.password,
@@ -88,8 +104,20 @@ export default defineComponent({
                 })
                 .catch((e: Error) => {
                     console.log(e);
+                    this.failedLogin = true;
+                    this.loginFailureMessage = e.message;
+                    if (e.response.status === 401) {
+                        this.loginFailureMessage = "ログイン情報が誤っています";
+                    }
+                    this.isLoadingLogin = false;
                 });
         },
     },
 });
 </script>
+
+<style>
+#email {
+    margin-bottom: 0;
+}
+</style>
