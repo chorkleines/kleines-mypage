@@ -1,26 +1,36 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-                    <div class="card-body">I'm an example component.</div>
+    <App>
+        <template v-slot:content>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Example Component</div>
+                            <div class="card-body">
+                                I'm an example component.
+                            </div>
+                        </div>
+                        {{ loginUser.user_id }}
+                        {{ loginUser.email }}
+                        {{ loginUser.status }}
+                        <router-link to="/logout">Logout</router-link>
+                    </div>
                 </div>
-                {{ loginUser.user_id }}
-                {{ loginUser.email }}
-                {{ loginUser.status }}
-                <router-link to="/logout">Logout</router-link>
             </div>
-        </div>
-    </div>
+        </template>
+    </App>
 </template>
 
 <script lang="ts">
 import { reactive, defineComponent } from "vue";
 import AuthApiService from "@/services/AuthApiService";
 import { LoginUserResponse, LoginUser } from "@/types/AuthType";
+import App from "@/components/App.vue";
 
 export default defineComponent({
+    components: {
+        App,
+    },
     setup() {
         const loginUser = reactive<LoginUser>({
             user_id: null,
