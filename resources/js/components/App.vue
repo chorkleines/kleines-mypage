@@ -1,11 +1,20 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
+    <nav
+        class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top"
+    >
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">
                 Kleines Mypage
             </router-link>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
-                aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#sidebar"
+                aria-controls="sidebar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
@@ -13,24 +22,50 @@
 
     <div class="container-fluid vh-100">
         <div class="row h-100">
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
+            <nav
+                id="sidebar"
+                class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse"
+            >
                 <div class="position-sticky h-100 d-flex flex-column">
                     <ul class="nav flex-column mt-3">
                         <li class="nav-item">
-                            <router-link class="nav-link" aria-current="page" to="/">
-                                <span class="me-2"><i class="fa-solid fa-house me-2"></i>Home</span>
+                            <router-link
+                                class="nav-link"
+                                aria-current="page"
+                                to="/"
+                            >
+                                <span class="me-2"
+                                    ><i class="fa-solid fa-house me-2"></i
+                                    >Home</span
+                                >
                             </router-link>
                         </li>
                     </ul>
                     <ul class="nav flex-column mt-auto mb-3">
                         <li class="nav-item dropup">
-                            <a class="nav-link dropdown-toggle" href="#" id="sidebarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="me-2"><i class="fa-solid fa-user me-2"></i>{{ loginUser.email }}</span>
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="sidebarDropdownMenuLink"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <span class="me-2"
+                                    ><i class="fa-solid fa-user me-2"></i
+                                    >{{ loginUser.email }}</span
+                                >
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="sidebarDropdownMenuLink">
+                            <ul
+                                class="dropdown-menu"
+                                aria-labelledby="sidebarDropdownMenuLink"
+                            >
                                 <li>
-                                    <router-link class="dropdown-item" to="/logout">Logout</router-link>
+                                    <router-link
+                                        class="dropdown-item"
+                                        to="/logout"
+                                        >Logout</router-link
+                                    >
                                 </li>
                             </ul>
                         </li>
