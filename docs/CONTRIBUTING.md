@@ -113,6 +113,12 @@ DB_PASSWORD=root
 php artisan key:generate
 ```
 
+JWT の秘密鍵を生成します。
+
+```sh
+php artisan jwt:secret
+```
+
 テーブルを作成します。
 
 ```sh

@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Vue Laravel SPA') }}</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.ts'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.ts'])
 </head>
 
 <body>
