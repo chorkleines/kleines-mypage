@@ -8,7 +8,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">個別会計残高</h5>
                                 <p class="card-text">
-                                    {{ paymentInfo.balance }}
+                                    {{
+                                        new Intl.NumberFormat("ja-JP", {
+                                            style: "currency",
+                                            currency: "JPY",
+                                        }).format(paymentInfo.balance)
+                                    }}
                                 </p>
                             </div>
                         </div>
@@ -18,7 +23,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">滞納額</h5>
                                 <p class="card-text">
-                                    {{ paymentInfo.arrears }}
+                                    {{
+                                        new Intl.NumberFormat("ja-JP", {
+                                            style: "currency",
+                                            currency: "JPY",
+                                        }).format(paymentInfo.arrears)
+                                    }}
                                 </p>
                             </div>
                         </div>
