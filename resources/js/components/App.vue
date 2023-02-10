@@ -112,9 +112,6 @@ export default defineComponent({
             grade: null,
             part: "",
         });
-        // defineProps(["isFullScreenLoading"]);
-        // const isFullScreenLoading = props.isFullScreenLoading;
-        // console.log(isFullScreenLoading);
 
         const route = useRoute();
         const appName = import.meta.env.VITE_APP_NAME;
