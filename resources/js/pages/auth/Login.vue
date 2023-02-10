@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container-fluid">
-            <router-link to="/" class="navbar-brand">Kleines Mypage</router-link>
+            <router-link to="/" class="navbar-brand">{{ appName }}</router-link>
         </div>
     </nav>
     <div class="container py-4">
@@ -14,22 +14,50 @@
 
                             <div class="card-body">
                                 <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
+                                    <label
+                                        for="email"
+                                        class="col-md-4 col-form-label text-md-end"
+                                        >Email Address</label
+                                    >
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" required :class="{
-                                            'is-invalid': failedLogin,
-                                        }" autocomplete="email" autofocus v-model="email" />
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            class="form-control"
+                                            required
+                                            :class="{
+                                                'is-invalid': failedLogin,
+                                            }"
+                                            autocomplete="email"
+                                            autofocus
+                                            v-model="email"
+                                        />
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
+                                    <label
+                                        for="password"
+                                        class="col-md-4 col-form-label text-md-end"
+                                        >Password</label
+                                    >
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control" required :class="{
-                                            'is-invalid': failedLogin,
-                                        }" autocomplete="current-password" v-model="password"
-                                            @keyup.enter="getBearerToken" />
-                                        <span class="invalid-feedback" role="alert">
+                                        <input
+                                            id="password"
+                                            type="password"
+                                            class="form-control"
+                                            required
+                                            :class="{
+                                                'is-invalid': failedLogin,
+                                            }"
+                                            autocomplete="current-password"
+                                            v-model="password"
+                                            @keyup.enter="getBearerToken"
+                                        />
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                        >
                                             <strong>{{
                                                 loginFailureMessage
                                             }}</strong>
@@ -51,10 +79,17 @@
 
                                 <div class="row mb-0">
                                     <div class="col-md-8 offset-md-4">
-                                        <button class="btn btn-primary" @click="getBearerToken"
-                                            v-bind:disabled="isLoadingLogin">
-                                            <span class="spinner-border spinner-border-sm" role="status"
-                                                aria-hidden="true" v-if="isLoadingLogin"></span>
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="getBearerToken"
+                                            v-bind:disabled="isLoadingLogin"
+                                        >
+                                            <span
+                                                class="spinner-border spinner-border-sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                                v-if="isLoadingLogin"
+                                            ></span>
                                             Login
                                         </button>
                                         <!-- <a class="btn btn-link" href=""> -->
@@ -86,12 +121,13 @@ export default defineComponent({
             isLoadingLogin: false,
             loginFailureMessage: "",
             failedLogin: false,
+            appName: import.meta.env.VITE_APP_NAME,
         };
     },
     methods: {
         getBearerToken() {
             this.isLoadingLogin = true;
-            // this.failedLogin = false;
+            this.failedLogin = false;
             let data: LoginRequest = {
                 email: this.email,
                 password: this.password,

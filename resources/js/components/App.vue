@@ -4,7 +4,7 @@
     >
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">
-                Kleines Mypage
+                {{ appName }}
             </router-link>
             <button
                 class="navbar-toggler"
@@ -31,8 +31,9 @@
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
+                                :class="{ active: route.name.match('home') }"
                                 aria-current="page"
-                                to="/"
+                                :to="{ name: 'home' }"
                             >
                                 <span class="me-2"
                                     ><i class="fa-solid fa-house me-2"></i
@@ -83,6 +84,7 @@
 import { reactive, defineComponent } from "vue";
 import AuthApiService from "@/services/AuthApiService";
 import { LoginUserResponse, LoginUser } from "@/types/AuthType";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
     setup() {
@@ -91,8 +93,10 @@ export default defineComponent({
             email: "",
             status: "",
         });
+        const route = useRoute();
+        const appName = import.meta.env.VITE_APP_NAME;
 
-        return { loginUser };
+        return { loginUser, route, appName };
     },
     methods: {
         getLoginUser() {
