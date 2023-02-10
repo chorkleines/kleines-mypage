@@ -76,6 +76,19 @@
                 </div>
             </nav>
             <div class="col-md-9 ms-sm-auto col-lg-10 px-0 py-4 mt-5">
+                <div
+                    id="spinner-div"
+                    class="d-flex align-items-center justify-content-center"
+                    :class="{
+                        'd-block': isFullScreenLoading,
+                        'd-none': !isFullScreenLoading,
+                    }"
+                >
+                    <div
+                        class="spinner-border text-primary"
+                        role="status"
+                    ></div>
+                </div>
                 <slot name="content"></slot>
             </div>
         </div>
@@ -89,6 +102,9 @@ import { LoginUserResponse, LoginUser } from "@/types/AuthType";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
+    props: {
+        isFullScreenLoading: Boolean,
+    },
     setup() {
         const loginUser = reactive<LoginUser>({
             firstName: "",
@@ -96,6 +112,9 @@ export default defineComponent({
             grade: null,
             part: "",
         });
+        // defineProps(["isFullScreenLoading"]);
+        // const isFullScreenLoading = props.isFullScreenLoading;
+        // console.log(isFullScreenLoading);
 
         const route = useRoute();
         const appName = import.meta.env.VITE_APP_NAME;
@@ -121,3 +140,26 @@ export default defineComponent({
     },
 });
 </script>
+
+<style>
+#spinner-div {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+}
+
+#spinner-div > div {
+    width: 3rem;
+    height: 3rem;
+}
+
+#sidebar {
+    position: fixed;
+    overflow-y: auto;
+}
+</style>

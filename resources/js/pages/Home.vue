@@ -1,5 +1,5 @@
 <template>
-    <App>
+    <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
             <div class="container">
                 <div class="row">
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, defineComponent } from "vue";
+import { reactive, ref, defineComponent } from "vue";
 import App from "@/components/App.vue";
 import HomeApiService from "@/services/HomeApiService";
 import { PaymentInfoResponse } from "@/types/HomeType";
@@ -44,14 +44,17 @@ export default defineComponent({
             arrears: null,
             balance: null,
         });
-        return { paymentInfo };
+        const isFullScreenLoading = ref<Boolean>(false);
+        return { paymentInfo, isFullScreenLoading };
     },
     methods: {
         getPaymentInfo() {
+            this.isFullScreenLoading = true;
             HomeApiService.getPaymentInfo()
                 .then((response: PaymentInfoResponse) => {
                     this.paymentInfo.arrears = response.data.arrears;
                     this.paymentInfo.balance = response.data.balance;
+                    this.isFullScreenLoading = false;
                 })
                 .catch((e: Error) => {
                     console.log(e);
