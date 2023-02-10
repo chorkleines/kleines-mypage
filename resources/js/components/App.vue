@@ -54,7 +54,9 @@
                             >
                                 <span class="me-2"
                                     ><i class="fa-solid fa-user me-2"></i
-                                    >{{ loginUser.email }}</span
+                                    >{{
+                                        `${loginUser.grade}${loginUser.part} ${loginUser.lastName}${loginUser.firstName}`
+                                    }}</span
                                 >
                             </a>
                             <ul
@@ -89,10 +91,12 @@ import { useRoute } from "vue-router";
 export default defineComponent({
     setup() {
         const loginUser = reactive<LoginUser>({
-            user_id: null,
-            email: "",
-            status: "",
+            firstName: "",
+            lastName: "",
+            grade: null,
+            part: "",
         });
+
         const route = useRoute();
         const appName = import.meta.env.VITE_APP_NAME;
 
@@ -102,9 +106,10 @@ export default defineComponent({
         getLoginUser() {
             AuthApiService.getLoginUser()
                 .then((response: LoginUserResponse) => {
-                    this.loginUser.user_id = response.data.user_id;
-                    this.loginUser.email = response.data.email;
-                    this.loginUser.status = response.data.status;
+                    this.loginUser.firstName = response.data.first_name;
+                    this.loginUser.lastName = response.data.last_name;
+                    this.loginUser.grade = response.data.grade;
+                    this.loginUser.part = response.data.part;
                 })
                 .catch((e: Error) => {
                     console.log(e);

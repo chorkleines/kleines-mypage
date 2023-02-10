@@ -40,7 +40,11 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user()->toArray();
+        $profile = auth()->user()->profile->toArray();
+        $me = array_merge($user, $profile);
+
+        return response()->json($me);
     }
 
     /**

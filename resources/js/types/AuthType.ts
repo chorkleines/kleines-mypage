@@ -10,12 +10,24 @@ export default interface BearerTokenResponse {
 }
 
 export default interface LoginUser {
+    firstName: string;
+    lastName: string;
+    grade: number;
+    part: string;
+    birtyday: string;
+    nameKana: string;
     user_id: number;
     email: string;
     status: string;
 }
 
 export default interface LoginUserResponse {
+    first_name: string;
+    last_name: string;
+    grade: number;
+    part: string;
+    birtyday: string;
+    name_kana: string;
     user_id: number;
     email: string;
     status: string;
