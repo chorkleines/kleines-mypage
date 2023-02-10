@@ -13,16 +13,19 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:api');
     }
 
     /**
-     * Show the application dashboard.
+     * Get the payment information of the authenticated user.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function getPaymentInfo()
     {
-        return view('home');
+        $arrears = auth()->user()->accountingRecords->where('datetime', null)->sum('price');
+        $balance = auth()->user()->individualAccountingRecords->sum('price');
+
+        return response()->json(['arrears' => $arrears, 'balance' => $balance]);
     }
 }
