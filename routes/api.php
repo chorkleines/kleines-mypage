@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 Route::group(['middleware' => 'api', 'prefix' => 'home'], function () {
     Route::get('payment_info', [HomeController::class, 'getPaymentInfo']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
+    Route::get('/', [UsersController::class, 'getUsers']);
 });

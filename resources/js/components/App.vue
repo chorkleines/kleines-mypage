@@ -41,6 +41,19 @@
                                 >
                             </router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link
+                                class="nav-link"
+                                :class="{ active: route.name.match('users') }"
+                                aria-current="page"
+                                :to="{ name: 'users' }"
+                            >
+                                <span class="me-2"
+                                    ><i class="fa-solid fa-users me-2"></i
+                                    >Users</span
+                                >
+                            </router-link>
+                        </li>
                     </ul>
                     <ul class="nav flex-column mt-auto mb-3">
                         <li class="nav-item dropup">
