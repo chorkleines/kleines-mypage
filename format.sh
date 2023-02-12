@@ -19,5 +19,6 @@ echo "${ESC}[36;1m╭──────────────────╮${
 echo "${ESC}[36;1m│ Running Prettier │${ESC}[m"
 echo "${ESC}[36;1m╰──────────────────╯${ESC}[m"
 ./node_modules/prettier/bin-prettier.js --write resources/css/*.css
-./node_modules/prettier/bin-prettier.js --write resources/js/*.js
+./node_modules/prettier/bin-prettier.js --write resources/js/*.ts
+./node_modules/prettier/bin-prettier.js --write resources/js/*.vue resources/js/**/*.vue
 ./node_modules/prettier/bin-prettier.js --write resources/sass/*.scss

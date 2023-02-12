@@ -1,0 +1,87 @@
+<template>
+    <App :isFullScreenLoading="isFullScreenLoading">
+        <template v-slot:content>
+            <div class="container">
+                <h2 class="mb-3">団員リスト</h2>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col">学年</th>
+                                <th scope="col">パート</th>
+                                <th scope="col">氏名</th>
+                                <th scope="col">在団 / 休団</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="user in users">
+                                <td>{{ user.grade }}</td>
+                                <td>{{ user.computed_part }}</td>
+                                <td>
+                                    {{ user.last_name + user.first_name }}
+                                </td>
+                                <td>{{ user.computed_status }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </App>
+</template>
+
+<script lang="ts">
+import { reactive, ref, defineComponent } from "vue";
+import App from "@/components/App.vue";
+import UsersApiService from "@/services/UsersApiService";
+import { User } from "@/types/UsersType";
+
+export default defineComponent({
+    components: {
+        App,
+    },
+    setup() {
+        const users = ref<User[]>([]);
+        const isFullScreenLoading = ref<Boolean>(false);
+        return { users, isFullScreenLoading };
+    },
+    methods: {
+        async getUsers() {
+            this.users = await UsersApiService.getUsers();
+            this.users.forEach((user: User) => {
+                switch (user.status) {
+                    case "PRESENT":
+                        user.computed_status = "在団";
+                        break;
+                    case "ABSENT":
+                        user.computed_status = "休団";
+                        break;
+                    default:
+                        user.computed_status = "";
+                        break;
+                }
+                switch (user.part) {
+                    case "S":
+                        user.computed_part = "Soprano";
+                        break;
+                    case "A":
+                        user.computed_part = "Alto";
+                    case "T":
+                        user.computed_part = "Tenor";
+                    case "B":
+                        user.computed_part = "Bass";
+                        break;
+                    default:
+                        user.computed_part = "";
+                        break;
+                }
+            });
+        },
+    },
+    async mounted() {
+        this.isFullScreenLoading = true;
+        await this.getUsers();
+        this.isFullScreenLoading = false;
+    },
+});
+</script>

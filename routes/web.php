@@ -16,12 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes([
-    'register' => false,
-]);
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::group(['prefix' => 'accounts', 'as' => 'accounts.'], function () {
-    Route::get('/', [AccountsController::class, 'list'])->name('list');
-});
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
