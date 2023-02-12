@@ -10,14 +10,14 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">Login</div>
+                            <div class="card-header">ログイン</div>
 
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <label
                                         for="email"
                                         class="col-md-4 col-form-label text-md-end"
-                                        >Email Address</label
+                                        >メールアドレス</label
                                     >
                                     <div class="col-md-6">
                                         <input
@@ -39,7 +39,7 @@
                                     <label
                                         for="password"
                                         class="col-md-4 col-form-label text-md-end"
-                                        >Password</label
+                                        >パスワード</label
                                     >
                                     <div class="col-md-6">
                                         <input
@@ -90,7 +90,7 @@
                                                 aria-hidden="true"
                                                 v-if="isLoadingLogin"
                                             ></span>
-                                            Login
+                                            ログイン
                                         </button>
                                         <!-- <a class="btn btn-link" href=""> -->
                                         <!--     Forgot Your Password? -->

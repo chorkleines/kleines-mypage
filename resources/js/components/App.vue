@@ -37,7 +37,7 @@
                             >
                                 <span class="me-2"
                                     ><i class="fa-solid fa-house me-2"></i
-                                    >Home</span
+                                    >ホーム</span
                                 >
                             </router-link>
                         </li>
@@ -50,7 +50,7 @@
                             >
                                 <span class="me-2"
                                     ><i class="fa-solid fa-users me-2"></i
-                                    >Users</span
+                                    >団員リスト</span
                                 >
                             </router-link>
                         </li>
@@ -80,7 +80,7 @@
                                     <router-link
                                         class="dropdown-item"
                                         to="/logout"
-                                        >Logout</router-link
+                                        >ログアウト</router-link
                                     >
                                 </li>
                             </ul>
