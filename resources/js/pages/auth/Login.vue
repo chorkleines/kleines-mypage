@@ -1,114 +1,82 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container-fluid">
-            <router-link to="/" class="navbar-brand">{{ appName }}</router-link>
-        </div>
-    </nav>
-    <div class="container py-4">
-        <main>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">ログイン</div>
+    <div
+        class="bg-base-200 min-w-screen min-h-screen flex justify-center items-center"
+    >
+        <div class="sm:w-96 w-full max-sm:p-5">
+            <div class="mb-3">
+                <img
+                    class="mx-auto h-20 w-auto"
+                    src="https://www.chorkleines.com/logo.png"
+                    alt="Chor Kleines Logo"
+                />
+                <h2 class="mt-2 text-center text-2xl font-bold">
+                    Kleines Mypage
+                </h2>
+            </div>
 
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <label
-                                        for="email"
-                                        class="col-md-4 col-form-label text-md-end"
-                                        >メールアドレス</label
-                                    >
-                                    <div class="col-md-6">
-                                        <input
-                                            id="email"
-                                            type="email"
-                                            class="form-control"
-                                            required
-                                            :class="{
-                                                'is-invalid': failedLogin,
-                                            }"
-                                            autocomplete="email"
-                                            autofocus
-                                            v-model="email"
-                                        />
-                                    </div>
-                                </div>
+            <div class="grid gap-1">
+                <div class="form-control w-full">
+                    <label for="email" class="label">
+                        <span class="labeltext">メールアドレス</span>
+                    </label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        required
+                        autofocus
+                        v-model="email"
+                        class="input w-full input-bordered"
+                        :class="{
+                            'input-bordered input-error': failedLogin,
+                        }"
+                    />
+                </div>
 
-                                <div class="row mb-3">
-                                    <label
-                                        for="password"
-                                        class="col-md-4 col-form-label text-md-end"
-                                        >パスワード</label
-                                    >
-                                    <div class="col-md-6">
-                                        <input
-                                            id="password"
-                                            type="password"
-                                            class="form-control"
-                                            required
-                                            :class="{
-                                                'is-invalid': failedLogin,
-                                            }"
-                                            autocomplete="current-password"
-                                            v-model="password"
-                                            @keyup.enter="getBearerToken"
-                                        />
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
-                                            <strong>{{
-                                                loginFailureMessage
-                                            }}</strong>
-                                        </span>
-                                    </div>
-                                </div>
+                <div class="form-control w-full">
+                    <label for="email" class="label">
+                        <span class="labeltext">パスワード</span>
+                    </label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                        required
+                        v-model="password"
+                        @keyup.enter="getBearerToken"
+                        class="input w-full input-bordered"
+                        :class="{
+                            'input-bordered input-error': failedLogin,
+                        }"
+                    />
+                    <label class="label" v-if="failedLogin">
+                        <span class="label-text-alt text-error">
+                            {{ loginFailureMessage }}
+                        </span>
+                    </label>
+                </div>
 
-                                <!-- <div class="row mb-3"> -->
-                                <!--     <div class="col-md-6 offset-md-4"> -->
-                                <!--         <div class="form-check"> -->
-                                <!--             <input class="form-check-input" type="checkbox" name="remember" -->
-                                <!--                 id="remember" /> -->
-                                <!--             <label class="form-check-label" for="remember"> -->
-                                <!--                 Remember Me -->
-                                <!--             </label> -->
-                                <!--         </div> -->
-                                <!--     </div> -->
-                                <!-- </div> -->
-
-                                <div class="row mb-0">
-                                    <div class="col-md-8 offset-md-4">
-                                        <button
-                                            class="btn btn-primary"
-                                            @click="getBearerToken"
-                                            v-bind:disabled="isLoadingLogin"
-                                        >
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                                v-if="isLoadingLogin"
-                                            ></span>
-                                            ログイン
-                                        </button>
-                                        <!-- <a class="btn btn-link" href=""> -->
-                                        <!--     Forgot Your Password? -->
-                                        <!-- </a> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-5">
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-full"
+                        @click="getBearerToken"
+                        :class="{
+                            loading: isLoadingLogin,
+                        }"
+                    >
+                        ログイン
+                    </button>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
 import AuthApiService from "@/services/AuthApiService";
 import { LoginRequest, BearerTokenResponse } from "@/types/AuthType";
 

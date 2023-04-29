@@ -1,16 +1,16 @@
 <template>
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
-            <div class="container">
-                <h2 class="mb-3">団員リスト</h2>
-                <div class="table-responsive">
-                    <table class="table table-sm table-striped text-nowrap">
+            <div class="prose">
+                <h1>団員リスト</h1>
+                <div class="overflow-x-auto w-full not-prose shadow-md">
+                    <table class="table text-nowrap w-full">
                         <thead>
                             <tr>
-                                <th scope="col">学年</th>
-                                <th scope="col">パート</th>
-                                <th scope="col">氏名</th>
-                                <th scope="col">在団 / 休団</th>
+                                <th>学年</th>
+                                <th>パート</th>
+                                <th>氏名</th>
+                                <th>在団 / 休団</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, ref, defineComponent } from "vue";
+import { ref, defineComponent } from "vue";
 import App from "@/components/App.vue";
 import UsersApiService from "@/services/UsersApiService";
 import { User } from "@/types/UsersType";

@@ -1,37 +1,36 @@
 <template>
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">個別会計残高</h5>
-                                <p class="card-text">
-                                    {{
-                                        new Intl.NumberFormat("ja-JP", {
-                                            style: "currency",
-                                            currency: "JPY",
-                                        }).format(paymentInfo.balance)
-                                    }}
-                                </p>
-                            </div>
-                        </div>
+            <div
+                class="stats stats-vertical md:stats-horizontal shadow w-full max-w-sm md:max-w-3xl"
+            >
+                <div class="stat">
+                    <div class="stat-figure text-primary">
+                        <i class="fa-solid fa-wallet text-3xl"></i>
                     </div>
-                    <div class="col-lg-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">滞納額</h5>
-                                <p class="card-text">
-                                    {{
-                                        new Intl.NumberFormat("ja-JP", {
-                                            style: "currency",
-                                            currency: "JPY",
-                                        }).format(paymentInfo.arrears)
-                                    }}
-                                </p>
-                            </div>
-                        </div>
+                    <div class="stat-title">個別会計残高</div>
+                    <div class="stat-value w-40">
+                        {{
+                            new Intl.NumberFormat("ja-JP", {
+                                style: "currency",
+                                currency: "JPY",
+                            }).format(paymentInfo.balance)
+                        }}
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-figure text-secondary">
+                        <i class="fa-solid fa-money-check-dollar text-3xl"></i>
+                    </div>
+                    <div class="stat-title">滞納額</div>
+                    <div class="stat-value w-40">
+                        {{
+                            new Intl.NumberFormat("ja-JP", {
+                                style: "currency",
+                                currency: "JPY",
+                            }).format(paymentInfo.arrears)
+                        }}
                     </div>
                 </div>
             </div>
