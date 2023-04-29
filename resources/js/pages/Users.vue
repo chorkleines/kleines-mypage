@@ -3,27 +3,15 @@
         <template v-slot:content>
             <div class="prose">
                 <h1>団員リスト</h1>
-                <div class="overflow-x-auto w-full not-prose shadow-md">
-                    <table class="table text-nowrap w-full">
-                        <thead>
-                            <tr>
-                                <th>学年</th>
-                                <th>パート</th>
-                                <th>氏名</th>
-                                <th>在団 / 休団</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="user in users">
-                                <td>{{ user.grade }}</td>
-                                <td>{{ user.computed_part }}</td>
-                                <td>
-                                    {{ user.last_name + user.first_name }}
-                                </td>
-                                <td>{{ user.computed_status }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="overflow-x-auto w-full not-prose">
+                    <vue-good-table
+                        :columns="columns"
+                        :rows="rows"
+                        :pagination-options="{
+                            enabled: true,
+                        }"
+                        styleClass="table text-nowrap w-full shadow-md mb-3"
+                    />
                 </div>
             </div>
         </template>
@@ -35,15 +23,36 @@ import { ref, defineComponent } from "vue";
 import App from "@/components/App.vue";
 import UsersApiService from "@/services/UsersApiService";
 import { User } from "@/types/UsersType";
+import { VueGoodTable } from "vue-good-table-next";
 
 export default defineComponent({
     components: {
         App,
+        VueGoodTable,
     },
     setup() {
         const users = ref<User[]>([]);
         const isFullScreenLoading = ref<Boolean>(false);
-        return { users, isFullScreenLoading };
+        const rows = users;
+        const columns = [
+            {
+                label: "学年",
+                field: "grade",
+            },
+            {
+                label: "パート",
+                field: "computed_part",
+            },
+            {
+                label: "氏名",
+                field: "last_name",
+            },
+            {
+                label: "在団 / 休団",
+                field: "computed_status",
+            },
+        ];
+        return { users, isFullScreenLoading, rows, columns };
     },
     methods: {
         async getUsers() {
