@@ -10,8 +10,9 @@
 // Bootstrap
 // @import 'bootstrap/scss/bootstrap';
 
-// MDB
-@import "mdb-ui-kit/src/scss/mdb.free";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import "sidebar";
 
