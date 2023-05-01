@@ -13,14 +13,14 @@
                     </ul>
                 </div>
                 <h1 class="text-2xl">団員リスト</h1>
-                <div class="overflow-x-auto w-full not-prose">
+                <div class="overflow-x-auto w-full not-prose max-w-lg">
                     <vue-good-table
                         :columns="columns"
                         :rows="users"
                         :sort-options="{
                             enabled: true,
                             initialSortBy: [
-                                { field: 'grade', type: 'desc' },
+                                { field: 'grade', type: 'asc' },
                                 { field: 'computed_part', type: 'asc' },
                             ],
                         }"
@@ -54,11 +54,13 @@ export default defineComponent({
                 {
                     label: "学年",
                     field: "grade",
+                    width: "5rem",
                 },
                 {
                     label: "パート",
                     field: "computed_part",
                     sortFn: this.sortPart,
+                    width: "7rem",
                 },
                 {
                     label: "氏名",
@@ -69,6 +71,7 @@ export default defineComponent({
                     label: "在団 / 休団",
                     field: "computed_status",
                     sortFn: this.sortStatus,
+                    width: "7rem",
                 },
             ],
         };
