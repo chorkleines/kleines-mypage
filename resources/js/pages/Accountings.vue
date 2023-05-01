@@ -113,9 +113,17 @@ export default defineComponent({
                     ? "期限切れ"
                     : "未払い";
             });
-            this.accountings.sort((a, b) => (a.deadline > b.deadline ? -1 : 1));
-            this.accountings.sort((a, b) => (a.datetime > b.datetime ? -1 : 1));
-            this.accountings.sort((a, b) => (a.is_paid < b.is_paid ? -1 : 1));
+            this.accountings.sort(function (a, b) {
+                const a_datetime = new Date(a.datetime);
+                const b_datetime = new Date(b.datetime);
+                const a_deadline = new Date(a.deadline);
+                const b_deadline = new Date(b.deadline);
+                return (
+                    a.is_paid - b.is_paid ||
+                    b_datetime.getTime() - a_datetime.getTime() ||
+                    b_deadline.getTime() - a_deadline.getTime()
+                );
+            });
         },
     },
     async mounted() {
