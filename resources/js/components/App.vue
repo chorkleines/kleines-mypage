@@ -3,7 +3,7 @@
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col">
             <!-- Navbar -->
-            <div class="navbar bg-base-100 shadow justify-between">
+            <div class="navbar bg-base-200 shadow justify-between">
                 <div class="flex-none">
                     <label
                         for="my-drawer-3"
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <!-- End of Navbar -->
-            <div class="flex-1 p-5 overflow-y-auto bg-base-200">
+            <div class="flex-1 p-5 overflow-y-auto bg-base-100">
                 <div
                     class="fixed w-screen h-screen flex justify-center items-center bg-base-200/90 top-0 left-0 z-50"
                     :class="{
@@ -60,7 +60,7 @@
         <!-- Sidebar -->
         <div class="drawer-side">
             <label for="my-drawer-3" class="drawer-overlay"></label>
-            <ul class="menu pt-0 w-80 bg-base-100">
+            <ul class="menu pt-0 w-80 bg-base-200">
                 <li>
                     <router-link
                         to="/"

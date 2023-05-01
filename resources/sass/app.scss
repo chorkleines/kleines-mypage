@@ -7,32 +7,12 @@
 // Variables
 @import "variables";
 
-// Bootstrap
-// @import 'bootstrap/scss/bootstrap';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "sidebar";
+@import "vue_good_table_next";
 
 body {
     font-family: "Noto Sans JP", sans-serif;
-}
-
-.pagination {
-    .page-item {
-        &.disabled {
-            .page-link {
-                background-color: transparent;
-            }
-        }
-    }
-}
-
-body {
-    > .container-fluid {
-        // padding of navbar height
-        padding-top: 56.03px;
-    }
 }
