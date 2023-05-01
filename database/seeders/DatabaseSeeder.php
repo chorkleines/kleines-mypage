@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Enums\AccountingType;
 use App\Enums\BulletinBoardStatus;
 use App\Enums\Part;
+use App\Enums\PaymentMethod;
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use DateTime;
@@ -84,22 +85,32 @@ class DatabaseSeeder extends Seeder
             $paid_individual = min($price, $user->individualAccountingRecords->sum('price'));
             $paid_cash = $price - $paid_individual;
             $datetime = date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time()));
-            \App\Models\AccountingRecord::create([
+            $accounting_record = \App\Models\AccountingRecord::create([
                 'accounting_id' => $accounting_list->accounting_id,
                 'user_id' => $user->user_id,
                 'price' => $price,
-                'paid_cash' => $paid_cash,
                 'datetime' => $datetime,
                 'is_paid' => true,
             ]);
-            if ($paid_individual == 0) {
-                continue;
+            if ($paid_cash > 0) {
+                \App\Models\AccountingPayment::create([
+                    'accounting_record_id' => $accounting_record->id,
+                    'price' => $paid_cash,
+                    'method' => PaymentMethod::CASH,
+                ]);
             }
-            \App\Models\IndividualAccountingRecord::create([
-                'user_id' => $user->user_id,
-                'price' => $paid_individual,
-                'accounting_id' => $accounting_list->accounting_id,
-            ]);
+            if ($paid_individual > 0) {
+                $payment = \App\Models\AccountingPayment::create([
+                    'accounting_record_id' => $accounting_record->id,
+                    'price' => $paid_individual,
+                    'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
+                ]);
+                \App\Models\IndividualAccountingRecord::create([
+                    'user_id' => $user->user_id,
+                    'price' => $paid_individual,
+                    'accounting_payment_id' => $payment->id,
+                ]);
+            }
         }
 
         // create bulletin board
