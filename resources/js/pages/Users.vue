@@ -2,7 +2,17 @@
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
             <div class="prose">
-                <h1>団員リスト</h1>
+                <div class="text-xs breadcrumbs pt-0">
+                    <ul class="m-0 p-0">
+                        <li>
+                            <router-link :to="{ name: 'home' }"
+                                >ホーム</router-link
+                            >
+                        </li>
+                        <li>団員リスト</li>
+                    </ul>
+                </div>
+                <h1 class="text-2xl">団員リスト</h1>
                 <div class="overflow-x-auto w-full not-prose">
                     <vue-good-table
                         :columns="columns"
@@ -18,7 +28,7 @@
                             enabled: true,
                             perPage: 20,
                         }"
-                        styleClass="table text-nowrap w-full shadow-md mb-3"
+                        styleClass="table text-nowrap w-full mb-3"
                     />
                 </div>
             </div>
