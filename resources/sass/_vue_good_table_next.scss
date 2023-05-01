@@ -54,6 +54,11 @@ th {
 
 .vgt-wrap__footer {
     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
     justify-content: space-between;
     align-items: center;
     .footer__row-count {
