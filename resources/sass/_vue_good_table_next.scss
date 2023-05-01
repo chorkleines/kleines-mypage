@@ -1,3 +1,57 @@
+th {
+    position: relative;
+    &.sortable {
+        button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: transparent;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: right;
+            padding-right: 1rem;
+        }
+    }
+}
+
+th {
+    &.sortable {
+        &:not(.sorting) {
+            button {
+                &::before {
+                    content: "\f0dc";
+                    font-family: "Font Awesome 6 Free";
+                    font-weight: 900;
+                }
+            }
+        }
+        &.sorting {
+            &.sorting-asc {
+                button {
+                    &::before {
+                        content: "\f0de";
+                        font-family: "Font Awesome 6 Free";
+                        font-weight: 900;
+                    }
+                }
+            }
+            &.sorting-desc {
+                button {
+                    &::before {
+                        content: "\f0dd";
+                        font-family: "Font Awesome 6 Free";
+                        font-weight: 900;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .vgt-wrap__footer {
     display: flex;
     justify-content: space-between;

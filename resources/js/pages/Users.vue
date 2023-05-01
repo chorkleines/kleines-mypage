@@ -6,10 +6,18 @@
                 <div class="overflow-x-auto w-full not-prose">
                     <vue-good-table
                         :columns="columns"
-                        :rows="rows"
+                        :rows="users"
+                        :sort-options="{
+                            enabled: true,
+                            initialSortBy: [
+                                { field: 'grade', type: 'desc' },
+                                { field: 'computed_part', type: 'asc' },
+                            ],
+                        }"
                         :pagination-options="{
                             enabled: true,
                         }"
+                        :line-numbers="true"
                         styleClass="table text-nowrap w-full shadow-md mb-3"
                     />
                 </div>
@@ -30,29 +38,35 @@ export default defineComponent({
         App,
         VueGoodTable,
     },
+    data() {
+        return {
+            columns: [
+                {
+                    label: "学年",
+                    field: "grade",
+                },
+                {
+                    label: "パート",
+                    field: "computed_part",
+                    sortFn: this.sortPart,
+                },
+                {
+                    label: "氏名",
+                    field: "last_name",
+                    sortable: false,
+                },
+                {
+                    label: "在団 / 休団",
+                    field: "computed_status",
+                    sortFn: this.sortStatus,
+                },
+            ],
+        };
+    },
     setup() {
         const users = ref<User[]>([]);
         const isFullScreenLoading = ref<Boolean>(false);
-        const rows = users;
-        const columns = [
-            {
-                label: "学年",
-                field: "grade",
-            },
-            {
-                label: "パート",
-                field: "computed_part",
-            },
-            {
-                label: "氏名",
-                field: "last_name",
-            },
-            {
-                label: "在団 / 休団",
-                field: "computed_status",
-            },
-        ];
-        return { users, isFullScreenLoading, rows, columns };
+        return { users, isFullScreenLoading };
     },
     methods: {
         async getUsers() {
@@ -85,6 +99,18 @@ export default defineComponent({
                         break;
                 }
             });
+        },
+        sortPart(x, y, _col, _rowX, _rowY) {
+            const part_order = ["Soprano", "Alto", "Tenor", "Bass"];
+            const x_index = part_order.indexOf(x);
+            const y_index = part_order.indexOf(y);
+            return x_index < y_index ? -1 : x_index > y_index ? 1 : 0;
+        },
+        sortStatus(x, y, _col, _rowX, _rowY) {
+            const status_order = ["在団", "休団"];
+            const x_index = status_order.indexOf(x);
+            const y_index = status_order.indexOf(y);
+            return x_index < y_index ? -1 : x_index > y_index ? 1 : 0;
         },
     },
     async mounted() {
