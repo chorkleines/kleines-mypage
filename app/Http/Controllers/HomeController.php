@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -23,7 +21,7 @@ class HomeController extends Controller
      */
     public function getPaymentInfo()
     {
-        $arrears = auth()->user()->accountingRecords->where('datetime', null)->sum('price');
+        $arrears = auth()->user()->accountingRecords->where('is_paid', false)->sum('price');
         $balance = auth()->user()->individualAccountingRecords->sum('price');
 
         return response()->json(['arrears' => $arrears, 'balance' => $balance]);

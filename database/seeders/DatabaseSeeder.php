@@ -90,6 +90,7 @@ class DatabaseSeeder extends Seeder
                 'price' => $price,
                 'paid_cash' => $paid_cash,
                 'datetime' => $datetime,
+                'is_paid' => true,
             ]);
             if ($paid_individual == 0) {
                 continue;
