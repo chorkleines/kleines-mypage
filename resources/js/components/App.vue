@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- End of Navbar -->
-            <div class="flex-1 p-5 overflow-y-auto bg-base-200/30">
+            <div class="flex-1 p-5 overflow-y-auto bg-base-200/50">
                 <div class="fixed w-screen h-screen flex justify-center items-center bg-base-200/90 top-0 left-0 z-50"
                     :class="{
                         hidden: !isFullScreenLoading,

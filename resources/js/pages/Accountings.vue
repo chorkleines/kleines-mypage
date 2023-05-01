@@ -2,16 +2,24 @@
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
             <div class="prose">
-                <h1>集金記録</h1>
+                <div class="text-xs breadcrumbs pt-0">
+                    <ul class="m-0 p-0">
+                        <li>
+                            <router-link :to="{ name: 'home' }">ホーム</router-link>
+                        </li>
+                        <li>集金記録</li>
+                    </ul>
+                </div>
+                <h1 class="text-2xl">集金記録</h1>
                 <div class="flex flex-col gap-3">
                     <div v-for="accounting in accountings">
-                        <div class="not-prose bg-base-100 rounded-box w-full shadow-xl p-3 px-4">
+                        <div class="not-prose bg-base-100 rounded-lg w-full p-3 px-4">
                             <div class="flex flex-col gap-2">
                                 <div class="flex gap-3 justify-between items-center">
                                     <div class="font-extrabold truncate">
                                         {{ accounting.name }}
                                     </div>
-                                    <div class="text-base-content/70 text-sm">
+                                    <div class="text-base-content/70 font-bold">
                                         {{ accounting.formatted_price }}
                                     </div>
                                 </div>
@@ -27,10 +35,10 @@
                                     }">
                                         {{ accounting.status }}
                                     </div>
-                                    <div class="text-base-content/70 text-sm" v-if="accounting.is_paid">
+                                    <div class="text-base-content/70 text-xs" v-if="accounting.is_paid">
                                         {{ accounting.datetime }}
                                     </div>
-                                    <div class="text-base-content/70 text-sm" v-if="!accounting.is_paid">
+                                    <div class="text-base-content/70 text-xs" v-if="!accounting.is_paid">
                                         支払い期限：{{ accounting.deadline }}
                                     </div>
                                 </div>
