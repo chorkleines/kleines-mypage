@@ -90,8 +90,10 @@ export default defineComponent({
                         break;
                     case "A":
                         user.computed_part = "Alto";
+                        break;
                     case "T":
                         user.computed_part = "Tenor";
+                        break;
                     case "B":
                         user.computed_part = "Bass";
                         break;
