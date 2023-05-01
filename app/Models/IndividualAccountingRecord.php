@@ -12,7 +12,7 @@ class IndividualAccountingRecord extends Model
 
     protected $fillable = [
         'user_id',
-        'accounting_id',
+        'accounting_payment_id',
         'list_id',
         'datetime',
         'price',
@@ -20,7 +20,7 @@ class IndividualAccountingRecord extends Model
 
     protected $casts = [
         'user_id' => 'int',
-        'accounting_id' => 'int',
+        'accounting_payment_id' => 'int',
         'list_id' => 'int',
         'datetime' => 'datetime',
         'price' => 'int',

@@ -25,9 +25,7 @@ class AccountingRecord extends Model
         'datetime' => 'datetime',
     ];
 
-    protected $primaryKey = ['accounting_id', 'user_id'];
-
-    public $incrementing = false;
+    protected $primaryKey = 'id';
 
     public function accouting_list()
     {
