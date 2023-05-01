@@ -16,8 +16,8 @@
                         }"
                         :pagination-options="{
                             enabled: true,
+                            perPage: 20,
                         }"
-                        :line-numbers="true"
                         styleClass="table text-nowrap w-full shadow-md mb-3"
                     />
                 </div>
@@ -52,7 +52,7 @@ export default defineComponent({
                 },
                 {
                     label: "氏名",
-                    field: "last_name",
+                    field: "name",
                     sortable: false,
                 },
                 {
@@ -72,6 +72,7 @@ export default defineComponent({
         async getUsers() {
             this.users = await UsersApiService.getUsers();
             this.users.forEach((user: User) => {
+                user.name = user.last_name + " " + user.first_name;
                 switch (user.status) {
                     case "PRESENT":
                         user.computed_status = "在団";
