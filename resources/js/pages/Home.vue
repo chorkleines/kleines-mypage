@@ -2,7 +2,7 @@
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
             <div
-                class="stats stats-vertical md:stats-horizontal shadow w-full max-w-sm md:max-w-3xl"
+                class="stats stats-vertical md:stats-horizontal w-full max-w-sm md:max-w-3xl"
             >
                 <div class="stat">
                     <div class="stat-figure text-primary">

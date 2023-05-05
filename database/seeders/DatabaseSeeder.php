@@ -61,55 +61,69 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $accounting_list = \App\Models\AccountingList::create([
-            'name' => 'テスト集金',
-            'deadline' => date('Y-m-d', random_int(time() - (30 * 24 * 60 * 60), time() + (30 * 24 * 60 * 60))),
-            'admin' => AccountingType::GENERAL,
-        ]);
+        $accounting_names = [
+            'テスト集金1',
+            'テスト集金2',
+            'テスト集金3',
+            'テスト集金4',
+            'テスト集金5',
+            'テスト集金6',
+            'テスト集金7',
+            'テスト集金8',
+            'テスト集金9',
+            'テスト集金10',
+        ];
+        foreach ($accounting_names as $accounting_name) {
+            $accounting_list = \App\Models\AccountingList::create([
+                'name' => $accounting_name,
+                'deadline' => date('Y-m-d', random_int(time() - (30 * 24 * 60 * 60), time() + (30 * 24 * 60 * 60))),
+                'admin' => AccountingType::GENERAL,
+            ]);
 
-        foreach ($users as $user) {
-            if (random_int(0, 5) % 5 == 0) {
-                continue;
-            }
-            $price = random_int(1000, 10000);
-            $is_paid = random_int(0, 5) % 5 != 0;
-            if (! $is_paid) {
-                \App\Models\AccountingRecord::create([
+            foreach ($users as $user) {
+                if (random_int(0, 5) % 5 == 0) {
+                    continue;
+                }
+                $price = random_int(1000, 10000);
+                $is_paid = random_int(0, 5) % 5 != 0;
+                if (! $is_paid) {
+                    \App\Models\AccountingRecord::create([
+                        'accounting_id' => $accounting_list->accounting_id,
+                        'user_id' => $user->user_id,
+                        'price' => $price,
+                    ]);
+                    continue;
+                }
+
+                $paid_individual = min($price, $user->individualAccountingRecords->sum('price'));
+                $paid_cash = $price - $paid_individual;
+                $datetime = date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time()));
+                $accounting_record = \App\Models\AccountingRecord::create([
                     'accounting_id' => $accounting_list->accounting_id,
                     'user_id' => $user->user_id,
                     'price' => $price,
+                    'datetime' => $datetime,
+                    'is_paid' => true,
                 ]);
-                continue;
-            }
-
-            $paid_individual = min($price, $user->individualAccountingRecords->sum('price'));
-            $paid_cash = $price - $paid_individual;
-            $datetime = date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time()));
-            $accounting_record = \App\Models\AccountingRecord::create([
-                'accounting_id' => $accounting_list->accounting_id,
-                'user_id' => $user->user_id,
-                'price' => $price,
-                'datetime' => $datetime,
-                'is_paid' => true,
-            ]);
-            if ($paid_cash > 0) {
-                \App\Models\AccountingPayment::create([
-                    'accounting_record_id' => $accounting_record->id,
-                    'price' => $paid_cash,
-                    'method' => PaymentMethod::CASH,
-                ]);
-            }
-            if ($paid_individual > 0) {
-                $payment = \App\Models\AccountingPayment::create([
-                    'accounting_record_id' => $accounting_record->id,
-                    'price' => $paid_individual,
-                    'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
-                ]);
-                \App\Models\IndividualAccountingRecord::create([
-                    'user_id' => $user->user_id,
-                    'price' => $paid_individual,
-                    'accounting_payment_id' => $payment->id,
-                ]);
+                if ($paid_cash > 0) {
+                    \App\Models\AccountingPayment::create([
+                        'accounting_record_id' => $accounting_record->id,
+                        'price' => $paid_cash,
+                        'method' => PaymentMethod::CASH,
+                    ]);
+                }
+                if ($paid_individual > 0) {
+                    $payment = \App\Models\AccountingPayment::create([
+                        'accounting_record_id' => $accounting_record->id,
+                        'price' => $paid_individual,
+                        'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
+                    ]);
+                    \App\Models\IndividualAccountingRecord::create([
+                        'user_id' => $user->user_id,
+                        'price' => $paid_individual,
+                        'accounting_payment_id' => $payment->id,
+                    ]);
+                }
             }
         }
 

@@ -1,4 +1,14 @@
 <template>
+    <div
+        class="fixed w-screen h-screen flex justify-center items-center bg-base-200/50 top-0 left-0 z-50"
+        :class="{
+            hidden: !isFullScreenLoading,
+        }"
+    >
+        <div class="animate-ping h-2 w-2 bg-primary rounded-full"></div>
+        <div class="animate-ping h-2 w-2 bg-primary rounded-full mx-4"></div>
+        <div class="animate-ping h-2 w-2 bg-primary rounded-full"></div>
+    </div>
     <div class="bg-base-100 drawer drawer-mobile">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col">
@@ -33,24 +43,8 @@
                 </div>
             </div>
             <!-- End of Navbar -->
-            <div class="flex-1 p-5 overflow-y-auto bg-base-100">
-                <div
-                    class="fixed w-screen h-screen flex justify-center items-center bg-base-200/90 top-0 left-0 z-50"
-                    :class="{
-                        hidden: !isFullScreenLoading,
-                    }"
-                >
-                    <div
-                        class="animate-ping h-2 w-2 bg-primary rounded-full"
-                    ></div>
-                    <div
-                        class="animate-ping h-2 w-2 bg-primary rounded-full mx-4"
-                    ></div>
-                    <div
-                        class="animate-ping h-2 w-2 bg-primary rounded-full"
-                    ></div>
-                </div>
-                <slot name="content"></slot>
+            <div class="flex-1 p-5 overflow-y-auto bg-base-200/50">
+                <slot name="content" v-if="!isFullScreenLoading"></slot>
             </div>
         </div>
         <!-- Sidebar -->
@@ -75,6 +69,12 @@
                     <router-link :to="{ name: 'users' }"
                         ><i class="fa-solid fa-users me-2"></i
                         >団員リスト</router-link
+                    >
+                </li>
+                <li :class="{ bordered: route.name.match('accountings') }">
+                    <router-link :to="{ name: 'accountings' }"
+                        ><i class="fa-solid fa-wallet me-2"></i
+                        >集金リスト</router-link
                     >
                 </li>
             </ul>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsersController;
@@ -30,4 +31,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'home'], function () {
 
 Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
     Route::get('/', [UsersController::class, 'getUsers']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'accountings'], function () {
+    Route::get('/', [AccountingsController::class, 'getAccountings']);
+    Route::get('/{id}', [AccountingsController::class, 'getAccounting'])->where('id', '[0-9]+');
 });

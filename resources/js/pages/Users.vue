@@ -2,8 +2,18 @@
     <App :isFullScreenLoading="isFullScreenLoading">
         <template v-slot:content>
             <div class="prose">
-                <h1>団員リスト</h1>
-                <div class="overflow-x-auto w-full not-prose">
+                <div class="text-xs breadcrumbs pt-0">
+                    <ul class="m-0 p-0">
+                        <li>
+                            <router-link :to="{ name: 'home' }"
+                                >ホーム</router-link
+                            >
+                        </li>
+                        <li>団員リスト</li>
+                    </ul>
+                </div>
+                <h1 class="text-2xl">団員リスト</h1>
+                <div class="overflow-x-auto w-full not-prose max-w-lg">
                     <vue-good-table
                         :columns="columns"
                         :rows="users"
@@ -18,7 +28,7 @@
                             enabled: true,
                             perPage: 20,
                         }"
-                        styleClass="table text-nowrap w-full shadow-md mb-3"
+                        styleClass="table text-nowrap w-full mb-3"
                     />
                 </div>
             </div>
@@ -43,11 +53,13 @@ export default defineComponent({
                 {
                     label: "学年",
                     field: "grade",
+                    width: "5rem",
                 },
                 {
                     label: "パート",
                     field: "part_formatted",
                     sortFn: this.sortPart,
+                    width: "7rem",
                 },
                 {
                     label: "氏名",
@@ -58,6 +70,7 @@ export default defineComponent({
                     label: "在団 / 休団",
                     field: "status_formatted",
                     sortFn: this.sortStatus,
+                    width: "7rem",
                 },
             ],
         };
