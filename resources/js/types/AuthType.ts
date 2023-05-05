@@ -1,27 +1,15 @@
-export default interface LoginRequest {
+export type LoginRequest = {
     email: string;
     password: string;
-}
+};
 
-export default interface BearerTokenResponse {
+export type BearerTokenResponse = {
     access_token: string;
     token_type: string;
     expires_in: number;
-}
+};
 
-export default interface LoginUser {
-    firstName: string;
-    lastName: string;
-    grade: number;
-    part: string;
-    birtyday: string;
-    nameKana: string;
-    user_id: number;
-    email: string;
-    status: string;
-}
-
-export default interface LoginUserResponse {
+export type LoginUser = {
     first_name: string;
     last_name: string;
     grade: number;
@@ -32,10 +20,12 @@ export default interface LoginUserResponse {
     email: string;
     status: string;
     email_verified_at: string;
-    created_at: string;
-    updated_at: string;
-}
+};
 
-export default interface LogoutResponse {
+export type LoginUserResponse = LoginUser & {
+    display_name: string;
+};
+
+export type LogoutResponse = {
     message: string;
-}
+};
