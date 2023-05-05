@@ -11,7 +11,7 @@
                             enabled: true,
                             initialSortBy: [
                                 { field: 'grade', type: 'desc' },
-                                { field: 'computed_part', type: 'asc' },
+                                { field: 'part_formatted', type: 'asc' },
                             ],
                         }"
                         :pagination-options="{
@@ -29,9 +29,8 @@
 <script lang="ts">
 import { ref, defineComponent } from "vue";
 import App from "@/components/App.vue";
-import UsersApiService from "@/services/UsersApiService";
-import { User } from "@/types/UsersType";
 import { VueGoodTable } from "vue-good-table-next";
+import { useUsers } from "@/composable/useUsers";
 
 export default defineComponent({
     components: {
@@ -47,69 +46,35 @@ export default defineComponent({
                 },
                 {
                     label: "パート",
-                    field: "computed_part",
+                    field: "part_formatted",
                     sortFn: this.sortPart,
                 },
                 {
                     label: "氏名",
-                    field: "name",
+                    field: "full_name",
                     sortable: false,
                 },
                 {
                     label: "在団 / 休団",
-                    field: "computed_status",
+                    field: "status_formatted",
                     sortFn: this.sortStatus,
                 },
             ],
         };
     },
     setup() {
-        const users = ref<User[]>([]);
+        const { users, fetchUsers } = useUsers();
         const isFullScreenLoading = ref<Boolean>(false);
-        return { users, isFullScreenLoading };
+        return { users, fetchUsers, isFullScreenLoading };
     },
     methods: {
-        async getUsers() {
-            this.users = await UsersApiService.getUsers();
-            this.users.forEach((user: User) => {
-                user.name = user.last_name + " " + user.first_name;
-                switch (user.status) {
-                    case "PRESENT":
-                        user.computed_status = "在団";
-                        break;
-                    case "ABSENT":
-                        user.computed_status = "休団";
-                        break;
-                    default:
-                        user.computed_status = "";
-                        break;
-                }
-                switch (user.part) {
-                    case "S":
-                        user.computed_part = "Soprano";
-                        break;
-                    case "A":
-                        user.computed_part = "Alto";
-                        break;
-                    case "T":
-                        user.computed_part = "Tenor";
-                        break;
-                    case "B":
-                        user.computed_part = "Bass";
-                        break;
-                    default:
-                        user.computed_part = "";
-                        break;
-                }
-            });
-        },
-        sortPart(x, y, _col, _rowX, _rowY) {
+        sortPart(x: string, y: string, _col, _rowX, _rowY) {
             const part_order = ["Soprano", "Alto", "Tenor", "Bass"];
             const x_index = part_order.indexOf(x);
             const y_index = part_order.indexOf(y);
             return x_index < y_index ? -1 : x_index > y_index ? 1 : 0;
         },
-        sortStatus(x, y, _col, _rowX, _rowY) {
+        sortStatus(x: string, y: string, _col, _rowX, _rowY) {
             const status_order = ["在団", "休団"];
             const x_index = status_order.indexOf(x);
             const y_index = status_order.indexOf(y);
@@ -118,7 +83,7 @@ export default defineComponent({
     },
     async mounted() {
         this.isFullScreenLoading = true;
-        await this.getUsers();
+        await this.fetchUsers();
         this.isFullScreenLoading = false;
     },
 });
