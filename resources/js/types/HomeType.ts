@@ -1,4 +1,4 @@
-export default interface PaymentInfoResponse {
+export type PaymentInfoResponse = {
     arrear: number;
     balance: number;
-}
+};

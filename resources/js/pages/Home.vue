@@ -14,7 +14,7 @@
                             new Intl.NumberFormat("ja-JP", {
                                 style: "currency",
                                 currency: "JPY",
-                            }).format(paymentInfo.balance)
+                            }).format(payment_info.balance)
                         }}
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                             new Intl.NumberFormat("ja-JP", {
                                 style: "currency",
                                 currency: "JPY",
-                            }).format(paymentInfo.arrears)
+                            }).format(payment_info.arrears)
                         }}
                     </div>
                 </div>
@@ -39,39 +39,23 @@
 </template>
 
 <script lang="ts">
-import { reactive, ref, defineComponent } from "vue";
+import { ref, defineComponent } from "vue";
 import App from "@/components/App.vue";
-import HomeApiService from "@/services/HomeApiService";
-import { PaymentInfoResponse } from "@/types/HomeType";
+import { usePaymentInfo } from "@/composable/usePaymentInfo";
 
 export default defineComponent({
     components: {
         App,
     },
     setup() {
-        const paymentInfo = reactive<PaymentInfoResponse>({
-            arrears: null,
-            balance: null,
-        });
+        const { payment_info, fetchPaymentInfo } = usePaymentInfo();
         const isFullScreenLoading = ref<Boolean>(false);
-        return { paymentInfo, isFullScreenLoading };
+        return { payment_info, fetchPaymentInfo, isFullScreenLoading };
     },
-    methods: {
-        getPaymentInfo() {
-            this.isFullScreenLoading = true;
-            HomeApiService.getPaymentInfo()
-                .then((response: PaymentInfoResponse) => {
-                    this.paymentInfo.arrears = response.data.arrears;
-                    this.paymentInfo.balance = response.data.balance;
-                    this.isFullScreenLoading = false;
-                })
-                .catch((e: Error) => {
-                    console.log(e);
-                });
-        },
-    },
-    mounted() {
-        this.getPaymentInfo();
+    async mounted() {
+        this.isFullScreenLoading = true;
+        await this.fetchPaymentInfo();
+        this.isFullScreenLoading = false;
     },
 });
 </script>

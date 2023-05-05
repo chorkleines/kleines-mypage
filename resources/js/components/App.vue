@@ -24,11 +24,7 @@
                         class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                     >
                         <li class="disabled">
-                            <a>
-                                {{
-                                    `${loginUser.grade}${loginUser.part} ${loginUser.lastName}${loginUser.firstName}`
-                                }}
-                            </a>
+                            <a>{{ login_user.display_name }}</a>
                         </li>
                         <li>
                             <router-link to="/logout">ログアウト</router-link>
@@ -88,44 +84,24 @@
 </template>
 
 <script lang="ts">
-import { reactive, defineComponent } from "vue";
-import AuthApiService from "@/services/AuthApiService";
-import { LoginUserResponse, LoginUser } from "@/types/AuthType";
+import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
+import { useAuth } from "@/composable/auth/useAuth";
 
 export default defineComponent({
     props: {
         isFullScreenLoading: Boolean,
     },
     setup() {
-        const loginUser = reactive<LoginUser>({
-            firstName: "",
-            lastName: "",
-            grade: null,
-            part: "",
-        });
+        const { login_user, fetchLoginUser } = useAuth();
 
         const route = useRoute();
         const appName = import.meta.env.VITE_APP_NAME;
 
-        return { loginUser, route, appName };
-    },
-    methods: {
-        getLoginUser() {
-            AuthApiService.getLoginUser()
-                .then((response: LoginUserResponse) => {
-                    this.loginUser.firstName = response.data.first_name;
-                    this.loginUser.lastName = response.data.last_name;
-                    this.loginUser.grade = response.data.grade;
-                    this.loginUser.part = response.data.part;
-                })
-                .catch((e: Error) => {
-                    console.log(e);
-                });
-        },
+        return { login_user, fetchLoginUser, route, appName };
     },
     mounted() {
-        this.getLoginUser();
+        this.fetchLoginUser();
     },
 });
 </script>

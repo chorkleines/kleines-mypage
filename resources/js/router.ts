@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ExampleComponent from "./components/ExampleComponent.vue";
 import Login from "./pages/auth/Login.vue";
 import Home from "./pages/Home.vue";
 import Users from "./pages/Users.vue";
-import AuthApiService from "@/services/AuthApiService";
 import LogoutResponse from "@/types/AuthType";
+import { useLogout } from "@/composable/auth/useLogout";
+import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+
+const { logout } = useLogout();
 
 const routes = [
     {
@@ -17,8 +19,12 @@ const routes = [
         path: "/logout",
         name: "logout",
         component: {
-            beforeRouteEnter(to, from, next) {
-                AuthApiService.logout()
+            beforeRouteEnter(
+                _to: RouteLocationNormalized,
+                _from: RouteLocationNormalized,
+                next: NavigationGuardNext
+            ) {
+                logout()
                     .then((_response: LogoutResponse) => {
                         localStorage.removeItem("jwt");
                         next("/login");
