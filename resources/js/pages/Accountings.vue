@@ -58,14 +58,14 @@
                                             class="text-base-content/70 text-xs"
                                             v-if="accounting.is_paid"
                                         >
-                                            {{ accounting.datetime }}
+                                            {{ accounting.datetime_formatted }}
                                         </div>
                                         <div
                                             class="text-base-content/70 text-xs"
                                             v-if="!accounting.is_paid"
                                         >
                                             支払い期限：{{
-                                                accounting.deadline
+                                                accounting.deadline_formatted
                                             }}
                                         </div>
                                     </div>

@@ -21,6 +21,12 @@ export function useAccountings() {
                 : accounting.is_overdue
                 ? "期限切れ"
                 : "未払い";
+            accounting.datetime_formatted = new Date(
+                accounting.datetime
+            ).toLocaleString();
+            accounting.deadline_formatted = new Date(
+                accounting.deadline
+            ).toLocaleDateString();
         });
 
         accountings.value.sort(function (a, b) {
