@@ -27,4 +27,28 @@ class AccountingsController extends Controller
 
         return response()->json($accountings);
     }
+
+    public function getAccounting($id)
+    {
+        $accounting = DB::table('accounting_records')
+            ->join('accounting_lists', 'accounting_records.accounting_id', '=', 'accounting_lists.accounting_id')
+            ->where('accounting_records.user_id', auth()->user()->user_id)
+            ->where('accounting_records.accounting_id', $id)
+            ->first();
+        if ($accounting->is_paid == true) {
+            $payments = DB::table('accounting_payments')
+                ->where('accounting_record_id', $accounting->id)
+                ->get()->toArray();
+            $response = [
+                'accounting' => $accounting,
+                'payments' => $payments,
+            ];
+        } else {
+            $response = [
+                'accounting' => $accounting,
+            ];
+        }
+
+        return response()->json($response);
+    }
 }

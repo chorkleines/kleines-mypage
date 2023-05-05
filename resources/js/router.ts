@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "./pages/auth/Login.vue";
 import Home from "./pages/Home.vue";
 import Users from "./pages/Users.vue";
+import Accounting from "./pages/Accounting.vue";
 import Accountings from "./pages/Accountings.vue";
 import LogoutResponse from "@/types/AuthType";
 import { useLogout } from "@/composable/auth/useLogout";
@@ -38,6 +39,7 @@ const routes = [
     },
     { path: "/users", name: "users", component: Users },
     { path: "/accountings", name: "accountings", component: Accountings },
+    { path: "/accountings/:id", name: "accounting", component: Accounting },
 ];
 
 const router = createRouter({

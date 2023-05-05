@@ -35,4 +35,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
 
 Route::group(['middleware' => 'api', 'prefix' => 'accountings'], function () {
     Route::get('/', [AccountingsController::class, 'getAccountings']);
+    Route::get('/{id}', [AccountingsController::class, 'getAccounting'])->where('id', '[0-9]+');
 });
