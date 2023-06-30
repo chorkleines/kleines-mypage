@@ -9,6 +9,9 @@ on:
 jobs:
   blade-formatter:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
     steps:
       - uses: actions/setup-node@v3
         with:
