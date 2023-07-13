@@ -67,7 +67,6 @@ export const useAuth = () => {
 
     async function getUser() {
         const jwt = useCookie("jwt");
-        console.log(jwt.value);
         const { data } = await useFetch("/api/auth/me", {
             baseURL: "http://localhost:8000",
             method: "POST",
