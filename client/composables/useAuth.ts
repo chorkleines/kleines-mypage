@@ -30,6 +30,9 @@ export const useBearerToken = () => {
 export const useAuth = () => {
     const user = useUser();
     const isLoggedIn = computed(() => !!user.value);
+    const failedLogin = ref(false);
+    const loginFailureMessage = ref("");
+    const isLoadingLogin = ref(false);
 
     const setUser = (u: User) => {
         if (u == null) {
@@ -53,16 +56,31 @@ export const useAuth = () => {
 
     async function login(email: string, password: string) {
         if (isLoggedIn.value) return;
+        isLoadingLogin.value = true;
         const jwt = useCookie("jwt");
         jwt.value = null;
 
-        const { data } = await useFetch("/api/auth/login", {
+        const { data, status, error } = await useFetch("/api/auth/login", {
             baseURL: "http://localhost:8000",
             method: "POST",
             body: JSON.stringify({ email, password }),
         });
 
+        console.log(error);
+        if (status.value === "error") {
+            failedLogin.value = true;
+            if (error.value?.statusCode === 401) {
+                loginFailureMessage.value =
+                    "メールアドレスまたはパスワードが間違っています";
+            } else {
+                loginFailureMessage.value = error.value!;
+            }
+            isLoadingLogin.value = false;
+            return;
+        }
+
         jwt.value = data.value.access_token;
+        isLoadingLogin.value = false;
     }
 
     async function getUser() {
@@ -82,5 +100,8 @@ export const useAuth = () => {
         isLoggedIn,
         login,
         getUser,
+        failedLogin,
+        loginFailureMessage,
+        isLoadingLogin,
     };
 };

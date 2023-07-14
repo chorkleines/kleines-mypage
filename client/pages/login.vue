@@ -1,29 +1,54 @@
 <template>
-    <section>
-        <p>login required</p>
-        <form @submit.prevent="submit">
-            <!-- Email Address -->
-            <div>
-                <label for="email">Email</label>
-                <input id="email" type="email" class="block mt-1 w-full" v-model="data.email" required autoFocus />
+    <div class="bg-base-200 min-w-screen min-h-screen flex justify-center items-center">
+        <div class="sm:w-96 w-full max-sm:p-5">
+            <div class="mb-3">
+                <img class="mx-auto h-20 w-auto" src="https://www.chorkleines.com/logo.png" alt="Chor Kleines Logo" />
+                <h2 class="mt-2 text-center text-2xl font-bold">
+                    Kleines Mypage
+                </h2>
             </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <label for="password">Password</label>
-                <input id="password" type="password" class="block mt-1 w-full" v-model="data.password" required
-                    autoComplete="current-password" />
-            </div>
+            <div class="grid gap-1">
+                <div class="form-control w-full">
+                    <label for="email" class="label">
+                        <span class="labeltext">メールアドレス</span>
+                    </label>
+                    <input id="email" name="email" type="email" autocomplete="email" required autofocus v-model="data.email"
+                        class="input w-full input-bordered" :class="{
+                            'input-bordered input-error': failedLogin,
+                        }" />
+                </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <button class="ml-3" @click="submit">Login</button>
+                <div class="form-control w-full">
+                    <label for="email" class="label">
+                        <span class="labeltext">パスワード</span>
+                    </label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                        v-model="data.password" @keyup.enter="submit" class="input w-full input-bordered" :class="{
+                            'input-bordered input-error': failedLogin,
+                        }" />
+                    <label class="label" v-if="failedLogin">
+                        <span class="label-text-alt text-error">
+                            {{ loginFailureMessage }}
+                        </span>
+                    </label>
+                </div>
+
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-primary w-full" @click="submit" :class="{
+                        'btn-disabled': isLoadingLogin,
+                    }">
+                        <span class="loading loading-spinner" v-if="isLoadingLogin"></span>
+                        ログイン
+                    </button>
+                </div>
             </div>
-        </form>
-    </section>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-const { login, getUser } = useAuth();
+const { login, failedLogin, loginFailureMessage, isLoadingLogin } = useAuth();
 const router = useRouter();
 
 const data = reactive({
@@ -33,7 +58,6 @@ const data = reactive({
 
 const submit = async () => {
     await login(data.email, data.password);
-    await getUser();
     router.push("/");
 };
 </script>
