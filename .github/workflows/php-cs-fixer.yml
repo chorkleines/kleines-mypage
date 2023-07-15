@@ -2,9 +2,9 @@ name: PHP-CS-Fixer
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   php-cs-fixer:

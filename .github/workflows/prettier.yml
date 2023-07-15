@@ -2,16 +2,16 @@ name: prettier
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["*"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["*"]
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./api
+        working-directory: ./client
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -20,12 +20,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: prettier Version
-        run: ./node_modules/prettier/bin-prettier.js --version
-      - name: prettier Dry Run (css)
-        run: ./node_modules/prettier/bin-prettier.js --check resources/css/*.css
+        run: ./node_modules/prettier/bin/prettier.cjs --version
       - name: prettier Dry Run (ts)
-        run: ./node_modules/prettier/bin-prettier.js --check resources/js/*.ts
+        run: ./node_modules/prettier/bin/prettier.cjs --check **/*.ts
       - name: prettier Dry Run (vue)
-        run: ./node_modules/prettier/bin-prettier.js --check resources/js/*.vue resources/js/**/*.vue
-      - name: pr  ettier Dry Run (scss)
-        run: ./node_modules/prettier/bin-prettier.js --check resources/sass/*.scss
+        run: ./node_modules/prettier/bin/prettier.cjs --check **/*.vue
