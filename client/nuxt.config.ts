@@ -7,4 +7,6 @@ export default defineNuxtConfig({
     },
     ssr: false,
     modules: ["@nuxtjs/tailwindcss"],
+    css: ["@fortawesome/fontawesome-svg-core/styles.css"],
+    plugins: ["@/plugins/fontawesome.ts"],
 });
