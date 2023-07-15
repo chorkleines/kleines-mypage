@@ -7,7 +7,7 @@ on:
     branches: [ "*" ]
 
 jobs:
-  php-cs-fixer:
+  format:
     runs-on: ubuntu-latest
     defaults:
       run:

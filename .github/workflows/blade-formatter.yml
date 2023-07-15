@@ -7,7 +7,7 @@ on:
     branches: [ "*" ]
 
 jobs:
-  blade-formatter:
+  format:
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -7,7 +7,7 @@ on:
     branches: ["*"]
 
 jobs:
-  prettier:
+  format:
     runs-on: ubuntu-latest
     defaults:
       run:
