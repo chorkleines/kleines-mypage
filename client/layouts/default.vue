@@ -16,7 +16,12 @@
     <div class="animate-ping h-2 w-2 bg-primary rounded-full"></div>
   </div>
   <div class="bg-base-100 drawer lg:drawer-open">
-    <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+    <input
+      id="my-drawer-3"
+      type="checkbox"
+      class="drawer-toggle"
+      v-model="drawer"
+    />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
       <div class="navbar bg-base-200 shadow justify-between">
@@ -53,12 +58,14 @@
       <label for="my-drawer-3" class="drawer-overlay"></label>
       <ul class="menu p-0 w-80 h-full bg-base-200">
         <li>
-          <a
+          <NuxtLink
             aria-current="page"
-            href="/"
+            to="/"
             class="btn btn-ghost normal-case text-xl rounded-none flex content-center"
             style="min-height: 4rem"
-            >Kleines Mypage</a
+            @click="drawer = false"
+          >
+            Kleines Mypage</NuxtLink
           >
         </li>
         <li
@@ -67,9 +74,14 @@
             'border-l-4': route.path === '/',
           }"
         >
-          <a aria-current="page" href="/" class="rounded-none p-4">
+          <NuxtLink
+            aria-current="page"
+            to="/"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
             <font-awesome-icon icon="home" class="me-2" />ホーム
-          </a>
+          </NuxtLink>
         </li>
         <li
           class="border-primary"
@@ -77,10 +89,14 @@
             'border-l-4': route.path === '/users',
           }"
         >
-          <a href="/users" class="rounded-none p-4">
-            <font-awesome-icon icon="users" class="me-2" />
-            団員リスト</a
+          <NuxtLink
+            to="/users"
+            class="rounded-none p-4"
+            @click="drawer = false"
           >
+            <font-awesome-icon icon="users" class="me-2" />
+            団員リスト
+          </NuxtLink>
         </li>
         <li
           class="border-primary"
@@ -88,10 +104,14 @@
             'border-l-4': route.path === '/accountings',
           }"
         >
-          <a href="/accountings" class="rounded-none p-4">
-            <font-awesome-icon icon="wallet" class="me-2" />
-            集金リスト</a
+          <NuxtLink
+            to="/accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
           >
+            <font-awesome-icon icon="wallet" class="me-2" />
+            集金リスト
+          </NuxtLink>
         </li>
       </ul>
     </div>
@@ -104,6 +124,7 @@ const isFullScreenLoading = ref(false);
 const { user, getUser, logout } = useAuth();
 const route = useRoute();
 const router = useRouter();
+const drawer = ref(false);
 await getUser();
 
 const submitLogut = () => {
