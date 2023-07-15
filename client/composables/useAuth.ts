@@ -53,6 +53,10 @@ export const useAuth = () => {
         }
     };
 
+    const getJWT = () => {
+        return jwt.value;
+    };
+
     const deleteJWT = () => {
         jwt.value = null;
     };
@@ -110,6 +114,7 @@ export const useAuth = () => {
         failedLogin,
         loginFailureMessage,
         isLoadingLogin,
+        getJWT,
         deleteJWT,
         jwt,
     };
