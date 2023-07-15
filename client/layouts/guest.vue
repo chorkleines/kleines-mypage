@@ -1,13 +1,11 @@
 <template>
-    <Html data-theme="light">
-
+  <Html data-theme="light">
     <Head>
-        <Title>Kleines Mypage</Title>
+      <Title>Kleines Mypage</Title>
     </Head>
+  </Html>
 
-    </Html>
-
-    <div>
-        <slot />
-    </div>
+  <div>
+    <slot />
+  </div>
 </template>
