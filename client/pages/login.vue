@@ -60,4 +60,9 @@ const submit = async () => {
     await login(data.email, data.password);
     router.push("/");
 };
+
+definePageMeta({
+    layout: "guest",
+    middleware: "auth",
+});
 </script>
