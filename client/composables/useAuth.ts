@@ -13,18 +13,8 @@ export type User = {
     updatedAt: string;
 };
 
-export type BearerToken = {
-    accessToken: string;
-    expiresIn: number;
-    tokenType: string;
-};
-
 export const useUser = () => {
     return useState<User | null>("user", () => null);
-};
-
-export const useBearerToken = () => {
-    return useState<User | null>("bearerToken", () => null);
 };
 
 export const useAuth = () => {
@@ -33,6 +23,7 @@ export const useAuth = () => {
     const failedLogin = ref(false);
     const loginFailureMessage = ref("");
     const isLoadingLogin = ref(false);
+    const jwt = useCookie("jwt");
 
     const setUser = (u: User) => {
         if (u == null) {
@@ -54,11 +45,22 @@ export const useAuth = () => {
         }
     };
 
+    const setJWT = (token) => {
+        if (token == null) {
+            jwt.value = null;
+        } else {
+            jwt.value = token;
+        }
+    };
+
+    const deleteJWT = () => {
+        jwt.value = null;
+    };
+
     async function login(email: string, password: string) {
         if (isLoggedIn.value) return;
         isLoadingLogin.value = true;
-        const jwt = useCookie("jwt");
-        jwt.value = null;
+        deleteJWT();
 
         const { data, status, error } = await useFetch("/api/auth/login", {
             baseURL: "http://localhost:8000",
@@ -79,12 +81,16 @@ export const useAuth = () => {
             return;
         }
 
-        jwt.value = data.value.access_token;
+        setJWT(data.value.access_token);
         isLoadingLogin.value = false;
     }
 
+    function logout() {
+        deleteJWT();
+        setUser(null);
+    }
+
     async function getUser() {
-        const jwt = useCookie("jwt");
         const { data } = await useFetch("/api/auth/me", {
             baseURL: "http://localhost:8000",
             method: "POST",
@@ -99,9 +105,12 @@ export const useAuth = () => {
         user,
         isLoggedIn,
         login,
+        logout,
         getUser,
         failedLogin,
         loginFailureMessage,
         isLoadingLogin,
+        deleteJWT,
+        jwt,
     };
 };
