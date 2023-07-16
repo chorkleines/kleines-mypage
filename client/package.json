@@ -16,6 +16,10 @@
     "@types/node": "^18",
     "daisyui": "^3.2.1",
     "nuxt": "^3.6.1",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "sass": "^1.63.6"
+  },
+  "dependencies": {
+    "vue-good-table-next": "^0.2.1"
   }
 }
