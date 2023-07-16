@@ -48,10 +48,6 @@ jobs:
         run: composer install -n --prefer-dist
       - name: VCmposer Dump Autoload
         run: composer dump-autoload
-      - name: Install Node Packages
-        run: npm install
-      - name: Build Node Packages
-        run: npm run build
       - name: Generate key
         run: php artisan key:generate
       - name: Create Database
@@ -60,22 +56,6 @@ jobs:
           DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
-  blade-formatter:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-      - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: npm install
-      - name: blade-formatter Version
-        run: ./node_modules/blade-formatter/bin/blade-formatter --version
-      - name: blade-formatter Dry Run
-        run: ./node_modules/blade-formatter/bin/blade-formatter -c ./resources/**/*.blade.php
   php-cs-fixer:
     runs-on: ubuntu-latest
     defaults:
