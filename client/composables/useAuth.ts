@@ -11,6 +11,7 @@ export type User = {
   emailVerifiedAt: string;
   createdAt: string;
   updatedAt: string;
+  displayName: string;
 };
 
 export const useUser = () => {
@@ -42,6 +43,7 @@ export const useAuth = () => {
       user.value.emailVerifiedAt = u.email_verified_at;
       user.value.createdAt = u.created_at;
       user.value.updatedAt = u.updated_at;
+      user.value.displayName = `${u.grade}${u.part} ${u.last_name}${u.first_name}`;
     }
   };
 
