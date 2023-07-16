@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $user->user_id,
                 'price' => random_int(1000, 10000),
                 'list_id' => $individual_accounting_list->list_id,
+                'datetime' => date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time())),
             ]);
         }
 

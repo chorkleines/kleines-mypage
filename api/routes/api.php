@@ -3,8 +3,8 @@
 use App\Http\Controllers\AccountingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IndividualAccountingsController;
 use App\Http\Controllers\UsersController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
@@ -36,4 +36,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'accountings'], function () {
     Route::get('/', [AccountingsController::class, 'getAccountings']);
     Route::get('/{id}', [AccountingsController::class, 'getAccounting'])->where('id', '[0-9]+');
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'individual_accountings'], function () {
+    Route::get('/', [IndividualAccountingsController::class, 'getIndividualAccountings']);
 });

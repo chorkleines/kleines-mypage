@@ -109,8 +109,23 @@
             class="rounded-none p-4"
             @click="drawer = false"
           >
-            <font-awesome-icon icon="wallet" class="me-2" />
+            <font-awesome-icon icon="yen-sign" class="me-2" />
             集金リスト
+          </NuxtLink>
+        </li>
+        <li
+          class="border-primary"
+          :class="{
+            'border-l-4': route.path === '/individual_accountings',
+          }"
+        >
+          <NuxtLink
+            to="/individual_accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="wallet" class="me-2" />
+            個別会計
           </NuxtLink>
         </li>
       </ul>
