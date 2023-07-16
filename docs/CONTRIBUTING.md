@@ -9,38 +9,47 @@
 
 ### Command Line 入門
 
--   [Command Line | Progate](https://prog-8.com/courses/commandline)
+- [Command Line | Progate](https://prog-8.com/courses/commandline)
 
 ### Git 入門
 
--   [サル先生の Git 入門 | Backlog](https://backlog.com/ja/git-tutorial/)
--   [Git | Progate](https://prog-8.com/courses/git)
+- [サル先生の Git 入門 | Backlog](https://backlog.com/ja/git-tutorial/)
+- [Git | Progate](https://prog-8.com/courses/git)
 
 ### GitHub 入門
 
--   [GitHub の概要 - Learn | Microsoft Docs](https://docs.microsoft.com/ja-jp/training/modules/introduction-to-github/)
--   [Introduction to GitHub | GitHub Skills](https://github.com/skills/introduction-to-github)
+- [GitHub の概要 - Learn | Microsoft Docs](https://docs.microsoft.com/ja-jp/training/modules/introduction-to-github/)
+- [Introduction to GitHub | GitHub Skills](https://github.com/skills/introduction-to-github)
 
 ### HTML / CSS 入門
 
--   [HTML & CSS | Progate](https://prog-8.com/courses/html)
+- [HTML & CSS | Progate](https://prog-8.com/courses/html)
 
 ### PHP 入門
 
--   [PHP | Progate](https://prog-8.com/courses/php)
+- [PHP | Progate](https://prog-8.com/courses/php)
 
 ### MySQL 入門
 
--   [MySQL の開発環境を用意しよう (mac) | Progate](https://prog-8.com/docs/mysql-env)
--   [MySQL の開発環境を用意しよう (Windows) | Progate](https://prog-8.com/docs/mysql-env-win)
--   [MySQL でデータベースを作成しよう | Progate](https://prog-8.com/docs/mysql-database-setup)
--   [MySQL 入門 | Qiita](https://qiita.com/okamuuu/items/c4efb7dc606d9efe4282)
+- [MySQL の開発環境を用意しよう (mac) | Progate](https://prog-8.com/docs/mysql-env)
+- [MySQL の開発環境を用意しよう (Windows) | Progate](https://prog-8.com/docs/mysql-env-win)
+- [MySQL でデータベースを作成しよう | Progate](https://prog-8.com/docs/mysql-database-setup)
+- [MySQL 入門 | Qiita](https://qiita.com/okamuuu/items/c4efb7dc606d9efe4282)
 
 [MAMP](https://www.mamp.info/en/mamp) を使うと楽に環境構築ができます。
 
 ### Laravel 入門
 
--   [Laravel 入門 | Qiita](https://qiita.com/sano1202/items/6021856b70e4f8d3dc3d)
+- [Laravel 入門 | Qiita](https://qiita.com/sano1202/items/6021856b70e4f8d3dc3d)
+
+### Vue.js 入門
+
+- [Vue.js チュートリアル](https://ja.vuejs.org/tutorial/#step-1)
+
+### Nuxt.js 入門
+
+- [Get Started with Nuxt](https://nuxt.com/docs/getting-started/introduction)
+- [Nuxt 3を使いこなすために基礎から徹底解説](https://reffect.co.jp/vue/nuxt3/)
 
 ## 開発環境構築
 
@@ -62,25 +71,32 @@ git clone git@github.com:<your-user-name>/kleines-mypage.git
 git remote add upstream git@github.com:chorkleines/kleines-mypage.git
 ```
 
-### PHP のインストール
+### API (Laravel)
+
+API は Laravel で書かれています。
+ソースコードは `api/` ディレクトリにあるので移動しましょう。
+
+```sh
+cd api
+```
+
+#### PHP のインストール
 
 PHP8 (>=8.0.21) をインストールしてください。
 
-### 依存ライブラリのインストール
+#### 依存ライブラリのインストール
 
 ```sh
 composer install
 composer install --working-dir=./tools/php-cs-fixer
-npm install
-npm run build
 ```
 
-### データベース作成
+#### データベース作成
 
 MySQL データベースを作成してください。
 データベース名は `kleines_mypage` とします。（任意の名前に変更可能です）
 
-### .env ファイルの変更
+#### .env ファイルの変更
 
 `.env` ファイルを作成してください。
 
@@ -105,7 +121,7 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-### Laravel のセットアップ
+#### Laravel のセットアップ
 
 アプリケーションキーを生成して下さい。
 
@@ -136,10 +152,33 @@ php artisan db:seed
 > Email: admin@chorkleines.com  
 > Password: password
 
-サーバーを立ち上げてログインして下さい。
+サーバーを立ち上げてみましょう。
 
 ```sh
 php artisan serve
+```
+
+続いて、クライアント側のサーバーを起動してログインできるか確認してみます。
+
+### クライアント (Nuxt.js)
+
+クライアントは Nuxt.js で書かれています。
+ソースコードは `client/` ディレクトリにあるので移動しましょう。
+
+```sh
+cd ../client
+```
+
+#### 依存ライブラリのインストール
+
+```sh
+npm install
+```
+
+#### サーバーの起動
+
+```sh
+npm run dev
 ```
 
 無事ログインができたら開発環境構築は完了です！
