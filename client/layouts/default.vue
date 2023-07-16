@@ -101,7 +101,7 @@
         <li
           class="border-primary"
           :class="{
-            'border-l-4': route.path === '/accountings',
+            'border-l-4': route.path.startsWith('/accountings'),
           }"
         >
           <NuxtLink
