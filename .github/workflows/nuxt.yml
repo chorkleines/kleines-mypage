@@ -1,0 +1,41 @@
+name: Nuxt.js 
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Project
+        run: npm run build
+  prettier:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm install
+      - name: prettier Version
+        run: ./node_modules/prettier/bin/prettier.cjs --version
+      - name: prettier Dry Run (ts)
+        run: ./node_modules/prettier/bin/prettier.cjs --check **/*.ts
+      - name: prettier Dry Run (vue)
+        run: ./node_modules/prettier/bin/prettier.cjs --check **/*.vue
