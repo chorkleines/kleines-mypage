@@ -15,14 +15,14 @@
     <div class="animate-ping h-2 w-2 bg-primary rounded-full mx-4"></div>
     <div class="animate-ping h-2 w-2 bg-primary rounded-full"></div>
   </div>
-  <div class="bg-base-100 drawer lg:drawer-open">
+  <div class="bg-base-100 drawer lg:drawer-open w-screen h-screen">
     <input
       id="my-drawer-3"
       type="checkbox"
       class="drawer-toggle"
       v-model="drawer"
     />
-    <div class="drawer-content flex flex-col">
+    <div class="drawer-content flex flex-col w-screen">
       <!-- Navbar -->
       <div class="navbar bg-base-200 shadow justify-between">
         <div class="flex-none">
