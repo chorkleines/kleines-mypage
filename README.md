@@ -4,9 +4,7 @@
     <p align="center">An internal system developed for <a href="https://chorkleines.com" target="_blank">Chor Kleines</a>.</p>
     <p align="center">
         <img src="https://github.com/chorkleines/kleines-mypage/actions/workflows/laravel.yml/badge.svg?branch=main" alt="Laravel CI"></img>
-        <img src="https://github.com/chorkleines/kleines-mypage/actions/workflows/php-cs-fixer.yml/badge.svg?branch=main" alt="PHP-CS-Fixer CI"></img>
         <img src="https://github.com/chorkleines/kleines-mypage/actions/workflows/nuxt.yml/badge.svg?branch=main" alt="Nuxt CI"></img>
-        <img src="https://github.com/chorkleines/kleines-mypage/actions/workflows/prettier.yml/badge.svg?branch=main" alt="Prettier CI"></img>
         <a href="https://github.com/chorkleines/kleines-mypage/blob/master/LICENSE">
             <img src="https://img.shields.io/github/license/chorkleines/kleines-mypage" alt="License"></img>
         </a>
