@@ -22,7 +22,7 @@
       class="drawer-toggle"
       v-model="drawer"
     />
-    <div class="drawer-content flex flex-col w-screen lg:w-auto">
+    <div class="drawer-content flex flex-col w-screen lg:w-auto h-screen">
       <!-- Navbar -->
       <div class="navbar bg-base-200 shadow justify-between">
         <div class="flex-none">
