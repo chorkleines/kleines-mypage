@@ -50,6 +50,8 @@ jobs:
         run: composer dump-autoload
       - name: Generate key
         run: php artisan key:generate
+      - name: Generate JWT secret
+        run: php artisan jwt:secret
       - name: Create Database
         run: php artisan migrate
         env:
