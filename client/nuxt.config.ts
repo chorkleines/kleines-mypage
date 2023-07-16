@@ -8,8 +8,15 @@ export default defineNuxtConfig({
   ssr: false,
   modules: ["@nuxtjs/tailwindcss"],
   css: [
+    "@/assets/styles/app.scss",
     "@fortawesome/fontawesome-svg-core/styles.css",
     "@/assets/styles/vue-good-table.scss",
   ],
   plugins: ["@/plugins/fontawesome.ts"],
+  buildModules: ["@nuxt/google-fonts"],
+  googleFonts: {
+    families: {
+      NotoSansJP: [400, 800],
+    },
+  },
 });

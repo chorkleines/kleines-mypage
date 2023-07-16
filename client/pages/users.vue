@@ -1,6 +1,6 @@
 <template>
   <div class="prose">
-    <div class="text-xs breadcrumbs pt-0">
+    <div class="text-xs breadcrumbs pt-0 not-prose">
       <ul class="m-0 p-0">
         <li>
           <NuxtLink to="/">ホーム</NuxtLink>
