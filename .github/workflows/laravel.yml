@@ -52,8 +52,10 @@ jobs:
         run: php artisan key:generate
       - name: Generate JWT secret
         run: php artisan jwt:secret
-      - name: Create Database
-        run: php artisan migrate
+      - name: Initialize Database
+        run: |
+          php artisan migrate
+          php artisan db:seed
         env:
           DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
