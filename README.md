@@ -10,8 +10,9 @@
         </a>
     </p>
     <br>
-    <div align="center" style="display: flex; align-items: center; justify-content: center;">
+    <div align="center">
     <img width="150px" src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" alt="Laravel Logo"></img>
+    <br>
     <img width="100px" height="24.6px" src="https://nuxt.com/assets/design-kit/logo/full-logo-green-dark.png" alt="Nuxt.js Logo"></img>
     </div>
 </p>
