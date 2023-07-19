@@ -36,16 +36,11 @@ const createAccounting = (a) => {
 };
 
 export const useAccountings = () => {
-  const { getJWT } = useAuth();
   const accountings = ref([]);
 
   async function getAccountings() {
-    const { data } = await useFetch("/api/accountings", {
-      baseURL: "http://localhost:8000",
+    const { data } = await useApiFetch("/api/accountings", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getJWT()}`,
-      },
     });
     data.value.forEach((a) => {
       const accounting = createAccounting(a);

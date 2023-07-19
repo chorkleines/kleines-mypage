@@ -60,7 +60,6 @@ const createPayment = (p) => {
 };
 
 export const useAccounting = () => {
-  const { getJWT } = useAuth();
   const accounting = ref({
     id: null,
     accountingId: null,
@@ -74,12 +73,8 @@ export const useAccounting = () => {
   const payments = ref([]);
 
   async function getAccounting(id: number) {
-    const { data } = await useFetch(`/api/accountings/${id}`, {
-      baseURL: "http://localhost:8000",
+    const { data } = await useApiFetch(`/api/accountings/${id}`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getJWT()}`,
-      },
     });
 
     accounting.value = createAccounting(data.value.accounting);

@@ -24,7 +24,6 @@ export const useAuth = () => {
   const failedLogin = ref(false);
   const loginFailureMessage = ref("");
   const isLoadingLogin = ref(false);
-  const jwt = useCookie("jwt");
 
   const setUser = (u: User) => {
     if (u == null) {
@@ -47,34 +46,17 @@ export const useAuth = () => {
     }
   };
 
-  const setJWT = (token) => {
-    if (token == null) {
-      jwt.value = null;
-    } else {
-      jwt.value = token;
-    }
-  };
-
-  const getJWT = () => {
-    return jwt.value;
-  };
-
-  const deleteJWT = () => {
-    jwt.value = null;
-  };
-
   async function login(email: string, password: string) {
     if (isLoggedIn.value) return;
     isLoadingLogin.value = true;
-    deleteJWT();
+    await getCsrfToken();
 
-    const { data, status, error } = await useFetch("/api/auth/login", {
-      baseURL: "http://localhost:8000",
+    const { data, status, error } = await useApiFetch("/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-
     console.log(error);
+
     if (status.value === "error") {
       failedLogin.value = true;
       if (error.value?.statusCode === 401) {
@@ -87,24 +69,27 @@ export const useAuth = () => {
       return;
     }
 
-    setJWT(data.value.access_token);
     isLoadingLogin.value = false;
   }
 
   function logout() {
-    deleteJWT();
     setUser(null);
   }
 
   async function getUser() {
-    const { data } = await useFetch("/api/auth/me", {
-      baseURL: "http://localhost:8000",
+    const { data } = await useApiFetch("/api/auth/me", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${jwt.value}`,
-      },
     });
     setUser(data.value);
+  }
+
+  async function getCsrfToken() {
+    await useFetch("/sanctum/csrf-cookie", {
+      baseURL: "http://localhost:8000",
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+    });
   }
 
   return {
@@ -116,8 +101,5 @@ export const useAuth = () => {
     failedLogin,
     loginFailureMessage,
     isLoadingLogin,
-    getJWT,
-    deleteJWT,
-    jwt,
   };
 };
