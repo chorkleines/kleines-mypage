@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth'], function () {
-    Route::post('me', [AuthController::class, 'me']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('me', [AuthController::class, 'me']);
+    Route::get('auth', [AuthController::class, 'auth'])->withoutMiddleware('auth:sanctum');
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'home'], function () {
