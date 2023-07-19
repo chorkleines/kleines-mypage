@@ -25,16 +25,11 @@ const createIndividualAccounting = (a) => {
 };
 
 export const useIndividualAccountings = () => {
-  const { getJWT } = useAuth();
   const individualAccountings = ref([]);
 
   async function getIndividualAccountings() {
-    const { data } = await useFetch("/api/individual_accountings", {
-      baseURL: "http://localhost:8000",
+    const { data } = await useApiFetch("/api/individual_accountings", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getJWT()}`,
-      },
     });
     data.value.forEach((a) => {
       const individualAccounting = createIndividualAccounting(a);

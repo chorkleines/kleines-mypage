@@ -30,16 +30,11 @@ const createUser = (u) => {
 };
 
 export const useUsers = () => {
-  const { getJWT } = useAuth();
   const users = ref([]);
 
   async function getUsers() {
-    const { data } = await useFetch("/api/users", {
-      baseURL: "http://localhost:8000",
+    const { data } = await useApiFetch("/api/users", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getJWT()}`,
-      },
     });
     data.value.forEach((u) => {
       const user = createUser(u);
