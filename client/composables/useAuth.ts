@@ -51,11 +51,10 @@ export const useAuth = () => {
     isLoadingLogin.value = true;
     await getCsrfToken();
 
-    const { data, status, error } = await useApiFetch("/login", {
+    const { status, error } = await useApiFetch("/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-    console.log(error);
 
     if (status.value === "error") {
       failedLogin.value = true;
@@ -72,13 +71,18 @@ export const useAuth = () => {
     isLoadingLogin.value = false;
   }
 
-  function logout() {
+  async function logout() {
+    await useApiFetch("/logout", {
+      method: "POST",
+    });
+    const xsrfToken = useCookie("XSRF-TOKEN");
+    xsrfToken.value = null;
     setUser(null);
   }
 
   async function getUser() {
-    const { data } = await useApiFetch("/api/auth/me", {
-      method: "POST",
+    const { data } = await useApiFetch("/api/me", {
+      method: "GET",
     });
     setUser(data.value);
   }
