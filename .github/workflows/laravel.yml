@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ "*" ]
 
-permissions:
-  issues: read|write
+permissions: write-all
 
 jobs:
   php-unit:
