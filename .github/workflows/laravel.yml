@@ -138,8 +138,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const params = {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: 'chorkleines',
+              repo: 'kleines-mypage',
               issue_number: context.issue.number,
               body: '${{ steps.coverage.outputs.message }}'
             }
