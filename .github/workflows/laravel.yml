@@ -134,12 +134,13 @@ jobs:
           echo "$EOF" >> $GITHUB_OUTPUT
       - name: Create comment
         uses: actions/github-script@v6
+        env:
+          MESSAGE: ${{ steps.coverage.outputs.message }}
         with: 
           script: |
-            const params = {
+            github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '${{ steps.coverage.outputs.message }}'
-            }
-            await github.rest.issues.createComment(params)
+              body: process.env.MESSAGE
+            })
