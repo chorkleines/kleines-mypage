@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "*" ]
 
+permissions:
+  issues: read|write
+
 jobs:
   php-unit:
     runs-on: ubuntu-latest
