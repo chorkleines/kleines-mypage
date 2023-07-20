@@ -128,8 +128,9 @@ jobs:
         id: coverage
         run: |
           php artisan test --coverage | tee coverage.txt
-          echo "message=# Coverage" >> $GITHUB_OUTPUT
-          cat coverage.txt >> $GITHUB_OUTPUT
+          echo "message<<$EOF" >> $GITHUB_OUTPUT
+          echo "# Coverage\n\n$(cat coverage.txt)" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
       - name: Create comment
         uses: actions/github-script@v6
         with: 
