@@ -128,6 +128,7 @@ jobs:
         id: coverage
         run: |
           php artisan test --coverage | tee coverage.txt
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "message<<$EOF" >> $GITHUB_OUTPUT
           echo "# Coverage\n\n$(cat coverage.txt)" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
