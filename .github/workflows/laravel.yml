@@ -32,7 +32,6 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
-          extension-csv: xdebug
       - uses: actions/checkout@v3
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -59,8 +58,6 @@ jobs:
           DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
-      - name: Calculate coverage
-        run: php artisan test --coverage
   php-cs-fixer:
     runs-on: ubuntu-latest
     defaults:
@@ -77,3 +74,71 @@ jobs:
         run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --version
       - name: PHP-CS-Fixer Dry Run
         run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run
+  coverage:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testdatabase
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: testdatabase
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extension-csv: xdebug
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Cache Vendor
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Composer Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: composer install -n --prefer-dist
+      - name: VCmposer Dump Autoload
+        run: composer dump-autoload
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Initialize Database
+        run: |
+          php artisan migrate
+          php artisan db:seed
+        env:
+          DB_HOST: 127.0.0.1
+      - name: Calculate coverage
+        id: coverage
+        run: |
+          php artisan test --coverage | tee coverage.txt
+          echo "message=# Coverage" >> $GITHUB_OUTPUT
+          cat coverage.txt >> $GITHUB_OUTPUT
+      - name: Create comment
+        uses: actions/github-script@v6
+        with: 
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: '${{ steps.coverage.outputs.message }}'
+            }
+            await github.rest.issues.createComment(params)
