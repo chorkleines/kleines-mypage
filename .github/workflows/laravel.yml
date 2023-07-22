@@ -152,7 +152,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             })
-            const comment = comments.data.filter(c => c.body.startsWith("# Coverage") )
+            const comment = comments.data.find(c => c.body.startsWith("# Coverage") )
             console.log(comment)
             if (comment === null || comment === undefined) {
               await github.rest.issues.createComment({
@@ -165,7 +165,6 @@ jobs:
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.issue.number,
                 body: process.env.MESSAGE,
                 comment_id: comment.id
               })
