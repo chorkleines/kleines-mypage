@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [ "*" ]
 
+permissions:
+  issues:  write
+  id-token: write
+  contents: read
+  pull_reqests: write
+  actions: read
+
 jobs:
   php-unit:
     runs-on: ubuntu-latest
@@ -95,7 +102,6 @@ jobs:
       DB_DATABASE: testdatabase
       DB_USERNAME: root
       DB_PASSWORD: password
-    permissions: write-all
     steps:
       - uses: shivammathur/setup-php@v2
         with:
