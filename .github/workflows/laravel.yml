@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "*" ]
 
-permissions:
-  pull-requests: write
-  issues: write
-
 jobs:
   php-unit:
     runs-on: ubuntu-latest
@@ -99,6 +95,7 @@ jobs:
       DB_DATABASE: testdatabase
       DB_USERNAME: root
       DB_PASSWORD: password
+    permissions: write-all
     steps:
       - uses: shivammathur/setup-php@v2
         with:
@@ -141,7 +138,7 @@ jobs:
         env:
           MESSAGE: ${{ steps.coverage.outputs.message }}
         with: 
-          github-token: ${{ secrets.NYAMA39_PAT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.rest.issues.createComment({
               owner: context.repo.owner,
