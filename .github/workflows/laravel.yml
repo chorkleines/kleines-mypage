@@ -152,7 +152,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             })
-            const issue = issues.filter((issue) => {
+            const issue = issues.data.filter((issue) => {
               issue.body.startsWith("# Coverage") 
             })
             if (issue === null || issue === undefined) {
