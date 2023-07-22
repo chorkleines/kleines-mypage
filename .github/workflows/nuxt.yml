@@ -1,10 +1,8 @@
-name: Nuxt.js 
+name: Nuxt.js
 
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
-    branches: [ "*" ]
+    branches: ["*"]
 
 jobs:
   build:
