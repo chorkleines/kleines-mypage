@@ -126,7 +126,7 @@ jobs:
         run: |
           php artisan test --coverage | tee coverage.txt
       - name: Format comment
-        id: format_commment
+        id: coverage
         run: |
           touch message.txt
           echo "# Coverage" > message.txt
@@ -143,7 +143,7 @@ jobs:
       - name: Create comment
         uses: actions/github-script@v6
         env:
-          MESSAGE: ${{ steps.format_comment.outputs.message }}
+          MESSAGE: ${{ steps.coverage.outputs.message }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
