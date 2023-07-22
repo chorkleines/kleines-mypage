@@ -6,13 +6,6 @@ on:
   pull_request:
     branches: [ "*" ]
 
-permissions:
-  issues:  write
-  id-token: write
-  contents: read
-  pull-requests: write
-  actions: read
-
 jobs:
   php-unit:
     runs-on: ubuntu-latest
@@ -83,6 +76,9 @@ jobs:
         run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run
   coverage:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     defaults:
       run:
         working-directory: ./api
