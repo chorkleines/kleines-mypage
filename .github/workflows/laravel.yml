@@ -130,11 +130,17 @@ jobs:
         run: |
           touch message.txt
           echo "# Coverage" > message.txt
+          cat message.txt
           echo "\`\`\`" >> message.txt
+          cat message.txt
           cat coverage.txt | grep -E "\/.+\.+\s\d+\.\d\s%" >> message.txt
+          cat message.txt
           echo "" >> message.txt
+          cat message.txt
           cat coverage.txt | grep -E "Total Coverage\s\.+\s\d+\.\d\s%" >> message.txt
+          cat message.txt
           echo "\`\`\`" >> message.txt
+          cat message.txt
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "message<<$EOF" >> $GITHUB_OUTPUT
           cat message.txt >> $GITHUB_OUTPUT
