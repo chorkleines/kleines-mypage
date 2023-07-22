@@ -133,7 +133,7 @@ jobs:
           echo "\`\`\`" >> message.txt
           cat coverage.txt | sed -n -E "/\/.+\.+ [0-9]+\.[0-9] %/p" >> message.txt
           echo "" >> message.txt
-          cat coverage.txt | sed -n -E "Total Coverage \.+ [0-9]+\.[0-9] %/p" >> message.txt
+          cat coverage.txt | sed -n -E "/Total Coverage \.+ [0-9]+\.[0-9] %/p" >> message.txt
           echo "\`\`\`" >> message.txt
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "message<<$EOF" >> $GITHUB_OUTPUT
