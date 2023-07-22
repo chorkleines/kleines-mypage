@@ -1,10 +1,8 @@
 name: Laravel
 
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
-    branches: [ "*" ]
+    branches: ["*"]
 
 jobs:
   php-unit:
@@ -31,7 +29,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: "8.0"
       - uses: actions/checkout@v3
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -58,6 +56,52 @@ jobs:
           DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
+      - name: Calculate coverage
+        run: |
+          php artisan test --coverage | tee coverage.txt
+      - name: Format comment
+        id: coverage
+        run: |
+          touch message.txt
+          echo "# Coverage" > message.txt
+          echo "\`\`\`" >> message.txt
+          cat coverage.txt | sed -n -E "/\/.+\.+ [0-9]+\.[0-9] %/p" >> message.txt
+          echo "" >> message.txt
+          cat coverage.txt | sed -n -E "/Total Coverage \.+ [0-9]+\.[0-9] %/p" >> message.txt
+          echo "\`\`\`" >> message.txt
+          cat message.txt
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "message<<$EOF" >> $GITHUB_OUTPUT
+          echo "$(cat message.txt)" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+      - name: Create comment
+        uses: actions/github-script@v6
+        env:
+          MESSAGE: ${{ steps.coverage.outputs.message }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const comment = comments.data.find(c => c.body.startsWith("# Coverage") )
+            if (comment === null || comment === undefined) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: process.env.MESSAGE
+              })
+            } else {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: process.env.MESSAGE,
+                comment_id: comment.id
+              })
+            }
   php-cs-fixer:
     runs-on: ubuntu-latest
     defaults:
@@ -66,7 +110,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: "8.0"
       - uses: actions/checkout@v3
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --prefer-dist --working-dir=tools/php-cs-fixer
