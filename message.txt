@@ -1,0 +1,63 @@
+# Coverage
+```
+Actions/Fortify/CreateNewUser ........................................ 0.0 %
+Actions/Fortify/PasswordValidationRules .............................. 0.0 %
+Actions/Fortify/ResetUserPassword .................................... 0.0 %
+Actions/Fortify/UpdateUserPassword ................................... 0.0 %
+Actions/Fortify/UpdateUserProfileInformation ......................... 0.0 %
+Console/Kernel 19 ................................................... 66.7 %
+Enums/AccountingType .............................................. 100.0 %
+Enums/BulletinBoardStatus ............................................ 0.0 %
+Enums/Part ........................................................... 0.0 %
+Enums/PaymentMethod .................................................. 0.0 %
+Enums/Role ........................................................... 0.0 %
+Enums/UserStatus ..................................................... 0.0 %
+Exceptions/Handler ................................................ 100.0 %
+Helpers/Helper ....................................................... 0.0 %
+Http/Controllers/AccountingsController ............................... 0.0 %
+Http/Controllers/Auth/ConfirmPasswordController ...................... 0.0 %
+Http/Controllers/Auth/ForgotPasswordController .................... 100.0 %
+Http/Controllers/Auth/LoginController ................................ 0.0 %
+Http/Controllers/Auth/RegisterController ............................. 0.0 %
+Http/Controllers/Auth/ResetPasswordController ..................... 100.0 %
+Http/Controllers/Auth/VerificationController ......................... 0.0 %
+Http/Controllers/AuthController ...................................... 0.0 %
+Http/Controllers/Controller ....................................... 100.0 %
+Http/Controllers/HomeController ...................................... 0.0 %
+Http/Controllers/IndividualAccountingsController ..................... 0.0 %
+Http/Controllers/UsersController ..................................... 0.0 %
+Http/Kernel ....................................................... 100.0 %
+Http/Middleware/Authenticate ......................................... 0.0 %
+Http/Middleware/AuthenticateAccountant ............................... 0.0 %
+Http/Middleware/AuthenticateCamp ..................................... 0.0 %
+Http/Middleware/AuthenticateManager .................................. 0.0 %
+Http/Middleware/AuthenticateMaster ................................... 0.0 %
+Http/Middleware/EncryptCookies .................................... 100.0 %
+Http/Middleware/PreventRequestsDuringMaintenance .................. 100.0 %
+Http/Middleware/RedirectIfAuthenticated 25..26 ...................... 66.7 %
+Http/Middleware/TrimStrings ....................................... 100.0 %
+Http/Middleware/TrustHosts ........................................... 0.0 %
+Http/Middleware/TrustProxies ...................................... 100.0 %
+Http/Middleware/ValidateSignature ................................. 100.0 %
+Http/Middleware/VerifyCsrfToken ................................... 100.0 %
+Models/AccountingList ................................................ 0.0 %
+Models/AccountingPayment ............................................. 0.0 %
+Models/AccountingRecord .............................................. 0.0 %
+Models/Admin ......................................................... 0.0 %
+Models/BulletinBoard ................................................. 0.0 %
+Models/BulletinBoardContent ....................................... 100.0 %
+Models/BulletinBoardHashtag ....................................... 100.0 %
+Models/BulletinBoardView .......................................... 100.0 %
+Models/IndividualAccountingList ...................................... 0.0 %
+Models/IndividualAccountingRecord .................................... 0.0 %
+Models/Profile ....................................................... 0.0 %
+Models/User .......................................................... 0.0 %
+Providers/AppServiceProvider ...................................... 100.0 %
+Providers/AuthServiceProvider ..................................... 100.0 %
+Providers/BroadcastServiceProvider ................................... 0.0 %
+Providers/EventServiceProvider .................................... 100.0 %
+Providers/FortifyServiceProvider ..................................... 0.0 %
+Providers/RouteServiceProvider 49 ................................... 90.9 %
+
+Total Coverage ....................................................... 8.2 %
+```
