@@ -147,14 +147,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issues = await github.rest.issues.listComments({
+            const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
             })
-            const issue = issues.data.filter((issue) => {
-              issue.body.startsWith("# Coverage") 
+            const comment = comments.data.filter((comment) => {
+              comment.body.startsWith("# Coverage") 
             })
+            console.log(comment)
             if (issue === null || issue === undefined) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -168,6 +169,6 @@ jobs:
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
                 body: process.env.MESSAGE,
-                comment_id: issue.id
+                comment_id: comment.id
               })
             }
