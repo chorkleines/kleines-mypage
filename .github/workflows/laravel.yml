@@ -128,7 +128,7 @@ jobs:
           php artisan test --coverage | tee coverage.txt
       - name: Format comment
         run: |
-          echo "# Coverage" >> message.txt
+          echo "# Coverage" > message.txt
           echo "\`\`\`" >> message.txt
           cat coverage.txt | grep -E "\/.+\.+\s\d+\.\d\s%" >> message.txt
           echo "" >> message.txt
