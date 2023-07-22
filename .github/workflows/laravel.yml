@@ -152,10 +152,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             })
-            const comment = comments.data.filter((comment) => {
-              comment.body.startsWith("# Coverage") 
-            })
-            console.log(comment)
+            const comment = comments.data.filter(c => c.body.startsWith("# Coverage") )
             if (issue === null || issue === undefined) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
