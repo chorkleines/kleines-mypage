@@ -39,12 +39,6 @@ jobs:
         run: composer dump-autoload
       - name: Generate key
         run: php artisan key:generate
-      - name: Initialize Database
-        run: |
-          php artisan migrate
-          php artisan db:seed
-        env:
-          DB_HOST: 127.0.0.1
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
       - name: Calculate coverage
