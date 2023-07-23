@@ -6,14 +6,14 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    public function test_me_without_authenticated_user()
+    public function test_get_user_info_using_unauthenticated_user()
     {
         $response = $this->get('/api/me');
 
         $response->assertStatus(401);
     }
 
-    public function test_auth_without_authenticated_user()
+    public function test_check_if_authenticated_using_unauthenticated_user()
     {
         $response = $this->get('/api/auth');
 
