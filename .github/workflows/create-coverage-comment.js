@@ -2,10 +2,10 @@ function format_coverage_message(coverageOutput) {
     const outputLines = coverageOutput.split("\n");
 
     const coverageLines = outputLines.filter((value) =>
-        value.match(/\/.+\s\.+\s\d+\.\d%/),
+        value.match(/\/.+\s\.+\s\d+\.\d\s%/),
     );
     const totalCoverageLine = outputLines.find((value) =>
-        value.match(/Total\sCoverage\s\.+\s\d+\.\d%/),
+        value.match(/Total\sCoverage\s\.+\s\d+\.\d\s%/),
     );
 
     var output = "#Coverage\n\n";
