@@ -12,7 +12,7 @@ function format_coverage_message(coverageOutput) {
     output += "<details>\n";
     output += "<summary>Coverage for all files</summary>\n\n";
     output += "| Path | Percentage |\n";
-    output += "| ---- | ---------- |\n";
+    output += "| ---- | ---------: |\n";
     for (const coverageLine of coverageLines) {
         const coverageContents = coverageLine.split(" ");
         const path = coverageContents[2];
@@ -24,7 +24,7 @@ function format_coverage_message(coverageOutput) {
     const totalCoverageContents = totalCoverageLine.split(" ");
     const totalPercentage = totalCoverageContents.slice(-2).join(" ");
     output += "|                | Percentage |\n";
-    output += "| -------------- | ---------- |\n";
+    output += "| -------------- | ---------: |\n";
     output += `| Total Coverage | ${totalPercentage} |\n`;
 
     return output;
