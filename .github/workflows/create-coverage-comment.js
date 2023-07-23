@@ -15,14 +15,15 @@ function format_coverage_message(coverageOutput) {
     output += "| ---- | ---------- |\n";
     for (const coverageLine of coverageLines) {
         const coverageContents = coverageLine.split(" ");
-        const path = coverageContents[1];
-        const percentage = coverageContents.slice(-3, -1).join(" ");
+        console.log(coverageContents);
+        const path = coverageContents[0];
+        const percentage = coverageContents.slice(-2).join(" ");
         output += `| ${path} | ${percentage} |\n`;
     }
     output += "</details>\n\n";
 
     const totalCoverageContents = totalCoverageLine.split(" ");
-    const totalPercentage = totalCoverageContents.slice(-3, -1).join(" ");
+    const totalPercentage = totalCoverageContents.slice(-2).join(" ");
     output += "|                | Percentage |\n";
     output += "| -------------- | ---------- |\n";
     output += `| Total Coverage | ${totalPercentage} |\n`;
