@@ -57,51 +57,22 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
       - name: Calculate coverage
-        run: |
-          php artisan test --coverage | tee coverage.txt
-      - name: Format comment
         id: coverage
         run: |
-          touch message.txt
-          echo "# Coverage" > message.txt
-          echo "\`\`\`" >> message.txt
-          cat coverage.txt | sed -n -E "/\/.+\.+ [0-9]+\.[0-9] %/p" >> message.txt
-          echo "" >> message.txt
-          cat coverage.txt | sed -n -E "/Total Coverage \.+ [0-9]+\.[0-9] %/p" >> message.txt
-          echo "\`\`\`" >> message.txt
-          cat message.txt
+          php artisan test --coverage | tee coverage.txt
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "message<<$EOF" >> $GITHUB_OUTPUT
-          echo "$(cat message.txt)" >> $GITHUB_OUTPUT
+          echo "coverage<<$EOF" >> $GITHUB_OUTPUT
+          echo "$(cat coverage.txt)" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
       - name: Create comment
         uses: actions/github-script@v6
         env:
-          MESSAGE: ${{ steps.coverage.outputs.message }}
+          COVERAGE: ${{ steps.coverage.outputs.coverage }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const comments = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            })
-            const comment = comments.data.find(c => c.body.startsWith("# Coverage") )
-            if (comment === null || comment === undefined) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: process.env.MESSAGE
-              })
-            } else {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: process.env.MESSAGE,
-                comment_id: comment.id
-              })
-            }
+            const script = require('./.github/workflows/create-coverage-comment.js')
+            script({github, context})
   php-cs-fixer:
     runs-on: ubuntu-latest
     defaults:
