@@ -15,8 +15,7 @@ function format_coverage_message(coverageOutput) {
     output += "| ---- | ---------- |\n";
     for (const coverageLine of coverageLines) {
         const coverageContents = coverageLine.split(" ");
-        console.log(coverageContents);
-        const path = coverageContents[0];
+        const path = coverageContents[2];
         const percentage = coverageContents.slice(-2).join(" ");
         output += `| ${path} | ${percentage} |\n`;
     }
