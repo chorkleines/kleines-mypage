@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -53,6 +53,7 @@ class Handler extends ExceptionHandler
                 if ($e instanceof AuthenticationException) {
                     $title = __('Unauthorized');
                     $detail = __('Unauthorized');
+
                     return response()->json([
                         'title' => $title,
                         'status' => 401,
@@ -68,7 +69,7 @@ class Handler extends ExceptionHandler
                     switch ($httpEx->getStatusCode()) {
                         case 401:
                             $title = __('Unauthorized');
-                            $detail =  __('Unauthorized');
+                            $detail = __('Unauthorized');
                             break;
                         case 403:
                             $title = __('Forbidden');
@@ -114,7 +115,7 @@ class Handler extends ExceptionHandler
                     'file' => $e->getFile(),
                     'line' => $e->getLine(),
                     'trace_str' => $e->getTraceAsString(),
-                    'trace' => $e->getTrace()
+                    'trace' => $e->getTrace(),
                 ] : __('Server Error');
 
                 return response()->json([
