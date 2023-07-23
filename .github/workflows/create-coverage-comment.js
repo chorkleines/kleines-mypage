@@ -1,10 +1,12 @@
 function format_coverage_message(coverageOutput) {
     const outputLines = coverageOutput.split("\n");
 
-    const coverageLines = outputLines.match(/\/.+\s\.+\s\d+\.\d%/);
-    const totalCoverageLine = outputLines.match(
-        /Total\sCoverage\s\.+\s\d+\.\d%/,
-    )[0];
+    const coverageLines = outputLines.filter((value) =>
+        value.match(/\/.+\s\.+\s\d+\.\d%/),
+    );
+    const totalCoverageLine = outputLines.find((value) =>
+        value.match(/Total\sCoverage\s\.+\s\d+\.\d%/),
+    );
 
     var output = "#Coverage\n\n";
     output += "| Path | Percentage |\n";
