@@ -9,8 +9,8 @@ function format_coverage_message(coverageOutput) {
     );
 
     var output = "# Coverage\n\n";
-    var output = "<details>\n";
-    var output = "<summary>Coverage for all files</summary>\n\n";
+    output += "<details>\n";
+    output += "<summary>Coverage for all files</summary>\n\n";
     output += "| Path | Percentage |\n";
     output += "| ---- | ---------- |\n";
     for (const coverageLine of coverageLines) {
