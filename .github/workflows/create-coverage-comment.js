@@ -9,6 +9,15 @@ function format_coverage_message(coverageOutput) {
     );
 
     var output = "# Coverage\n\n";
+
+    const totalCoverageContents = totalCoverageLine.split(" ");
+    const totalPercentage = totalCoverageContents.slice(-2).join(" ");
+    output += "|                | Percentage |\n";
+    output += "| -------------- | ---------: |\n";
+    output += `| Total Coverage | ${totalPercentage} |\n`;
+
+    output += "\n\n";
+
     output += "<details>\n";
     output += "<summary>Coverage for all files</summary>\n\n";
     output += "| Path | Percentage |\n";
@@ -19,13 +28,7 @@ function format_coverage_message(coverageOutput) {
         const percentage = coverageContents.slice(-2).join(" ");
         output += `| ${path} | ${percentage} |\n`;
     }
-    output += "</details>\n\n";
-
-    const totalCoverageContents = totalCoverageLine.split(" ");
-    const totalPercentage = totalCoverageContents.slice(-2).join(" ");
-    output += "|                | Percentage |\n";
-    output += "| -------------- | ---------: |\n";
-    output += `| Total Coverage | ${totalPercentage} |\n`;
+    output += "</details>";
 
     return output;
 }
