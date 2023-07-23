@@ -49,6 +49,12 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\Profile::factory()->create([
             'user_id' => $user->user_id,
+            'last_name' => '山田',
+            'first_name' => '太郎',
+            'name_kana' => 'ヤマダタロウ',
+            'grade' => '18',
+            'part' => Part::TENOR,
+            'birthday' => '2000-01-01',
         ]);
         \App\Models\Admin::create([
             'user_id' => $user->user_id,

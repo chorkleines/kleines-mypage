@@ -26,7 +26,7 @@ class Profile extends Model
         'user_id' => 'int',
         'grade' => 'int',
         'part' => Part::class,
-        'birthday' => 'date',
+        'birthday' => 'date:Y-m-d',
     ];
 
     protected $primaryKey = 'user_id';
