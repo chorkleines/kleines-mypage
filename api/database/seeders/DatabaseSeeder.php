@@ -149,6 +149,7 @@ class DatabaseSeeder extends Seeder
                         'user_id' => $user->user_id,
                         'price' => $paid_individual,
                         'accounting_payment_id' => $payment->id,
+                        'datetime' => $datetime,
                     ]);
                 }
             }
