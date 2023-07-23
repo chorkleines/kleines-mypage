@@ -14,6 +14,22 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    public function createAdminUser($role)
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'admin_'.strtolower($role).'@chorkleines.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => UserStatus::PRESENT,
+        ]);
+        \App\Models\Profile::factory()->create([
+            'user_id' => $user->user_id,
+        ]);
+        \App\Models\Admin::create([
+            'user_id' => $user->user_id,
+            'role' => $role,
+        ]);
+    }
+
     /**
      * Seed the application's database.
      *
@@ -40,6 +56,10 @@ class DatabaseSeeder extends Seeder
         ]);
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
+
+        $this->createAdminUser(Role::MANAGER);
+        $this->createAdminUser(Role::ACCOUNTANT);
+        $this->createAdminUser(Role::CAMP);
 
         // create random users
         \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();

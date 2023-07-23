@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\Part;
 use App\Enums\UserStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -29,6 +30,12 @@ class AuthTest extends TestCase
         $response->assertJson([
             'email' => 'admin@chorkleines.com',
             'status' => UserStatus::PRESENT,
+            'last_name' => '山田',
+            'first_name' => '太郎',
+            'name_kana' => 'ヤマダタロウ',
+            'grade' => 18,
+            'part' => Part::TENOR,
+            'birthday' => '2000-01-01',
         ]);
     }
 
