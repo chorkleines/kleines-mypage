@@ -1,5 +1,29 @@
-function format_coverage_message(coverage) {
-    return `# Coverage\n\n${coverage}`;
+function format_coverage_message(coverageOutput) {
+    const outputLines = coverageOutput.split("\n");
+
+    const coverageLines = outputLines.match(/\/.+\s\.+\s\d+\.\d%/);
+    const totalCoverageLine = outputLines.match(
+        /Total\sCoverage\s\.+\s\d+\.\d%/,
+    )[0];
+
+    var output = "#Coverage\n\n";
+    output += "| Path | Percentage |\n";
+    output += "| ---- | ---------- |\n";
+    for (const coverageLine of coverageLines) {
+        const coverageContents = coverageLine.split(" ");
+        const path = coverageContents[0];
+        const percentage = coverageContents[-1];
+        output += `| ${path} | ${percentage} |\n`;
+    }
+    output += "\n\n";
+
+    const totalCoverageContents = totalCoverageLine.split(" ");
+    const totalPercentage = totalCoverageContents[-1];
+    output += "|                | Percentage |\n";
+    output += "| -------------- | ---------- |\n";
+    output += `| Total Coverage | ${totalPercentage} |\n`;
+
+    return output;
 }
 
 module.exports = async ({ github, context }) => {
