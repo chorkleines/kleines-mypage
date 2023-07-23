@@ -8,19 +8,21 @@ function format_coverage_message(coverageOutput) {
         value.match(/Total\sCoverage\s\.+\s\d+\.\d\s%/),
     );
 
-    var output = "#Coverage\n\n";
+    var output = "# Coverage\n\n";
+    var output = "<details>\n";
+    var output = "<summary>Coverage for all files</summary>\n\n";
     output += "| Path | Percentage |\n";
     output += "| ---- | ---------- |\n";
     for (const coverageLine of coverageLines) {
         const coverageContents = coverageLine.split(" ");
-        const path = coverageContents[0];
-        const percentage = coverageContents[-1];
+        const path = coverageContents[1];
+        const percentage = coverageContents.slice(-3, -1).join(" ");
         output += `| ${path} | ${percentage} |\n`;
     }
-    output += "\n\n";
+    output += "</details>\n\n";
 
     const totalCoverageContents = totalCoverageLine.split(" ");
-    const totalPercentage = totalCoverageContents[-1];
+    const totalPercentage = totalCoverageContents.slice(-3, -1).join(" ");
     output += "|                | Percentage |\n";
     output += "| -------------- | ---------- |\n";
     output += `| Total Coverage | ${totalPercentage} |\n`;
