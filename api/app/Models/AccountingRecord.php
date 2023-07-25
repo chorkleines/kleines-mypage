@@ -35,7 +35,8 @@ class AccountingRecord extends Model
         'paid_cash',
         'datetime',
         'is_paid',
-        'accounting_list'
+        'accounting_list',
+        'accounting_payments',
     ];
 
     protected $primaryKey = 'id';
@@ -43,5 +44,10 @@ class AccountingRecord extends Model
     public function accounting_list()
     {
         return $this->belongsTo(AccountingList::class, 'accounting_id');
+    }
+
+    public function accounting_payments()
+    {
+        return $this->hasMany(AccountingPayment::class, 'accounting_record_id');
     }
 }
