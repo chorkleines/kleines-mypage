@@ -32,8 +32,6 @@ class AccountingTest extends TestCase
             'accounting_id' => $accounting_list->accounting_id,
             'user_id' => $user_id,
             'price' => 12000,
-            'datetime' => '2022-06-01 12:34:56',
-            'is_paid' => false,
         ]);
 
         $response = $this->get('/api/accountings');
@@ -45,7 +43,7 @@ class AccountingTest extends TestCase
                 'user_id' => $user_id,
                 'price' => 12000,
                 'is_paid' => false,
-                'datetime' => '2022-06-01 12:34:56',
+                'datetime' => null,
                 'accounting_list' => [
                     'accounting_id' => $accounting_list->accounting_id,
                     'name' => '2022年度団費集金',
@@ -77,8 +75,6 @@ class AccountingTest extends TestCase
             'accounting_id' => $accounting_list->accounting_id,
             'user_id' => $user_id,
             'price' => 12000,
-            'datetime' => '2022-06-01 12:34:56',
-            'is_paid' => false,
         ]);
 
         $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
@@ -89,7 +85,7 @@ class AccountingTest extends TestCase
             'user_id' => $user_id,
             'price' => 12000,
             'is_paid' => false,
-            'datetime' => '2022-06-01 12:34:56',
+            'datetime' => null,
             'accounting_list' => [
                 'accounting_id' => $accounting_list->accounting_id,
                 'name' => '2022年度団費集金',
