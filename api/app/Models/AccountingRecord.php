@@ -15,6 +15,7 @@ class AccountingRecord extends Model
         'price',
         'paid_cash',
         'datetime',
+        'is_paid',
     ];
 
     protected $casts = [
@@ -23,6 +24,7 @@ class AccountingRecord extends Model
         'price' => 'int',
         'paid_cash' => 'int',
         'datetime' => 'datetime:Y-m-d H:i:s',
+        'is_paid' => 'boolean',
     ];
 
     protected $primaryKey = 'id';
