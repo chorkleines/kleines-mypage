@@ -27,6 +27,17 @@ class AccountingRecord extends Model
         'is_paid' => 'boolean',
     ];
 
+    protected $visible = [
+        'id',
+        'accounting_id',
+        'user_id',
+        'price',
+        'paid_cash',
+        'datetime',
+        'is_paid',
+        'accounting_list'
+    ];
+
     protected $primaryKey = 'id';
 
     public function accounting_list()

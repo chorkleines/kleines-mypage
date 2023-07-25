@@ -21,6 +21,13 @@ class AccountingList extends Model
         'admin' => AccountingType::class,
     ];
 
+    protected $visible = [
+        'accounting_id',
+        'name',
+        'deadline',
+        'admin',
+    ];
+
     protected $primaryKey = 'accounting_id';
 
     public function accounting_records()
