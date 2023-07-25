@@ -27,7 +27,7 @@ class AccountingRecord extends Model
 
     protected $primaryKey = 'id';
 
-    public function accouting_list()
+    public function accounting_list()
     {
         return $this->belongsTo(AccountingList::class, 'accounting_id');
     }
