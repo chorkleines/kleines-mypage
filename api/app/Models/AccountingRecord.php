@@ -22,7 +22,7 @@ class AccountingRecord extends Model
         'user_id' => 'int',
         'price' => 'int',
         'paid_cash' => 'int',
-        'datetime' => 'datetime',
+        'datetime' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $primaryKey = 'id';
