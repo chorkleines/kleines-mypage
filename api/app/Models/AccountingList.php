@@ -17,7 +17,7 @@ class AccountingList extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'date',
+        'deadline' => 'date:Y-m-d',
         'admin' => AccountingType::class,
     ];
 
