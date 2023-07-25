@@ -73,7 +73,7 @@ class IndividualAccountingTest extends TestCase
         $accounting_list = \App\Models\AccountingList::create(
             [
                 'name' => '2022年度団費集金',
-                'deadline' => new DateTime('2022-06-31 12:34:56'),
+                'deadline' => new DateTime('2022-06-30 12:34:56'),
                 'admin' => AccountingType::GENERAL,
             ]
         );
