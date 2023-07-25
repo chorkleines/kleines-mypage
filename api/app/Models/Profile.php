@@ -31,6 +31,16 @@ class Profile extends Model
 
     protected $primaryKey = 'user_id';
 
+    protected $visible = [
+        'user_id',
+        'last_name',
+        'first_name',
+        'name_kana',
+        'grade',
+        'part',
+        'birthday',
+    ];
+
     public $sortable = ['name_kana', 'grade', 'part'];
 
     private $partOrderRaw = 'CASE WHEN profiles.part LIKE "S" THEN 1 WHEN profiles.part LIKE "A" THEN 2 WHEN profiles.part LIKE "T" THEN 3 WHEN profiles.part LIKE "B" THEN 4 END';

@@ -57,6 +57,16 @@ class User extends Authenticatable
      */
     protected $primaryKey = 'user_id';
 
+    protected $visible = [
+        'user_id',
+        'email',
+        'status',
+        'profile',
+        'admin',
+        'accounting_records',
+        'individual_accounting_records',
+    ];
+
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id');
@@ -72,7 +82,7 @@ class User extends Authenticatable
         return $this->admin->role->value === $value;
     }
 
-    public function accountingRecords()
+    public function accounting_records()
     {
         return $this->hasMany(AccountingRecord::class, 'user_id');
     }
@@ -82,7 +92,7 @@ class User extends Authenticatable
         return Helper::formatPrice($this->accountingRecords->where('datetime', null)->sum('price'));
     }
 
-    public function individualAccountingRecords()
+    public function individual_accounting_records()
     {
         return $this->hasMany(IndividualAccountingRecord::class, 'user_id');
     }

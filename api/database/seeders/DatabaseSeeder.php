@@ -122,7 +122,7 @@ class DatabaseSeeder extends Seeder
                     continue;
                 }
 
-                $paid_individual = min($price, $user->individualAccountingRecords->sum('price'));
+                $paid_individual = min($price, $user->individual_accounting_records->sum('price'));
                 $paid_cash = $price - $paid_individual;
                 $datetime = date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time()));
                 $accounting_record = \App\Models\AccountingRecord::create([

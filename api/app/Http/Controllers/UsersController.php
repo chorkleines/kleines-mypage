@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStatus;
-use App\Models\Profile;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class UsersController extends Controller
 {
@@ -21,10 +19,13 @@ class UsersController extends Controller
 
     public function getUsers()
     {
-        $users = DB::table('users')->join('profiles', 'users.user_id', '=', 'profiles.user_id')
-            ->select('users.user_id', 'users.status', 'profiles.first_name', 'profiles.last_name', 'profiles.grade', 'profiles.part', 'profiles.name_kana')
-            ->where('users.status', '!=', UserStatus::RESIGNED)
-            ->get();
+        $users = User::with('profile')
+            ->where('status', '!=', UserStatus::RESIGNED)
+            ->get()
+            ->makeHidden(['email'])
+            ->each(function ($user) {
+                $user->profile->makeHidden(['birthday', 'user_id']);
+            });
 
         return response()->json($users);
     }
