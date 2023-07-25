@@ -15,7 +15,14 @@ class IndividualAccountingList extends Model
     ];
 
     protected $casts = [
-        'datetime' => 'datetime',
+        'datetime' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    protected $visible = [
+        'list_id',
+        'name',
+        'datetime',
+        'individual_accounting_records',
     ];
 
     protected $primaryKey = 'list_id';

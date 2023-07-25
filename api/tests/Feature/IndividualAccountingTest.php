@@ -27,7 +27,7 @@ class IndividualAccountingTest extends TestCase
                 'datetime' => new DateTime('2019-12-31 12:34:56'),
             ]
         );
-        $individual_accounting_record = \App\Models\IndividualAccountingRecord::create([
+        \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
             'price' => 8790,
             'list_id' => $individual_accounting_list->list_id,
@@ -38,11 +38,17 @@ class IndividualAccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonFragment([
             [
-                'price' => 8790,
-                'name' => '2019年度引き継ぎ',
+                'accounting_payment' => null,
+                'accounting_payment_id' => null,
                 'datetime' => '2019-12-31 13:20:32',
-                'created_at' => date('Y-m-d H:i:s', strtotime($individual_accounting_record->created_at)),
-                'updated_at' => date('Y-m-d H:i:s', strtotime($individual_accounting_record->updated_at)),
+                'individual_accounting_list' => [
+                    'datetime' => '2019-12-31 12:34:56',
+                    'list_id' => $individual_accounting_list->list_id,
+                    'name' => '2019年度引き継ぎ',
+                ],
+                'price' => 8790,
+                'list_id' => $individual_accounting_list->list_id,
+                'user_id' => $user_id,
             ],
         ]);
     }
@@ -65,7 +71,7 @@ class IndividualAccountingTest extends TestCase
 
         \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
-            'price' => 12000,
+            'price' => 10000,
             'list_id' => $individual_accounting_list->list_id,
             'datetime' => '2019-12-31 13:20:32',
         ]);
@@ -83,6 +89,7 @@ class IndividualAccountingTest extends TestCase
             'user_id' => $user_id,
             'price' => 12000,
             'datetime' => '2022-06-01 12:34:56',
+            'is_paid' => true,
         ]);
 
         \App\Models\AccountingPayment::create([
@@ -96,7 +103,7 @@ class IndividualAccountingTest extends TestCase
             'price' => 2000,
             'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
         ]);
-        $individual_accounting_record = \App\Models\IndividualAccountingRecord::create([
+        \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
             'price' => 2000,
             'accounting_payment_id' => $payment->id,
@@ -107,12 +114,32 @@ class IndividualAccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonFragment([
             [
-                'accounting_id' => $accounting_list->accounting_id,
-                'price' => 2000,
-                'name' => '2022年度団費集金',
+                'accounting_payment' => [
+                    'accounting_record_id' => $accounting_record->id,
+                    'accounting_record' => [
+                        'accounting_id' => $accounting_list->accounting_id,
+                        'accounting_list' => [
+                            'accounting_id' => $accounting_list->accounting_id,
+                            'admin' => AccountingType::GENERAL,
+                            'deadline' => '2022-06-30',
+                            'name' => '2022年度団費集金',
+                        ],
+                        'datetime' => '2022-06-01 12:34:56',
+                        'id' => $accounting_record->id,
+                        'is_paid' => true,
+                        'price' => 12000,
+                        'user_id' => $user_id,
+                    ],
+                    'id' => $payment->id,
+                    'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
+                    'price' => 2000,
+                ],
+                'accounting_payment_id' => $payment->id,
                 'datetime' => '2022-06-01 12:34:56',
-                'created_at' => date('Y-m-d H:i:s', strtotime($individual_accounting_record->created_at)),
-                'updated_at' => date('Y-m-d H:i:s', strtotime($individual_accounting_record->updated_at)),
+                'individual_accounting_list' => null,
+                'list_id' => null,
+                'price' => 2000,
+                'user_id' => $user_id,
             ],
         ]);
     }
