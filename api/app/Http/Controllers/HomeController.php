@@ -21,9 +21,11 @@ class HomeController extends Controller
      */
     public function getPaymentInfo()
     {
-        $arrears = auth()->user()->accountingRecords->where('is_paid', false)->sum('price');
-        $balance = auth()->user()->individualAccountingRecords->sum('price');
+        $payment_info = [
+            'arrears' => auth()->user()->getArrears(),
+            'balance' => auth()->user()->getBalance(),
+        ];
 
-        return response()->json(['arrears' => $arrears, 'balance' => $balance]);
+        return response()->json($payment_info);
     }
 }
