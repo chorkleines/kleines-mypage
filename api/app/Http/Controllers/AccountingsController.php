@@ -18,7 +18,9 @@ class AccountingsController extends Controller
 
     public function getAccountings()
     {
-        $accountings = AccountingRecord::with('accounting_list')->where('user_id', auth()->user()->user_id)->get();
+        $accountings = AccountingRecord::with('accounting_list')
+            ->where('user_id', auth()->user()->user_id)
+            ->get();
 
         return response()->json($accountings);
     }
