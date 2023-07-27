@@ -39,7 +39,6 @@ class IndividualAccountingTest extends TestCase
         $response->assertJsonFragment([
             [
                 'accounting_payment' => null,
-                'accounting_payment_id' => null,
                 'datetime' => '2019-12-31 13:20:32',
                 'individual_accounting_list' => [
                     'datetime' => '2019-12-31 12:34:56',
@@ -47,8 +46,6 @@ class IndividualAccountingTest extends TestCase
                     'name' => '2019年度引き継ぎ',
                 ],
                 'price' => 8790,
-                'list_id' => $individual_accounting_list->list_id,
-                'user_id' => $user_id,
             ],
         ]);
     }
@@ -115,9 +112,7 @@ class IndividualAccountingTest extends TestCase
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [
-                    'accounting_record_id' => $accounting_record->id,
                     'accounting_record' => [
-                        'accounting_id' => $accounting_list->accounting_id,
                         'accounting_list' => [
                             'accounting_id' => $accounting_list->accounting_id,
                             'admin' => AccountingType::GENERAL,
@@ -128,18 +123,14 @@ class IndividualAccountingTest extends TestCase
                         'id' => $accounting_record->id,
                         'is_paid' => true,
                         'price' => 12000,
-                        'user_id' => $user_id,
                     ],
                     'id' => $payment->id,
                     'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                     'price' => 2000,
                 ],
-                'accounting_payment_id' => $payment->id,
                 'datetime' => '2022-06-01 12:34:56',
                 'individual_accounting_list' => null,
-                'list_id' => null,
                 'price' => 2000,
-                'user_id' => $user_id,
             ],
         ]);
     }

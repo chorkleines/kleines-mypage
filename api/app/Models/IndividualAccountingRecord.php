@@ -27,9 +27,6 @@ class IndividualAccountingRecord extends Model
     ];
 
     protected $visible = [
-        'user_id',
-        'accounting_payment_id',
-        'list_id',
         'datetime',
         'price',
         'individual_accounting_list',

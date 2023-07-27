@@ -40,8 +40,6 @@ class AccountingTest extends TestCase
         $response->assertJsonFragment([
             [
                 'id' => $accounting_record->id,
-                'accounting_id' => $accounting_list->accounting_id,
-                'user_id' => $user_id,
                 'price' => 12000,
                 'is_paid' => false,
                 'datetime' => null,
@@ -82,8 +80,6 @@ class AccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id' => $accounting_record->id,
-            'accounting_id' => $accounting_list->accounting_id,
-            'user_id' => $user_id,
             'price' => 12000,
             'is_paid' => false,
             'datetime' => null,
@@ -132,8 +128,6 @@ class AccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id' => $accounting_record->id,
-            'accounting_id' => $accounting_list->accounting_id,
-            'user_id' => $user_id,
             'price' => 12000,
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
@@ -145,7 +139,6 @@ class AccountingTest extends TestCase
             ],
             'accounting_payments' => [[
                 'id' => $accounting_payment->id,
-                'accounting_record_id' => $accounting_record->id,
                 'price' => 12000,
                 'method' => PaymentMethod::CASH,
             ]],
@@ -194,8 +187,6 @@ class AccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id' => $accounting_record->id,
-            'accounting_id' => $accounting_list->accounting_id,
-            'user_id' => $user_id,
             'price' => 12000,
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
@@ -207,7 +198,6 @@ class AccountingTest extends TestCase
             ],
             'accounting_payments' => [[
                 'id' => $accounting_payment->id,
-                'accounting_record_id' => $accounting_record->id,
                 'price' => 12000,
                 'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
             ]],
@@ -218,9 +208,7 @@ class AccountingTest extends TestCase
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [
-                    'accounting_record_id' => $accounting_record->id,
                     'accounting_record' => [
-                        'accounting_id' => $accounting_list->accounting_id,
                         'accounting_list' => [
                             'accounting_id' => $accounting_list->accounting_id,
                             'admin' => AccountingType::GENERAL,
@@ -231,18 +219,14 @@ class AccountingTest extends TestCase
                         'id' => $accounting_record->id,
                         'is_paid' => true,
                         'price' => 12000,
-                        'user_id' => $user_id,
                     ],
                     'id' => $accounting_payment->id,
                     'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                     'price' => 12000,
                 ],
-                'accounting_payment_id' => $accounting_payment->id,
                 'datetime' => '2022-06-01 12:34:56',
                 'individual_accounting_list' => null,
-                'list_id' => null,
                 'price' => 12000,
-                'user_id' => $user_id,
             ],
         ]);
     }
@@ -295,8 +279,6 @@ class AccountingTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id' => $accounting_record->id,
-            'accounting_id' => $accounting_list->accounting_id,
-            'user_id' => $user_id,
             'price' => 12000,
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
@@ -309,13 +291,11 @@ class AccountingTest extends TestCase
             'accounting_payments' => [
                 [
                     'id' => $accounting_payment_cash->id,
-                    'accounting_record_id' => $accounting_record->id,
                     'price' => 10000,
                     'method' => PaymentMethod::CASH,
                 ],
                 [
                     'id' => $accounting_payment_individual_accounting->id,
-                    'accounting_record_id' => $accounting_record->id,
                     'price' => 2000,
                     'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                 ],
@@ -327,9 +307,7 @@ class AccountingTest extends TestCase
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [
-                    'accounting_record_id' => $accounting_record->id,
                     'accounting_record' => [
-                        'accounting_id' => $accounting_list->accounting_id,
                         'accounting_list' => [
                             'accounting_id' => $accounting_list->accounting_id,
                             'admin' => AccountingType::GENERAL,
@@ -340,18 +318,14 @@ class AccountingTest extends TestCase
                         'id' => $accounting_record->id,
                         'is_paid' => true,
                         'price' => 12000,
-                        'user_id' => $user_id,
                     ],
                     'id' => $accounting_payment_individual_accounting->id,
                     'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                     'price' => 2000,
                 ],
-                'accounting_payment_id' => $accounting_payment_individual_accounting->id,
                 'datetime' => '2022-06-01 12:34:56',
                 'individual_accounting_list' => null,
-                'list_id' => null,
                 'price' => 2000,
-                'user_id' => $user_id,
             ],
         ]);
     }

@@ -29,8 +29,6 @@ class AccountingRecord extends Model
 
     protected $visible = [
         'id',
-        'accounting_id',
-        'user_id',
         'price',
         'paid_cash',
         'datetime',
