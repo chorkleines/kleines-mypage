@@ -27,6 +27,16 @@ class AuthTest extends TestCase
         $response = $this->get('/api/me');
 
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'email',
+            'status',
+            'last_name',
+            'first_name',
+            'name_kana',
+            'grade',
+            'part',
+            'birthday',
+        ]);
         $response->assertJson([
             'email' => 'admin@chorkleines.com',
             'status' => UserStatus::PRESENT,

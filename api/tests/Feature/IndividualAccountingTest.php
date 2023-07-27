@@ -36,6 +36,14 @@ class IndividualAccountingTest extends TestCase
 
         $response = $this->get('/api/individual_accountings');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'accounting_payment',
+                'datetime',
+                'individual_accounting_list',
+                'price',
+            ],
+        ]);
         $response->assertJsonFragment([
             [
                 'accounting_payment' => null,
@@ -109,6 +117,14 @@ class IndividualAccountingTest extends TestCase
 
         $response = $this->get('/api/individual_accountings');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'accounting_payment',
+                'datetime',
+                'individual_accounting_list',
+                'price',
+            ],
+        ]);
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [

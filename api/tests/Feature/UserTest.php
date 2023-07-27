@@ -19,6 +19,19 @@ class UserTest extends TestCase
 
         $response = $this->getJson('/api/users');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'user_id',
+                'status',
+                'profile' => [
+                    'grade',
+                    'part',
+                    'last_name',
+                    'first_name',
+                    'name_kana',
+                ],
+            ],
+        ]);
         $response->assertJsonFragment([
             'user_id' => 1,
             'status' => UserStatus::PRESENT,

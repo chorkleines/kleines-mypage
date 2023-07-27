@@ -37,6 +37,20 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/accountings');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'price',
+                'is_paid',
+                'datetime',
+                'accounting_list' => [
+                    'accounting_id',
+                    'name',
+                    'deadline',
+                    'admin',
+                ],
+            ],
+        ]);
         $response->assertJsonFragment([
             [
                 'id' => $accounting_record->id,
@@ -78,6 +92,25 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'price',
+            'is_paid',
+            'datetime',
+            'accounting_list' => [
+                'accounting_id',
+                'name',
+                'deadline',
+                'admin',
+            ],
+            'accounting_payments' => [
+                '*' => [
+                    'id',
+                    'price',
+                    'method',
+                ],
+            ],
+        ]);
         $response->assertJson([
             'id' => $accounting_record->id,
             'price' => 12000,
@@ -126,6 +159,25 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'price',
+            'is_paid',
+            'datetime',
+            'accounting_list' => [
+                'accounting_id',
+                'name',
+                'deadline',
+                'admin',
+            ],
+            'accounting_payments' => [
+                '*' => [
+                    'id',
+                    'price',
+                    'method',
+                ],
+            ],
+        ]);
         $response->assertJson([
             'id' => $accounting_record->id,
             'price' => 12000,
@@ -185,6 +237,25 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'price',
+            'is_paid',
+            'datetime',
+            'accounting_list' => [
+                'accounting_id',
+                'name',
+                'deadline',
+                'admin',
+            ],
+            'accounting_payments' => [
+                '*' => [
+                    'id',
+                    'price',
+                    'method',
+                ],
+            ],
+        ]);
         $response->assertJson([
             'id' => $accounting_record->id,
             'price' => 12000,
@@ -205,6 +276,14 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/individual_accountings');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'accounting_payment',
+                'datetime',
+                'individual_accounting_list',
+                'price',
+            ],
+        ]);
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [
@@ -277,6 +356,25 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'price',
+            'is_paid',
+            'datetime',
+            'accounting_list' => [
+                'accounting_id',
+                'name',
+                'deadline',
+                'admin',
+            ],
+            'accounting_payments' => [
+                '*' => [
+                    'id',
+                    'price',
+                    'method',
+                ],
+            ],
+        ]);
         $response->assertJson([
             'id' => $accounting_record->id,
             'price' => 12000,
@@ -304,6 +402,14 @@ class AccountingTest extends TestCase
 
         $response = $this->get('/api/individual_accountings');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'accounting_payment',
+                'datetime',
+                'individual_accounting_list',
+                'price',
+            ],
+        ]);
         $response->assertJsonFragment([
             [
                 'accounting_payment' => [
