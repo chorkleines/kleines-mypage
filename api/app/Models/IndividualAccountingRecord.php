@@ -13,7 +13,7 @@ class IndividualAccountingRecord extends Model
     protected $fillable = [
         'user_id',
         'accounting_payment_id',
-        'list_id',
+        'individual_accounting_list_id',
         'datetime',
         'price',
     ];
@@ -21,7 +21,7 @@ class IndividualAccountingRecord extends Model
     protected $casts = [
         'user_id' => 'int',
         'accounting_payment_id' => 'int',
-        'list_id' => 'int',
+        'individual_accounting_list_id' => 'int',
         'datetime' => 'datetime:Y-m-d H:i:s',
         'price' => 'int',
     ];
@@ -39,7 +39,7 @@ class IndividualAccountingRecord extends Model
 
     public function individual_accounting_list()
     {
-        return $this->belongsTo(IndividualAccountingList::class, 'list_id');
+        return $this->belongsTo(IndividualAccountingList::class, 'individual_accounting_list_id');
     }
 
     public function accounting_payment()

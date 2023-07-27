@@ -19,13 +19,13 @@ class IndividualAccountingList extends Model
     ];
 
     protected $visible = [
-        'list_id',
+        'id',
         'name',
         'datetime',
         'individual_accounting_records',
     ];
 
-    protected $primaryKey = 'list_id';
+    protected $primaryKey = 'id';
 
     public function individual_accounting_records()
     {

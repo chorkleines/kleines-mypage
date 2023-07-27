@@ -22,16 +22,16 @@ class AccountingList extends Model
     ];
 
     protected $visible = [
-        'accounting_id',
+        'id',
         'name',
         'deadline',
         'admin',
     ];
 
-    protected $primaryKey = 'accounting_id';
+    protected $primaryKey = 'id';
 
     public function accounting_records()
     {
-        return $this->hasMany(AccountingRecord::class, 'accounting_id');
+        return $this->hasMany(AccountingRecord::class, 'accounting_list_id');
     }
 }

@@ -19,7 +19,7 @@ class IndividualAccountingsController extends Controller
     public function getIndividualAccountings()
     {
         $individual_accountings = IndividualAccountingRecord::with('individual_accounting_list', 'accounting_payment.accounting_record.accounting_list')
-            ->where('user_id', auth()->user()->user_id)
+            ->where('user_id', auth()->user()->id)
             ->get();
 
         return response()->json($individual_accountings);

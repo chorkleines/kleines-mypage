@@ -21,7 +21,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
-                'user_id',
+                'id',
                 'status',
                 'profile' => [
                     'grade',
@@ -33,7 +33,7 @@ class UserTest extends TestCase
             ],
         ]);
         $response->assertJsonFragment([
-            'user_id' => 1,
+            'id' => 1,
             'status' => UserStatus::PRESENT,
             'profile' => [
                 'grade' => 18,

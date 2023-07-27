@@ -10,7 +10,7 @@ class AccountingRecord extends Model
     use HasFactory;
 
     protected $fillable = [
-        'accounting_id',
+        'accounting_list_id',
         'user_id',
         'price',
         'paid_cash',
@@ -19,7 +19,7 @@ class AccountingRecord extends Model
     ];
 
     protected $casts = [
-        'accounting_id' => 'int',
+        'accounting_list_id' => 'int',
         'user_id' => 'int',
         'price' => 'int',
         'paid_cash' => 'int',
@@ -41,7 +41,7 @@ class AccountingRecord extends Model
 
     public function accounting_list()
     {
-        return $this->belongsTo(AccountingList::class, 'accounting_id');
+        return $this->belongsTo(AccountingList::class, 'accounting_list_id');
     }
 
     public function accounting_payments()

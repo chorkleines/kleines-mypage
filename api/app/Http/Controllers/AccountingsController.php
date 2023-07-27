@@ -19,7 +19,7 @@ class AccountingsController extends Controller
     public function getAccountings()
     {
         $accountings = AccountingRecord::with('accounting_list')
-            ->where('user_id', auth()->user()->user_id)
+            ->where('user_id', auth()->user()->id)
             ->get();
 
         return response()->json($accountings);
@@ -28,8 +28,8 @@ class AccountingsController extends Controller
     public function getAccounting($id)
     {
         $accounting = AccountingRecord::with(['accounting_list', 'accounting_payments'])
-            ->where('user_id', auth()->user()->user_id)
-            ->where('accounting_id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->where('accounting_list_id', $id)
             ->first();
 
         return response()->json($accounting);

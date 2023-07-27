@@ -52,10 +52,10 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
 
     protected $visible = [
-        'user_id',
+        'id',
         'email',
         'status',
         'profile',

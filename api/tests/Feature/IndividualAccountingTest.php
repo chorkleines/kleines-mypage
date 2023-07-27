@@ -19,7 +19,7 @@ class IndividualAccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $individual_accounting_list = \App\Models\IndividualAccountingList::create(
             [
@@ -30,7 +30,7 @@ class IndividualAccountingTest extends TestCase
         \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
             'price' => 8790,
-            'list_id' => $individual_accounting_list->list_id,
+            'individual_accounting_list_id' => $individual_accounting_list->id,
             'datetime' => '2019-12-31 13:20:32',
         ]);
 
@@ -50,7 +50,7 @@ class IndividualAccountingTest extends TestCase
                 'datetime' => '2019-12-31 13:20:32',
                 'individual_accounting_list' => [
                     'datetime' => '2019-12-31 12:34:56',
-                    'list_id' => $individual_accounting_list->list_id,
+                    'id' => $individual_accounting_list->id,
                     'name' => '2019年度引き継ぎ',
                 ],
                 'price' => 8790,
@@ -65,7 +65,7 @@ class IndividualAccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $individual_accounting_list = \App\Models\IndividualAccountingList::create(
             [
@@ -77,7 +77,7 @@ class IndividualAccountingTest extends TestCase
         \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
             'price' => 10000,
-            'list_id' => $individual_accounting_list->list_id,
+            'individual_accounting_list_id' => $individual_accounting_list->id,
             'datetime' => '2019-12-31 13:20:32',
         ]);
 
@@ -90,7 +90,7 @@ class IndividualAccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
             'datetime' => '2022-06-01 12:34:56',
@@ -103,7 +103,7 @@ class IndividualAccountingTest extends TestCase
             'method' => PaymentMethod::CASH,
         ]);
 
-        $payment = \App\Models\AccountingPayment::create([
+        $accounting_payment = \App\Models\AccountingPayment::create([
             'accounting_record_id' => $accounting_record->id,
             'price' => 2000,
             'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
@@ -111,7 +111,7 @@ class IndividualAccountingTest extends TestCase
         \App\Models\IndividualAccountingRecord::create([
             'user_id' => $user_id,
             'price' => 2000,
-            'accounting_payment_id' => $payment->id,
+            'accounting_payment_id' => $accounting_payment->id,
             'datetime' => '2022-06-01 12:34:56',
         ]);
 
@@ -130,7 +130,7 @@ class IndividualAccountingTest extends TestCase
                 'accounting_payment' => [
                     'accounting_record' => [
                         'accounting_list' => [
-                            'accounting_id' => $accounting_list->accounting_id,
+                            'id' => $accounting_list->id,
                             'admin' => AccountingType::GENERAL,
                             'deadline' => '2022-06-30',
                             'name' => '2022年度団費集金',
@@ -140,7 +140,7 @@ class IndividualAccountingTest extends TestCase
                         'is_paid' => true,
                         'price' => 12000,
                     ],
-                    'id' => $payment->id,
+                    'id' => $accounting_payment->id,
                     'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                     'price' => 2000,
                 ],

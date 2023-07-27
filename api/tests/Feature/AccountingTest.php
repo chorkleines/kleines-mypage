@@ -19,7 +19,7 @@ class AccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $accounting_list = \App\Models\AccountingList::create(
             [
@@ -30,7 +30,7 @@ class AccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
         ]);
@@ -44,7 +44,7 @@ class AccountingTest extends TestCase
                 'is_paid',
                 'datetime',
                 'accounting_list' => [
-                    'accounting_id',
+                    'id',
                     'name',
                     'deadline',
                     'admin',
@@ -58,7 +58,7 @@ class AccountingTest extends TestCase
                 'is_paid' => false,
                 'datetime' => null,
                 'accounting_list' => [
-                    'accounting_id' => $accounting_list->accounting_id,
+                    'id' => $accounting_list->id,
                     'name' => '2022年度団費集金',
                     'deadline' => '2022-06-30',
                     'admin' => AccountingType::GENERAL,
@@ -74,7 +74,7 @@ class AccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $accounting_list = \App\Models\AccountingList::create(
             [
@@ -85,12 +85,12 @@ class AccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
         ]);
 
-        $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
+        $response = $this->get('/api/accountings/'.$accounting_list->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',
@@ -98,7 +98,7 @@ class AccountingTest extends TestCase
             'is_paid',
             'datetime',
             'accounting_list' => [
-                'accounting_id',
+                'id',
                 'name',
                 'deadline',
                 'admin',
@@ -117,7 +117,7 @@ class AccountingTest extends TestCase
             'is_paid' => false,
             'datetime' => null,
             'accounting_list' => [
-                'accounting_id' => $accounting_list->accounting_id,
+                'id' => $accounting_list->id,
                 'name' => '2022年度団費集金',
                 'deadline' => '2022-06-30',
                 'admin' => AccountingType::GENERAL,
@@ -133,7 +133,7 @@ class AccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $accounting_list = \App\Models\AccountingList::create(
             [
@@ -144,7 +144,7 @@ class AccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
             'datetime' => '2022-06-01 12:34:56',
@@ -157,7 +157,7 @@ class AccountingTest extends TestCase
             'method' => PaymentMethod::CASH,
         ]);
 
-        $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
+        $response = $this->get('/api/accountings/'.$accounting_list->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',
@@ -165,7 +165,7 @@ class AccountingTest extends TestCase
             'is_paid',
             'datetime',
             'accounting_list' => [
-                'accounting_id',
+                'id',
                 'name',
                 'deadline',
                 'admin',
@@ -184,7 +184,7 @@ class AccountingTest extends TestCase
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
             'accounting_list' => [
-                'accounting_id' => $accounting_list->accounting_id,
+                'id' => $accounting_list->id,
                 'name' => '2022年度団費集金',
                 'deadline' => '2022-06-30',
                 'admin' => AccountingType::GENERAL,
@@ -204,7 +204,7 @@ class AccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $accounting_list = \App\Models\AccountingList::create(
             [
@@ -215,7 +215,7 @@ class AccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
             'datetime' => '2022-06-01 12:34:56',
@@ -235,7 +235,7 @@ class AccountingTest extends TestCase
             'datetime' => '2022-06-01 12:34:56',
         ]);
 
-        $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
+        $response = $this->get('/api/accountings/'.$accounting_list->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',
@@ -243,7 +243,7 @@ class AccountingTest extends TestCase
             'is_paid',
             'datetime',
             'accounting_list' => [
-                'accounting_id',
+                'id',
                 'name',
                 'deadline',
                 'admin',
@@ -262,7 +262,7 @@ class AccountingTest extends TestCase
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
             'accounting_list' => [
-                'accounting_id' => $accounting_list->accounting_id,
+                'id' => $accounting_list->id,
                 'name' => '2022年度団費集金',
                 'deadline' => '2022-06-30',
                 'admin' => AccountingType::GENERAL,
@@ -289,7 +289,7 @@ class AccountingTest extends TestCase
                 'accounting_payment' => [
                     'accounting_record' => [
                         'accounting_list' => [
-                            'accounting_id' => $accounting_list->accounting_id,
+                            'id' => $accounting_list->id,
                             'admin' => AccountingType::GENERAL,
                             'deadline' => '2022-06-30',
                             'name' => '2022年度団費集金',
@@ -317,7 +317,7 @@ class AccountingTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/api/me');
-        $user_id = $response->json()['user_id'];
+        $user_id = $response->json()['id'];
 
         $accounting_list = \App\Models\AccountingList::create(
             [
@@ -328,7 +328,7 @@ class AccountingTest extends TestCase
         );
 
         $accounting_record = \App\Models\AccountingRecord::create([
-            'accounting_id' => $accounting_list->accounting_id,
+            'accounting_list_id' => $accounting_list->id,
             'user_id' => $user_id,
             'price' => 12000,
             'datetime' => '2022-06-01 12:34:56',
@@ -354,7 +354,7 @@ class AccountingTest extends TestCase
             'datetime' => '2022-06-01 12:34:56',
         ]);
 
-        $response = $this->get('/api/accountings/'.$accounting_list->accounting_id);
+        $response = $this->get('/api/accountings/'.$accounting_list->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',
@@ -362,7 +362,7 @@ class AccountingTest extends TestCase
             'is_paid',
             'datetime',
             'accounting_list' => [
-                'accounting_id',
+                'id',
                 'name',
                 'deadline',
                 'admin',
@@ -381,7 +381,7 @@ class AccountingTest extends TestCase
             'is_paid' => true,
             'datetime' => '2022-06-01 12:34:56',
             'accounting_list' => [
-                'accounting_id' => $accounting_list->accounting_id,
+                'id' => $accounting_list->id,
                 'name' => '2022年度団費集金',
                 'deadline' => '2022-06-30',
                 'admin' => AccountingType::GENERAL,
@@ -415,7 +415,7 @@ class AccountingTest extends TestCase
                 'accounting_payment' => [
                     'accounting_record' => [
                         'accounting_list' => [
-                            'accounting_id' => $accounting_list->accounting_id,
+                            'id' => $accounting_list->id,
                             'admin' => AccountingType::GENERAL,
                             'deadline' => '2022-06-30',
                             'name' => '2022年度団費集金',
