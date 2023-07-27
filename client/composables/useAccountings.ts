@@ -1,18 +1,21 @@
-export type Accounting = {
+type Accounting = {
   id: number;
-  accountingId: number;
-  admin: string;
-  createdAt: string;
-  datetime: string;
-  deadline: string;
-  isPaid: boolean;
-  name: string;
   price: number;
+  isPaid: boolean;
+  datetime: string;
+  accountingList: AccountingList;
   priceFormatted: string;
   isOverdue: boolean;
   status: string;
-  deadlineFormatted: string;
   datetimeFormatted: string;
+};
+
+type AccountingList = {
+  id: number;
+  name: string;
+  deadline: string;
+  admin: string;
+  deadlineFormatted: string;
 };
 
 const createAccounting = (a) => {
@@ -22,14 +25,15 @@ const createAccounting = (a) => {
   } else {
     accounting = {
       id: a.id,
-      accountingId: a.accounting_id,
-      admin: a.admin,
-      createdAt: a.created_at,
-      datetime: a.datetime,
-      deadline: a.deadline,
-      isPaid: a.is_paid,
-      name: a.name,
       price: a.price,
+      isPaid: a.is_paid,
+      datetime: a.datetime,
+      accountingList: {
+        id: a.accounting_list.id,
+        name: a.accounting_list.name,
+        deadline: a.accounting_list.deadline,
+        admin: a.accounting_list.admin,
+      },
     };
   }
   return accounting;
@@ -54,7 +58,7 @@ export const useAccountings = () => {
       }).format(accounting.price);
       accounting.isOverdue =
         !accounting.isPaid &&
-        Date.now() > new Date(accounting.deadline).getTime();
+        Date.now() > new Date(accounting.accountingList.deadline).getTime();
       accounting.status = accounting.isPaid
         ? "支払い済み"
         : accounting.isOverdue
@@ -63,16 +67,16 @@ export const useAccountings = () => {
       accounting.datetimeFormatted = new Date(
         accounting.datetime,
       ).toLocaleString();
-      accounting.deadlineFormatted = new Date(
-        accounting.deadline,
+      accounting.accountingList.deadlineFormatted = new Date(
+        accounting.accountingList.deadline,
       ).toLocaleDateString();
     });
 
     accountings.value.sort(function (a, b) {
       const aDatetime = new Date(a.datetime);
       const bDatetime = new Date(b.datetime);
-      const aDeadline = new Date(a.deadline);
-      const bDeadline = new Date(b.deadline);
+      const aDeadline = new Date(a.accountingList.deadline);
+      const bDeadline = new Date(b.accountingList.deadline);
       return (
         a.isPaid - b.isPaid ||
         bDatetime.getTime() - aDatetime.getTime() ||
