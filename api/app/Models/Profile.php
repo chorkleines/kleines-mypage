@@ -32,7 +32,6 @@ class Profile extends Model
     protected $primaryKey = 'user_id';
 
     protected $visible = [
-        'user_id',
         'last_name',
         'first_name',
         'name_kana',

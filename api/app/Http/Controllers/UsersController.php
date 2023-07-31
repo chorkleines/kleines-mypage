@@ -24,7 +24,7 @@ class UsersController extends Controller
             ->get()
             ->makeHidden(['email'])
             ->each(function ($user) {
-                $user->profile->makeHidden(['birthday', 'user_id']);
+                $user->profile->makeHidden(['birthday']);
             });
 
         return response()->json($users);
