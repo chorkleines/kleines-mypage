@@ -16,8 +16,8 @@
         :sort-options="{
           enabled: true,
           initialSortBy: [
-            { field: 'grade', type: 'desc' },
-            { field: 'partFormatted', type: 'asc' },
+            { field: 'profile.grade', type: 'asc' },
+            { field: 'profile.partFormatted', type: 'asc' },
           ],
         }"
         :pagination-options="{
@@ -42,18 +42,18 @@ await getUsers();
 const columns = [
   {
     label: "学年",
-    field: "grade",
+    field: "profile.grade",
     width: "5rem",
   },
   {
     label: "パート",
-    field: "partFormatted",
+    field: "profile.partFormatted",
     sortFn: sortPart,
     width: "7rem",
   },
   {
     label: "氏名",
-    field: "fullName",
+    field: "profile.fullName",
     sortable: false,
   },
   {

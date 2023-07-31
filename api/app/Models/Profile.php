@@ -26,10 +26,19 @@ class Profile extends Model
         'user_id' => 'int',
         'grade' => 'int',
         'part' => Part::class,
-        'birthday' => 'date',
+        'birthday' => 'date:Y-m-d',
     ];
 
     protected $primaryKey = 'user_id';
+
+    protected $visible = [
+        'last_name',
+        'first_name',
+        'name_kana',
+        'grade',
+        'part',
+        'birthday',
+    ];
 
     public $sortable = ['name_kana', 'grade', 'part'];
 

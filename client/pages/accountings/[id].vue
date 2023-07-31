@@ -37,7 +37,7 @@
                 <div class="flex justify-between">
                     <div class="text-base-content/70 text-sm">支払い期限</div>
                     <div class="text-base-content/70 text-sm">
-                        {{ accounting.deadlineFormatted }}
+                        {{ accounting.accountingList.deadlineFormatted }}
                     </div>
                 </div>
                 <div class="flex justify-between" v-if="accounting.isPaid">
@@ -49,7 +49,7 @@
             </div>
             <hr class="my-3" v-if="accounting.isPaid" />
             <div class="flex flex-col gap-1" v-if="accounting.isPaid">
-                <div class="flex justify-between" v-for="payment in payments">
+                <div class="flex justify-between" v-for="payment in accounting.accountingPayments">
                     <div class="text-base-content/70 text-sm">
                         {{ payment.methodFormatted }}
                     </div>
@@ -75,6 +75,6 @@ definePageMeta({
 
 const route = useRoute();
 const { id } = route.params;
-const { accounting, payments, getAccounting } = useAccounting();
+const { accounting, getAccounting } = useAccounting();
 await getAccounting(id);
 </script>

@@ -20,9 +20,16 @@ class AccountingPayment extends Model
         'price' => 'int',
     ];
 
+    protected $visible = [
+        'id',
+        'price',
+        'method',
+        'accounting_record',
+    ];
+
     protected $primaryKey = 'id';
 
-    public function accouting_record()
+    public function accounting_record()
     {
         return $this->belongsTo(AccountingRecord::class, 'accounting_record_id');
     }

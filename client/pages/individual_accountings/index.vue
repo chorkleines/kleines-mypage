@@ -19,9 +19,10 @@
 }" styleClass="table whitespace-nowrap w-full mb-3">
                 <template #table-row="props">
                     <span v-if="props.column.field == 'name'">
-                        <NuxtLink :to="`/accountings/${props.row.accountingId}`" v-if="props.row.accountingId !== undefined &&
-                            props.row.accountingId !== null
-                            " class="underline">{{ props.row.name }}</NuxtLink>
+                        <NuxtLink :to="`/accountings/${props.row.accountingPayment.accountingRecord.accountingList.id}`"
+                            v-if="props.row.accountingPayment !== undefined &&
+                                props.row.accountingPayment !== null
+                                " class="underline">{{ props.row.name }}</NuxtLink>
                         <span v-else>{{ props.row.name }}</span>
                     </span>
                     <span v-else>

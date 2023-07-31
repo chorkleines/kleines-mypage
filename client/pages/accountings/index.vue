@@ -12,12 +12,12 @@
         <div class="flex flex-col gap-3">
             <div v-for="accounting in accountings">
                 <div class="not-prose">
-                    <NuxtLink :to="`/accountings/${accounting.accountingId}`"
+                    <NuxtLink :to="`/accountings/${accounting.accountingList.id}`"
                         class="group block bg-base-100 hover:bg-base-200 rounded-lg w-full h-full p-3 px-4">
                         <div class="flex flex-col gap-2">
                             <div class="flex gap-3 justify-between items-center">
                                 <div class="font-extrabold truncate">
-                                    {{ accounting.name }}
+                                    {{ accounting.accountingList.name }}
                                 </div>
                                 <div class="text-base-content/70 font-bold">
                                     {{ accounting.priceFormatted }}
@@ -36,7 +36,7 @@
                                     {{ accounting.datetimeFormatted }}
                                 </div>
                                 <div class="text-base-content/70 text-xs" v-if="!accounting.isPaid">
-                                    支払い期限：{{ accounting.deadlineFormatted }}
+                                    支払い期限：{{ accounting.accountingList.deadlineFormatted }}
                                 </div>
                             </div>
                         </div>

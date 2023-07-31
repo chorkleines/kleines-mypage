@@ -1,23 +1,26 @@
-export type Accounting = {
+type Accounting = {
   id: number;
-  accountingId: number;
-  admin: string;
-  createdAt: string;
-  datetime: string;
-  deadline: string;
-  isPaid: boolean;
-  name: string;
   price: number;
+  isPaid: boolean;
+  datetime: string;
+  accountingList: AccountingList;
+  accountingPayments: AccountingPayment[];
   priceFormatted: string;
   isOverdue: boolean;
   status: string;
-  deadlineFormatted: string;
   datetimeFormatted: string;
 };
 
-export type Payment = {
+type AccountingList = {
   id: number;
-  accountingRecordId: number;
+  name: string;
+  deadline: string;
+  admin: string;
+  deadlineFormatted: string;
+};
+
+type AccountingPayment = {
+  id: number;
   price: number;
   method: string;
   priceFormatted: string;
@@ -31,27 +34,32 @@ const createAccounting = (a) => {
   } else {
     accounting = {
       id: a.id,
-      accountingId: a.accounting_id,
-      admin: a.admin,
-      createdAt: a.created_at,
-      datetime: a.datetime,
-      deadline: a.deadline,
-      isPaid: a.is_paid,
-      name: a.name,
       price: a.price,
+      isPaid: a.is_paid,
+      datetime: a.datetime,
+      accountingList: {
+        id: a.accounting_list.id,
+        name: a.accounting_list.name,
+        deadline: a.accounting_list.deadline,
+        admin: a.accounting_list.admin,
+      },
+      accountingPayments: [],
     };
+    a.accounting_payments.forEach((p) => {
+      const payment = createPayment(p);
+      accounting.accountingPayments.push(payment);
+    });
   }
   return accounting;
 };
 
 const createPayment = (p) => {
-  let payment: Payment | null = null;
+  let payment: AccountingPayment | null = null;
   if (p === null) {
     payment = null;
   } else {
     payment = {
       id: p.id,
-      accountingRecordId: p.accounting_record_id,
       price: p.price,
       method: p.method,
     };
@@ -62,29 +70,31 @@ const createPayment = (p) => {
 export const useAccounting = () => {
   const accounting = ref({
     id: null,
-    accountingId: null,
-    admin: "",
-    name: "",
     price: null,
-    deadline: "",
     isPaid: null,
     datetime: "",
+    accountingList: {
+      id: null,
+      name: "",
+      deadline: "",
+      admin: "",
+    },
+    accountingPayments: [],
   });
-  const payments = ref([]);
 
   async function getAccounting(id: number) {
     const { data } = await useApiFetch(`/api/accountings/${id}`, {
       method: "GET",
     });
 
-    accounting.value = createAccounting(data.value.accounting);
+    accounting.value = createAccounting(data.value);
     accounting.value.priceFormatted = new Intl.NumberFormat("ja-JP", {
       style: "currency",
       currency: "JPY",
     }).format(accounting.value.price);
     accounting.value.isOverdue =
       !accounting.value.isPaid &&
-      Date.now() > new Date(accounting.value.deadline).getTime();
+      Date.now() > new Date(accounting.value.accountingList.deadline).getTime();
     accounting.value.status = accounting.value.isPaid
       ? "支払い済み"
       : accounting.value.isOverdue
@@ -93,39 +103,35 @@ export const useAccounting = () => {
     accounting.value.datetimeFormatted = new Date(
       accounting.value.datetime,
     ).toLocaleString();
-    accounting.value.deadlineFormatted = new Date(
-      accounting.value.deadline,
+    accounting.value.accountingList.deadlineFormatted = new Date(
+      accounting.value.accountingList.deadline,
     ).toLocaleDateString();
-    console.log(accounting.value);
 
     if (accounting.value.isPaid) {
-      data.value.payments.forEach((p) => {
-        const payment = createPayment(p);
-        payments.value.push(payment);
-      });
-      payments.value.forEach((payment: Payment) => {
-        payment.priceFormatted = new Intl.NumberFormat("ja-JP", {
-          style: "currency",
-          currency: "JPY",
-        }).format(payment.price);
-        switch (payment.method) {
-          case "CASH":
-            payment.methodFormatted = "現金";
-            break;
-          case "INDIVIDUAL_ACCOUNTING":
-            payment.methodFormatted = "個別会計";
-            break;
-          default:
-            payment.methodFormatted = "";
-            break;
-        }
-      });
+      accounting.value.accountingPayments.forEach(
+        (payment: AccountingPayment) => {
+          payment.priceFormatted = new Intl.NumberFormat("ja-JP", {
+            style: "currency",
+            currency: "JPY",
+          }).format(payment.price);
+          switch (payment.method) {
+            case "CASH":
+              payment.methodFormatted = "現金";
+              break;
+            case "INDIVIDUAL_ACCOUNTING":
+              payment.methodFormatted = "個別会計";
+              break;
+            default:
+              payment.methodFormatted = "";
+              break;
+          }
+        },
+      );
     }
   }
 
   return {
     accounting,
-    payments,
     getAccounting,
   };
 };

@@ -14,6 +14,22 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    public function createAdminUser($role)
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'admin_'.strtolower($role).'@chorkleines.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => UserStatus::PRESENT,
+        ]);
+        \App\Models\Profile::factory()->create([
+            'user_id' => $user->id,
+        ]);
+        \App\Models\Admin::create([
+            'user_id' => $user->id,
+            'role' => $role,
+        ]);
+    }
+
     /**
      * Seed the application's database.
      *
@@ -32,14 +48,24 @@ class DatabaseSeeder extends Seeder
             'status' => UserStatus::PRESENT,
         ]);
         \App\Models\Profile::factory()->create([
-            'user_id' => $user->user_id,
+            'user_id' => $user->id,
+            'last_name' => '山田',
+            'first_name' => '太郎',
+            'name_kana' => 'ヤマダタロウ',
+            'grade' => '18',
+            'part' => Part::TENOR,
+            'birthday' => '2000-01-01',
         ]);
         \App\Models\Admin::create([
-            'user_id' => $user->user_id,
+            'user_id' => $user->id,
             'role' => Role::MASTER,
         ]);
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
+
+        $this->createAdminUser(Role::MANAGER);
+        $this->createAdminUser(Role::ACCOUNTANT);
+        $this->createAdminUser(Role::CAMP);
 
         // create random users
         \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();
@@ -55,9 +81,9 @@ class DatabaseSeeder extends Seeder
         $users = \App\Models\User::all();
         foreach ($users as $user) {
             \App\Models\IndividualAccountingRecord::create([
-                'user_id' => $user->user_id,
+                'user_id' => $user->id,
                 'price' => random_int(1000, 10000),
-                'list_id' => $individual_accounting_list->list_id,
+                'individual_accounting_list_id' => $individual_accounting_list->id,
                 'datetime' => date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time())),
             ]);
         }
@@ -89,19 +115,19 @@ class DatabaseSeeder extends Seeder
                 $is_paid = random_int(0, 5) % 5 != 0;
                 if (! $is_paid) {
                     \App\Models\AccountingRecord::create([
-                        'accounting_id' => $accounting_list->accounting_id,
-                        'user_id' => $user->user_id,
+                        'accounting_list_id' => $accounting_list->id,
+                        'user_id' => $user->id,
                         'price' => $price,
                     ]);
                     continue;
                 }
 
-                $paid_individual = min($price, $user->individualAccountingRecords->sum('price'));
+                $paid_individual = min($price, $user->individual_accounting_records->sum('price'));
                 $paid_cash = $price - $paid_individual;
                 $datetime = date('Y-m-d H:i:s', random_int(time() - (30 * 24 * 60 * 60), time()));
                 $accounting_record = \App\Models\AccountingRecord::create([
-                    'accounting_id' => $accounting_list->accounting_id,
-                    'user_id' => $user->user_id,
+                    'accounting_list_id' => $accounting_list->id,
+                    'user_id' => $user->id,
                     'price' => $price,
                     'datetime' => $datetime,
                     'is_paid' => true,
@@ -120,9 +146,10 @@ class DatabaseSeeder extends Seeder
                         'method' => PaymentMethod::INDIVIDUAL_ACCOUNTING,
                     ]);
                     \App\Models\IndividualAccountingRecord::create([
-                        'user_id' => $user->user_id,
+                        'user_id' => $user->id,
                         'price' => $paid_individual,
                         'accounting_payment_id' => $payment->id,
+                        'datetime' => $datetime,
                     ]);
                 }
             }
@@ -130,7 +157,7 @@ class DatabaseSeeder extends Seeder
 
         // create bulletin board
         $bulletin_board = \App\Models\BulletinBoard::create([
-            'user_id' => $user->user_id,
+            'user_id' => $user->id,
             'title' => 'test',
             'status' => BulletinBoardStatus::RELEASE,
         ]);

@@ -1,13 +1,17 @@
-export type User = {
+type User = {
   userId: number;
+  status: string;
+  profile: Profile;
+  statusFormatted?: string;
+};
+
+type Profile = {
+  grade: number;
+  part: string;
   firstName: string;
   lastName: string;
   nameKana?: string;
-  grade: number;
-  part: string;
-  status: string;
   fullName?: string;
-  statusFormatted?: string;
   partFormatted?: string;
 };
 
@@ -18,12 +22,14 @@ const createUser = (u) => {
   } else {
     user = {
       userId: u.user_id,
-      firstName: u.first_name,
-      lastName: u.last_name,
-      nameKana: u.name_kana,
-      grade: u.grade,
-      part: u.part,
       status: u.status,
+      profile: {
+        grade: u.profile.grade,
+        part: u.profile.part,
+        firstName: u.profile.first_name,
+        lastName: u.profile.last_name,
+        nameKana: u.profile.name_kana,
+      },
     };
   }
   return user;
@@ -41,7 +47,7 @@ export const useUsers = () => {
       users.value.push(user);
     });
     users.value.forEach((user: User) => {
-      user.fullName = `${user.lastName} ${user.firstName}`;
+      user.profile.fullName = `${user.profile.lastName} ${user.profile.firstName}`;
       switch (user.status) {
         case "PRESENT":
           user.statusFormatted = "在団";
@@ -53,21 +59,21 @@ export const useUsers = () => {
           user.statusFormatted = "";
           break;
       }
-      switch (user.part) {
+      switch (user.profile.part) {
         case "S":
-          user.partFormatted = "Soprano";
+          user.profile.partFormatted = "Soprano";
           break;
         case "A":
-          user.partFormatted = "Alto";
+          user.profile.partFormatted = "Alto";
           break;
         case "T":
-          user.partFormatted = "Tenor";
+          user.profile.partFormatted = "Tenor";
           break;
         case "B":
-          user.partFormatted = "Bass";
+          user.profile.partFormatted = "Bass";
           break;
         default:
-          user.partFormatted = "";
+          user.profile.partFormatted = "";
           break;
       }
       users.value.push(user);

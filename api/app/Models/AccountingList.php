@@ -17,14 +17,21 @@ class AccountingList extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'date',
+        'deadline' => 'date:Y-m-d',
         'admin' => AccountingType::class,
     ];
 
-    protected $primaryKey = 'accounting_id';
+    protected $visible = [
+        'id',
+        'name',
+        'deadline',
+        'admin',
+    ];
+
+    protected $primaryKey = 'id';
 
     public function accounting_records()
     {
-        return $this->hasMany(AccountingRecord::class, 'accounting_id');
+        return $this->hasMany(AccountingRecord::class, 'accounting_list_id');
     }
 }
