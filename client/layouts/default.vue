@@ -69,9 +69,10 @@
           >
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/',
+            'border-primary-content': route.path !== '/',
+            'border-primary': route.path === '/',
           }"
         >
           <NuxtLink
@@ -84,9 +85,10 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/users',
+            'border-primary-content': route.path !== '/users',
+            'border-primary': route.path === '/users',
           }"
         >
           <NuxtLink
@@ -99,9 +101,10 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path.startsWith('/accountings'),
+            'border-primary-content': !route.path.startsWith('/accountings'),
+            'border-primary': route.path.startsWith('/accountings'),
           }"
         >
           <NuxtLink
@@ -114,9 +117,10 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/individual_accountings',
+            'border-primary-content': route.path !== '/individual_accountings',
+            'border-primary': route.path === '/individual_accountings',
           }"
         >
           <NuxtLink
