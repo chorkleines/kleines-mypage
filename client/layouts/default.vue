@@ -42,7 +42,6 @@
               <a>{{ user.displayName }}</a>
             </li>
             <li>
-              <!-- <router-link to="/logout">ログアウト</router-link> -->
               <a @click="submitLogut">ログアウト</a>
             </li>
           </ul>
