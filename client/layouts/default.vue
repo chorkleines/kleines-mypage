@@ -132,6 +132,64 @@
             個別会計
           </NuxtLink>
         </li>
+        <li class="mt-6">
+          <a class="rounded-none p-4 btn-disabled font-bold text-base"
+            >管理者メニュー</a
+          >
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content': !route.path.startsWith('/admin/users'),
+            'border-secondary': route.path.startsWith('/admin/users'),
+          }"
+        >
+          <NuxtLink
+            to="/admin/users"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="users" class="me-2" />
+            団員リスト
+          </NuxtLink>
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content':
+              !route.path.startsWith('/admin/accountings'),
+            'border-secondary': route.path.startsWith('/admin/accountings'),
+          }"
+        >
+          <NuxtLink
+            to="/admin/accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="yen-sign" class="me-2" />
+            集金リスト
+          </NuxtLink>
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content': !route.path.startsWith(
+              '/admin/individual_accountings',
+            ),
+            'border-secondary': route.path.startsWith(
+              '/admin/individual_accountings',
+            ),
+          }"
+        >
+          <NuxtLink
+            to="/admin/individual_accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="wallet" class="me-2" />
+            個別会計
+          </NuxtLink>
+        </li>
       </ul>
     </div>
     <!-- End of Sidebar -->
