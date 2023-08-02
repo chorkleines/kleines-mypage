@@ -131,7 +131,7 @@
             個別会計
           </NuxtLink>
         </li>
-        <li class="mt-6">
+        <li class="mt-6" v-if="isAdmin(user)">
           <a class="rounded-none p-4 btn-disabled font-bold text-base"
             >管理者メニュー</a
           >
@@ -142,6 +142,7 @@
             'border-secondary-content': !route.path.startsWith('/admin/users'),
             'border-secondary': route.path.startsWith('/admin/users'),
           }"
+          v-if="isAdmin(user)"
         >
           <NuxtLink
             to="/admin/users"
@@ -159,6 +160,7 @@
               !route.path.startsWith('/admin/accountings'),
             'border-secondary': route.path.startsWith('/admin/accountings'),
           }"
+          v-if="isMaster(user) || isAccountant(user) || isCamp(user)"
         >
           <NuxtLink
             to="/admin/accountings"
@@ -179,6 +181,7 @@
               '/admin/individual_accountings',
             ),
           }"
+          v-if="isMaster(user) || isAccountant(user)"
         >
           <NuxtLink
             to="/admin/individual_accountings"
@@ -202,6 +205,7 @@ const route = useRoute();
 const router = useRouter();
 const drawer = ref(false);
 await getUser();
+const { isAdmin, isMaster, isAccountant, isCamp } = useAdmin();
 
 const submitLogut = () => {
   logout();
