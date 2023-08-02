@@ -26,7 +26,8 @@ class AuthController extends Controller
     {
         $user = auth()->user()->toArray();
         $profile = auth()->user()->profile->toArray();
-        $me = array_merge($user, $profile);
+        $admin = auth()->user()->admin->toArray();
+        $me = array_merge($user, $profile, $admin);
 
         return response()->json($me);
     }

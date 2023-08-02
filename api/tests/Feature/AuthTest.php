@@ -36,6 +36,7 @@ class AuthTest extends TestCase
             'grade',
             'part',
             'birthday',
+            'roles' => [],
         ]);
         $response->assertJson([
             'email' => 'admin@chorkleines.com',
@@ -46,6 +47,7 @@ class AuthTest extends TestCase
             'grade' => 18,
             'part' => Part::TENOR,
             'birthday' => '2000-01-01',
+            'roles' => ['MASTER'],
         ]);
     }
 

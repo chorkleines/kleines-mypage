@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\Admin::create([
             'user_id' => $user->id,
-            'role' => $role,
+            'roles' => [$role],
         ]);
     }
 
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\Admin::create([
             'user_id' => $user->id,
-            'role' => Role::MASTER,
+            'roles' => [Role::MASTER],
         ]);
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
