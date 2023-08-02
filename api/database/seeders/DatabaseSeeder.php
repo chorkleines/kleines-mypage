@@ -20,13 +20,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin_'.strtolower($role).'@chorkleines.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
             'status' => UserStatus::PRESENT,
+            'roles' => [$role],
         ]);
         \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
-        ]);
-        \App\Models\Admin::create([
-            'user_id' => $user->id,
-            'roles' => [$role],
         ]);
     }
 
@@ -46,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@chorkleines.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
             'status' => UserStatus::PRESENT,
+            'roles' => [Role::MASTER],
         ]);
         \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
@@ -55,10 +53,6 @@ class DatabaseSeeder extends Seeder
             'grade' => '18',
             'part' => Part::TENOR,
             'birthday' => '2000-01-01',
-        ]);
-        \App\Models\Admin::create([
-            'user_id' => $user->id,
-            'roles' => [Role::MASTER],
         ]);
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
