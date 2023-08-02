@@ -27,6 +27,18 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
+    public function createUser($status)
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'user_'.strtolower($status).'@chorkleines.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => $status,
+        ]);
+        \App\Models\Profile::factory()->create([
+            'user_id' => $user->id,
+        ]);
+    }
+
     /**
      * Seed the application's database.
      *
@@ -60,6 +72,10 @@ class DatabaseSeeder extends Seeder
         $this->createAdminUser(Role::MANAGER);
         $this->createAdminUser(Role::ACCOUNTANT);
         $this->createAdminUser(Role::CAMP);
+
+        $this->createUser(UserStatus::PRESENT);
+        $this->createUser(UserStatus::ABSENT);
+        $this->createUser(UserStatus::RESIGNED);
 
         // create random users
         \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();
