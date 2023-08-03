@@ -58,7 +58,7 @@ jobs:
       - name: Run middleware test
         id: middleware
         run: |
-          node ./.github/workflows/test-middleware.js > results.txt
+          node ./.github/workflows/test-middleware.js | tee results.txt
           echo "results=$(cat results.txt)" >> $GITHUB_OUTPUT
       - name: Create comment
         uses: actions/github-script@v6

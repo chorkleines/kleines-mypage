@@ -9,21 +9,21 @@ async function checkUrl(url, email, password) {
 
   async function login(email, password) {
     await page.goto("http://localhost:3000");
-    console.log(page.url());
+    console.error(page.url());
     await page.waitForNavigation({ waitUntil: "networkidle0" });
     await page.type("#email", email);
     await page.type("#password", password);
     await page.click("#login");
-    console.log(page.url());
+    console.error(page.url());
     await page.waitForSelector("#login:not(.btn-disabled)");
   }
 
-  console.log(email);
+  console.error(email);
   await login(email, password);
   await page.goto(url);
-  console.log(page.url());
+  console.error(page.url());
   await page.waitForNavigation({ waitUntil: "networkidle0" });
-  console.log(page.url());
+  console.error(page.url());
   const redirectUrl = page.url();
   await browser.close();
   return redirectUrl;
