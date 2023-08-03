@@ -4,7 +4,6 @@ const fs = require("fs");
 async function checkUrl(url, email, password) {
   const browser = await puppeteer.launch({
     headless: "new",
-    // headless: false,
   });
   const page = await browser.newPage();
 
@@ -45,6 +44,9 @@ async function getResults() {
       result.users[user.id] = {
         status: actualUrl === expectedUrl ? "success" : "fail",
         allowed: url === actualUrl,
+        url,
+        actualUrl,
+        expectedUrl,
       };
     }
     results.routes.push(result);
