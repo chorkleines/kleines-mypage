@@ -56,9 +56,14 @@ jobs:
       - name: Install puppeteer
         run: npm install puppeteer
       - name: Run middleware test
-        run: node ./.github/workflows/test-middleware.js
+        id: middleware
+        run: |
+          node ./.github/workflows/test-middleware.js > results.txt
+          echo "results=$(cat results.txt)" >> $GITHUB_OUTPUT
       - name: Create comment
         uses: actions/github-script@v6
+        env:
+          RESULTS: ${{ steps.middleware.outputs.results }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
