@@ -6,6 +6,8 @@ async function checkUrl(url, email, password) {
     headless: "new",
   });
   const page = await browser.newPage();
+  await page.goto("http://localhost:8000/api/auth");
+  console.error(await page.content());
 
   async function login(email, password) {
     await page.goto("http://localhost:3000");
