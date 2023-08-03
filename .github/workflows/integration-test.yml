@@ -57,3 +57,10 @@ jobs:
         run: npm install puppeteer
       - name: Run middleware test
         run: node ./.github/workflows/test-middleware.js
+      - name: Create comment
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./.github/workflows/create-middleware-comment.js')
+            script({github, context})
