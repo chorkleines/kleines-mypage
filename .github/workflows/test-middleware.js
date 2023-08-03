@@ -54,6 +54,5 @@ async function getResults() {
 
 (async () => {
   const results = await getResults();
-  // process.env["RESULTS"] = JSON.stringify(results);
-  console.log(JSON.stringify(results));
+  process.env["RESULTS"] = JSON.stringify(results);
 })();
