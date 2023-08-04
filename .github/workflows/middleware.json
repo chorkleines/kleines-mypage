@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": "MASTER",
+      "name": "管理者",
+      "email": "admin@chorkleines.com",
+      "password": "password"
+    },
+    {
+      "id": "MANAGER",
+      "name": "運営",
+      "email": "admin_manager@chorkleines.com",
+      "password": "password"
+    },
+    {
+      "id": "ACCOUNTANT",
+      "name": "会計",
+      "email": "admin_accountant@chorkleines.com",
+      "password": "password"
+    },
+    {
+      "id": "CAMP",
+      "name": "合宿",
+      "email": "admin_camp@chorkleines.com",
+      "password": "password"
+    },
+    {
+      "id": "GUEST",
+      "name": "ゲスト",
+      "email": "unexisting_user@chorkleines.com",
+      "password": "wrong_password"
+    }
+  ],
+  "routes": [
+    {
+      "uri": "/",
+      "name": "ホーム",
+      "expected": {
+        "MASTER": "/",
+        "MANAGER": "/",
+        "ACCOUNTANT": "/",
+        "CAMP": "/",
+        "GUEST": "/login"
+      }
+    },
+    {
+      "uri": "/users",
+      "name": "団員リスト",
+      "expected": {
+        "MASTER": "/users",
+        "MANAGER": "/users",
+        "ACCOUNTANT": "/users",
+        "CAMP": "/users",
+        "GUEST": "/login"
+      }
+    },
+    {
+      "uri": "/accountings",
+      "name": "集金リスト",
+      "expected": {
+        "MASTER": "/accountings",
+        "MANAGER": "/accountings",
+        "ACCOUNTANT": "/accountings",
+        "CAMP": "/accountings",
+        "GUEST": "/login"
+      }
+    },
+    {
+      "uri": "/individual_accountings",
+      "name": "個別会計",
+      "expected": {
+        "MASTER": "/individual_accountings",
+        "MANAGER": "/individual_accountings",
+        "ACCOUNTANT": "/individual_accountings",
+        "CAMP": "/individual_accountings",
+        "GUEST": "/login"
+      }
+    }
+  ]
+}

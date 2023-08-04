@@ -58,6 +58,7 @@
 
         <div class="mt-5">
           <button
+            id="login"
             type="submit"
             class="btn btn-primary w-full"
             @click="submit"
