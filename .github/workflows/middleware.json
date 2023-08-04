@@ -25,8 +25,14 @@
       "password": "password"
     },
     {
-      "id": "GUEST",
-      "name": "ゲスト",
+      "id": "PRESENT",
+      "name": "団員",
+      "email": "user_present@chorkleines.com",
+      "password": "password"
+    },
+    {
+      "id": "UNAUTHORIZED",
+      "name": "未認証",
       "email": "unexisting_user@chorkleines.com",
       "password": "wrong_password"
     }
@@ -40,7 +46,20 @@
         "MANAGER": "/",
         "ACCOUNTANT": "/",
         "CAMP": "/",
-        "GUEST": "/login"
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
+      }
+    },
+    {
+      "uri": "/login",
+      "name": "ログイン",
+      "expected": {
+        "MASTER": "/",
+        "MANAGER": "/",
+        "ACCOUNTANT": "/",
+        "CAMP": "/",
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
       }
     },
     {
@@ -51,7 +70,8 @@
         "MANAGER": "/users",
         "ACCOUNTANT": "/users",
         "CAMP": "/users",
-        "GUEST": "/login"
+        "PRESENT": "/users",
+        "UNAUTHORIZED": "/login"
       }
     },
     {
@@ -62,7 +82,8 @@
         "MANAGER": "/accountings",
         "ACCOUNTANT": "/accountings",
         "CAMP": "/accountings",
-        "GUEST": "/login"
+        "PRESENT": "/accountings",
+        "UNAUTHORIZED": "/login"
       }
     },
     {
@@ -73,7 +94,44 @@
         "MANAGER": "/individual_accountings",
         "ACCOUNTANT": "/individual_accountings",
         "CAMP": "/individual_accountings",
-        "GUEST": "/login"
+        "PRESENT": "/individual_accountings",
+        "UNAUTHORIZED": "/login"
+      }
+    },
+    {
+      "uri": "/admin/users",
+      "name": "管理者 ＞ 団員リスト",
+      "expected": {
+        "MASTER": "/admin/users",
+        "MANAGER": "/admin/users",
+        "ACCOUNTANT": "/admin/users",
+        "CAMP": "/admin/users",
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
+      }
+    },
+    {
+      "uri": "/admin/accountings",
+      "name": "管理者 ＞ 集金リスト",
+      "expected": {
+        "MASTER": "/admin/accountings",
+        "MANAGER": "/",
+        "ACCOUNTANT": "/admin/accountings",
+        "CAMP": "/admin/accountings",
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
+      }
+    },
+    {
+      "uri": "/admin/individual_accountings",
+      "name": "管理者 ＞ 個別会計",
+      "expected": {
+        "MASTER": "/admin/individual_accountings",
+        "MANAGER": "/",
+        "ACCOUNTANT": "/admin/individual_accountings",
+        "CAMP": "/",
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
       }
     }
   ]

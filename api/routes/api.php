@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountingsController;
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndividualAccountingsController;
@@ -38,4 +39,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'accountings'], functi
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'individual_accountings'], function () {
     Route::get('/', [IndividualAccountingsController::class, 'getIndividualAccountings']);
+});
+
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function () {
+    Route::group(['middleware' => 'role:master,manager,accountant,camp', 'prefix' => 'users'], function () {
+        Route::get('/', [AdminUsersController::class, 'getUsers']);
+    });
 });

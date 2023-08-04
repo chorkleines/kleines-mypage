@@ -50,19 +50,6 @@ class Handler extends ExceptionHandler
                 $title = '';
                 $detail = '';
 
-                if ($e instanceof AuthenticationException) {
-                    $title = __('Unauthorized');
-                    $detail = __('Unauthorized');
-
-                    return response()->json([
-                        'title' => $title,
-                        'status' => 401,
-                        'detail' => $detail,
-                    ], 401, [
-                        'Content-Type' => 'application/problem+json',
-                    ]);
-                }
-
                 if ($e instanceof HttpException) {
                     $cast = fn ($orig): HttpException => $orig;
                     $httpEx = $cast($e);

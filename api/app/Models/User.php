@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\AccountingRecord;
 use App\Models\IndividualAccountingRecord;
 use App\Models\Profile;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
+        'roles',
     ];
 
     /**
@@ -58,8 +61,8 @@ class User extends Authenticatable
         'id',
         'email',
         'status',
+        'roles',
         'profile',
-        'admin',
         'accounting_records',
         'individual_accounting_records',
     ];
@@ -69,14 +72,14 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, 'user_id');
     }
 
-    public function admin()
+    public function hasRole($value)
     {
-        return $this->hasOne(Admin::class, 'user_id');
+        return in_array($value, $this->roles);
     }
 
-    public function is_admin($value)
+    public function hasAnyRole($values)
     {
-        return $this->admin->role->value === $value;
+        return count(array_intersect($values, $this->roles)) > 0;
     }
 
     public function accounting_records()
@@ -97,5 +100,23 @@ class User extends Authenticatable
     public function getBalance()
     {
         return $this->individual_accounting_records->sum('price');
+    }
+
+    private function is_role($value)
+    {
+        return in_array($value, Role::getValues());
+    }
+
+    /**
+     * Get the roles attribute.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function roles(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => array_filter(explode(',', $value), [$this, 'is_role']),
+            set: fn ($value) => implode(',', $value),
+        );
     }
 }

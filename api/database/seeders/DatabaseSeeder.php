@@ -20,13 +20,22 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin_'.strtolower($role).'@chorkleines.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
             'status' => UserStatus::PRESENT,
+            'roles' => [$role],
         ]);
         \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
         ]);
-        \App\Models\Admin::create([
+    }
+
+    public function createUser($status)
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'user_'.strtolower($status).'@chorkleines.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => $status,
+        ]);
+        \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
-            'role' => $role,
         ]);
     }
 
@@ -46,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@chorkleines.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
             'status' => UserStatus::PRESENT,
+            'roles' => [Role::MASTER],
         ]);
         \App\Models\Profile::factory()->create([
             'user_id' => $user->id,
@@ -56,16 +66,16 @@ class DatabaseSeeder extends Seeder
             'part' => Part::TENOR,
             'birthday' => '2000-01-01',
         ]);
-        \App\Models\Admin::create([
-            'user_id' => $user->id,
-            'role' => Role::MASTER,
-        ]);
         echo 'Email: admin@chorkleines.com'.PHP_EOL;
         echo 'Password: password'.PHP_EOL;
 
         $this->createAdminUser(Role::MANAGER);
         $this->createAdminUser(Role::ACCOUNTANT);
         $this->createAdminUser(Role::CAMP);
+
+        $this->createUser(UserStatus::PRESENT);
+        $this->createUser(UserStatus::ABSENT);
+        $this->createUser(UserStatus::RESIGNED);
 
         // create random users
         \App\Models\User::factory(100)->has(\App\Models\Profile::factory())->create();

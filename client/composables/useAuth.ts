@@ -9,6 +9,7 @@ export type User = {
   birthday: string;
   status: string;
   emailVerifiedAt: string;
+  roles: string[];
   createdAt: string;
   updatedAt: string;
   displayName: string;
@@ -40,6 +41,7 @@ export const useAuth = () => {
       user.value.birthday = u.birthday;
       user.value.status = u.status;
       user.value.emailVerifiedAt = u.email_verified_at;
+      user.value.roles = u.roles;
       user.value.createdAt = u.created_at;
       user.value.updatedAt = u.updated_at;
       user.value.displayName = `${u.grade}${u.part} ${u.last_name}${u.first_name}`;

@@ -42,7 +42,6 @@
               <a>{{ user.displayName }}</a>
             </li>
             <li>
-              <!-- <router-link to="/logout">ログアウト</router-link> -->
               <a @click="submitLogut">ログアウト</a>
             </li>
           </ul>
@@ -69,9 +68,10 @@
           >
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/',
+            'border-primary-content': route.path !== '/',
+            'border-primary': route.path === '/',
           }"
         >
           <NuxtLink
@@ -84,9 +84,10 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/users',
+            'border-primary-content': route.path !== '/users',
+            'border-primary': route.path === '/users',
           }"
         >
           <NuxtLink
@@ -99,9 +100,10 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path.startsWith('/accountings'),
+            'border-primary-content': !route.path.startsWith('/accountings'),
+            'border-primary': route.path.startsWith('/accountings'),
           }"
         >
           <NuxtLink
@@ -114,13 +116,75 @@
           </NuxtLink>
         </li>
         <li
-          class="border-primary"
+          class="border-l-4"
           :class="{
-            'border-l-4': route.path === '/individual_accountings',
+            'border-primary-content': route.path !== '/individual_accountings',
+            'border-primary': route.path === '/individual_accountings',
           }"
         >
           <NuxtLink
             to="/individual_accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="wallet" class="me-2" />
+            個別会計
+          </NuxtLink>
+        </li>
+        <li class="mt-6" v-if="isAdmin(user)">
+          <a class="rounded-none p-4 btn-disabled font-bold text-base"
+            >管理者メニュー</a
+          >
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content': !route.path.startsWith('/admin/users'),
+            'border-secondary': route.path.startsWith('/admin/users'),
+          }"
+          v-if="isAdmin(user)"
+        >
+          <NuxtLink
+            to="/admin/users"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="users" class="me-2" />
+            団員リスト
+          </NuxtLink>
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content':
+              !route.path.startsWith('/admin/accountings'),
+            'border-secondary': route.path.startsWith('/admin/accountings'),
+          }"
+          v-if="isMaster(user) || isAccountant(user) || isCamp(user)"
+        >
+          <NuxtLink
+            to="/admin/accountings"
+            class="rounded-none p-4"
+            @click="drawer = false"
+          >
+            <font-awesome-icon icon="yen-sign" class="me-2" />
+            集金リスト
+          </NuxtLink>
+        </li>
+        <li
+          class="border-l-4"
+          :class="{
+            'border-secondary-content': !route.path.startsWith(
+              '/admin/individual_accountings',
+            ),
+            'border-secondary': route.path.startsWith(
+              '/admin/individual_accountings',
+            ),
+          }"
+          v-if="isMaster(user) || isAccountant(user)"
+        >
+          <NuxtLink
+            to="/admin/individual_accountings"
             class="rounded-none p-4"
             @click="drawer = false"
           >
@@ -141,6 +205,7 @@ const route = useRoute();
 const router = useRouter();
 const drawer = ref(false);
 await getUser();
+const { isAdmin, isMaster, isAccountant, isCamp } = useAdmin();
 
 const submitLogut = () => {
   logout();
