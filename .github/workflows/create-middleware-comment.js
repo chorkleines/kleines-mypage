@@ -17,7 +17,7 @@ function formatMiddlewareMessage(middlewareResultText) {
   for (const route of middlewareResult.routes) {
     output += `| ${route.name} | ${route.route} |`;
     for (const user of middlewareResult.users) {
-      const mark = route.users[user.id].allowed ? ":white_check_mark:" : ":x:";
+      const mark = route.users[user.id].allowed ? "✅" : "❌";
       output += ` ${mark} |`;
       if (route.users[user.id].status === "fail") {
         error += `* Route \`${
