@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\AccountingType;
-use App\Enums\BulletinBoardStatus;
 use App\Enums\Part;
 use App\Enums\PaymentMethod;
 use App\Enums\Role;
@@ -164,19 +162,5 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
-
-        // create bulletin board
-        $bulletin_board = \App\Models\BulletinBoard::create([
-            'user_id' => $user->id,
-            'title' => 'test',
-            'status' => BulletinBoardStatus::RELEASE,
-        ]);
-
-        \App\Models\BulletinBoardContent::create([
-            'bulletin_board_id' => $bulletin_board->bulletin_board_id,
-            'user_id' => $user->user_id,
-            'datetime' => now(),
-            'content' => 'content',
-        ]);
     }
 }

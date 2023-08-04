@@ -13,19 +13,4 @@ final class UserStatus extends Enum
     const ABSENT = 'ABSENT';
 
     const RESIGNED = 'RESIGNED';
-
-    public static function getDescription($value): string
-    {
-        if ($value == self::PRESENT) {
-            return '在団';
-        }
-        if ($value == self::ABSENT) {
-            return '休団';
-        }
-        if ($value == self::RESIGNED) {
-            return '退団';
-        }
-
-        return parent::getDescription($value);
-    }
 }
