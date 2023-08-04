@@ -63,7 +63,6 @@ class User extends Authenticatable
         'status',
         'roles',
         'profile',
-        'admin',
         'accounting_records',
         'individual_accounting_records',
     ];
@@ -75,7 +74,7 @@ class User extends Authenticatable
 
     public function is_admin($value)
     {
-        return $this->admin->role->value === $value;
+        return in_array($value, $this->roles);
     }
 
     public function accounting_records()
