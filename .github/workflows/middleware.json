@@ -25,12 +25,6 @@
       "password": "password"
     },
     {
-      "id": "PRESENT",
-      "name": "団員",
-      "email": "user_present@chorkleines.com",
-      "password": "password"
-    },
-    {
       "id": "GUEST",
       "name": "ゲスト",
       "email": "unexisting_user@chorkleines.com",
@@ -46,7 +40,6 @@
         "MANAGER": "/",
         "ACCOUNTANT": "/",
         "CAMP": "/",
-        "PRESENT": "/",
         "GUEST": "/login"
       }
     }
