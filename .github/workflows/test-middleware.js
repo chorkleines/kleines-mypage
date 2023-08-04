@@ -38,7 +38,7 @@ async function getResults() {
     result.route = route.uri;
     result.users = {};
     for (const user of middlewareList.users) {
-      console.log(`Checking ${route.uri} for ${user.id}`);
+      console.error(`Checking ${route.uri} for ${user.id}`);
       const url = `http://localhost:3000${route.uri}`;
       const expectedUrl = `http://localhost:3000${route.expected[user.id]}`;
       const actualUrl = await checkUrl(url, user.email, user.password);
