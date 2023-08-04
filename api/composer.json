@@ -10,7 +10,6 @@
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "kyslik/column-sortable": "^6.4",
-        "laravel/fortify": "^1.17",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7"

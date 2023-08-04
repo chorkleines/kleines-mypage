@@ -16,7 +16,7 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
     }
 
     public function test_login_using_wrong_password()
@@ -27,6 +27,20 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'email',
+            ],
+        ]);
+        $response->assertJson([
+            'message' => 'These credentials do not match our records.',
+            'errors' => [
+                'email' => [
+                    'These credentials do not match our records.',
+                ],
+            ],
+        ]);
     }
 
     public function test_login_using_unexisting_email()
@@ -37,5 +51,19 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'email',
+            ],
+        ]);
+        $response->assertJson([
+            'message' => 'These credentials do not match our records.',
+            'errors' => [
+                'email' => [
+                    'These credentials do not match our records.',
+                ],
+            ],
+        ]);
     }
 }
