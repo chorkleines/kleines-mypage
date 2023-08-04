@@ -37,7 +37,7 @@ class LoginTest extends TestCase
             'message' => 'These credentials do not match our records.',
             'errors' => [
                 'email' => [
-                    'These credentials do not match our records.'
+                    'These credentials do not match our records.',
                 ],
             ],
         ]);
@@ -61,7 +61,7 @@ class LoginTest extends TestCase
             'message' => 'These credentials do not match our records.',
             'errors' => [
                 'email' => [
-                    'These credentials do not match our records.'
+                    'These credentials do not match our records.',
                 ],
             ],
         ]);
