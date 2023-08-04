@@ -2,6 +2,7 @@ function formatMiddlewareMessage(middlewareResultText) {
   const middlewareResult = JSON.parse(middlewareResultText);
 
   var output = "# Middleware\n\n";
+  var error = "";
 
   output += "| | Route |";
   for (const user of middlewareResult.users) {
@@ -18,16 +19,29 @@ function formatMiddlewareMessage(middlewareResultText) {
     for (const user of middlewareResult.users) {
       const mark = route.users[user.id].allowed ? ":white_check_mark:" : ":x:";
       output += ` ${mark} |`;
+      if (route.users[user.id].status === "fail") {
+        error += `* \`${route.users[user.id].expectedUrl}\` expected for user \`${
+          user.id
+        }\` when accessing \`${route.users[user.id].url}\` but got \`${
+          route.users[user.id].actualUrl
+        }\`\n`;
+      }
     }
     output += "\n";
   }
 
-  return output;
+  if (error !== "") {
+    output += "\n";
+    output += error;
+  }
+
+  return { output, error: error !== "" };
 }
 
 module.exports = async ({ github, context }) => {
   const { RESULTS: middlewareResult } = process.env;
-  const middlwareMessage = formatMiddlewareMessage(middlewareResult);
+  const { output: middlwareMessage, error } =
+    formatMiddlewareMessage(middlewareResult);
   const comments = await github.rest.issues.listComments({
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -48,5 +62,8 @@ module.exports = async ({ github, context }) => {
       body: middlwareMessage,
       comment_id: comment.id,
     });
+  }
+  if (error) {
+    throw new Error("Middleware tests failed");
   }
 };
