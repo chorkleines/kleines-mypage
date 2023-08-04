@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\Role;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AuthenticateCamp
+class EnsureUserHasRole
 {
     /**
      * Handle an incoming request.
@@ -16,10 +14,11 @@ class AuthenticateCamp
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (! Auth::user()->is_admin(Role::CAMP)) {
-            return redirect()->route('home');
+        $roles = array_map('strtoupper', $roles);
+        if (! $request->user()->hasAnyRole($roles)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         return $next($request);

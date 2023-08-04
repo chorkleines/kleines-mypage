@@ -72,9 +72,14 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, 'user_id');
     }
 
-    public function is_admin($value)
+    public function hasRole($value)
     {
         return in_array($value, $this->roles);
+    }
+
+    public function hasAnyRole($values)
+    {
+        return count(array_intersect($values, $this->roles)) > 0;
     }
 
     public function accounting_records()
