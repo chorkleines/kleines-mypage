@@ -49,7 +49,7 @@ jobs:
           php artisan db:seed
         working-directory: ./api
       - name: Run Laravel Server
-        run: php artisan serve &
+        run: php artisan serve > /dev/null 2>&1 &
         working-directory: ./api
       - name: Install Dependencies
         run: npm install
