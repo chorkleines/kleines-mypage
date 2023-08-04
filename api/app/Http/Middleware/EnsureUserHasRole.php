@@ -18,7 +18,7 @@ class EnsureUserHasRole
     {
         $roles = array_map('strtoupper', $roles);
         if (! $request->user()->hasAnyRole($roles)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            abort(403);
         }
 
         return $next($request);

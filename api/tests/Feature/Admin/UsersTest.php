@@ -18,12 +18,16 @@ class UsersTest extends TestCase
         ]);
 
         $response = $this->getJson('/api/admin/users');
-        $response->assertStatus(401);
+        $response->assertStatus(403);
         $response->assertJsonStructure([
-            'message',
+            'title',
+            'status',
+            'detail',
         ]);
-        $response->assertJsonFragment([
-            'message' => 'Unauthorized',
+        $response->assertJson([
+            'title' => 'Forbidden',
+            'status' => 403,
+            'detail' => 'Forbidden',
         ]);
     }
 

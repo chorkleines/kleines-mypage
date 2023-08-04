@@ -16,6 +16,16 @@ class AuthTest extends TestCase
         $response = $this->get('/api/me');
 
         $response->assertStatus(401);
+        $response->assertJsonStructure([
+            'title',
+            'status',
+            'detail',
+        ]);
+        $response->assertJson([
+            'title' => 'Unauthorized',
+            'status' => 401,
+            'detail' => 'Unauthorized',
+        ]);
     }
 
     public function test_get_user_info_using_authenticated_user()
