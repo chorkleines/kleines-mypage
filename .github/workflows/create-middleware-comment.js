@@ -20,11 +20,11 @@ function formatMiddlewareMessage(middlewareResultText) {
       const mark = route.users[user.id].allowed ? ":white_check_mark:" : ":x:";
       output += ` ${mark} |`;
       if (route.users[user.id].status === "fail") {
-        error += `* \`${route.users[user.id].expectedUrl}\` expected for user \`${
-          user.id
-        }\` when accessing \`${route.users[user.id].url}\` but got \`${
-          route.users[user.id].actualUrl
-        }\`\n`;
+        error += `* Route \`${
+          route.users[user.id].expectedUri
+        }\` expected for user \`${user.id}\` when accessing \`${
+          route.users[user.id].uri
+        }\` but got \`${route.users[user.id].actualUri}\`\n`;
       }
     }
     output += "\n";

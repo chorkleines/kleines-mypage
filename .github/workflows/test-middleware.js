@@ -38,15 +38,16 @@ async function getResults() {
     result.route = route.uri;
     result.users = {};
     for (const user of middlewareList.users) {
+      console.log(`Checking ${route.uri} for ${user.id}`);
       const url = `http://localhost:3000${route.uri}`;
       const expectedUrl = `http://localhost:3000${route.expected[user.id]}`;
       const actualUrl = await checkUrl(url, user.email, user.password);
       result.users[user.id] = {
         status: actualUrl === expectedUrl ? "success" : "fail",
         allowed: url === actualUrl,
-        url,
-        actualUrl,
-        expectedUrl,
+        uri: route.uri,
+        actualUri: actualUrl.replace("http://localhost:3000", ""),
+        expectedUri: expectedUrl.replace("http://localhost:3000", ""),
       };
     }
     results.routes.push(result);
