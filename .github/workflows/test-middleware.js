@@ -6,26 +6,19 @@ async function checkUrl(url, email, password) {
     headless: "new",
   });
   const page = await browser.newPage();
-  await page.goto("http://localhost:8000/api/auth");
-  console.error(await page.content());
 
   async function login(email, password) {
     await page.goto("http://localhost:3000");
-    console.error(page.url());
     await page.waitForNavigation({ waitUntil: "networkidle0" });
     await page.type("#email", email);
     await page.type("#password", password);
     await page.click("#login");
-    console.error(page.url());
     await page.waitForSelector("#login:not(.btn-disabled)");
   }
 
-  console.error(email);
   await login(email, password);
   await page.goto(url);
-  console.error(page.url());
   await page.waitForNavigation({ waitUntil: "networkidle0" });
-  console.error(page.url());
   const redirectUrl = page.url();
   await browser.close();
   return redirectUrl;
