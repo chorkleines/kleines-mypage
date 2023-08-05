@@ -4,21 +4,27 @@ export const useResetPassword = () => {
   const failedResetPassword = ref(false);
   const resetPasswordFailureMessage = ref("");
 
-  async function resetPassword(email: string) {
+  async function resetPassword(
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    token: string,
+  ) {
     isLoadingResetPassword.value = true;
     await getCsrfToken();
-    const { status, error } = await useApiFetch("/api/password/forgot", {
+    const { status, error } = await useApiFetch("/api/password/reset", {
       method: "POST",
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+        token,
+      }),
     });
 
     if (status.value === "error") {
       failedResetPassword.value = true;
-      if (error.value?.statusCode === 500) {
-        resetPasswordFailureMessage.value = "Please wait before retrying.";
-      } else {
-        resetPasswordFailureMessage.value = error.value!;
-      }
+      resetPasswordFailureMessage.value = error.value!;
       isLoadingResetPassword.value = false;
       return;
     }

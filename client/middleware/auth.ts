@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   });
   const isAuthenticated = data.value === "authenticated";
 
-  const guestRoutes = ["/login", "/forgot-password", "/password-reset"];
+  const guestRoutes = ["/login", "/forgot-password", "/reset-password"];
 
   const isGuestRoute = guestRoutes.some((route) => to.path.startsWith(route));
 
