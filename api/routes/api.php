@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountingsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndividualAccountingsController;
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::group(['prefix' => 'password'], function () {
+    Route::post('reset', [ResetPasswordController::class, 'reset'])->withoutMiddleware('auth');
     Route::post('forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])->withoutMiddleware('auth');
 });
 

@@ -4,7 +4,11 @@ namespace Tests\Feature;
 
 use App\Enums\Part;
 use App\Enums\UserStatus;
+use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -95,5 +99,53 @@ class AuthTest extends TestCase
             'email' => $user->email,
         ]);
         $response->assertStatus(200);
+    }
+
+    public function test_email_verifiction()
+    {
+        $user = \App\Models\User::factory()->create([
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => 'PRESENT',
+        ]);
+        \App\Models\Profile::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        Notification::fake();
+        $response = $this->postJson('/api/password/forgot', [
+            'email' => $user->email,
+        ]);
+        $response->assertStatus(200);
+        Notification::assertSentTo(
+            $user,
+            ResetPassword::class,
+            function ($notification, $channels) use ($user, &$token) {
+                $token = $notification->token;
+
+                return true;
+            }
+        );
+
+        $response = $this->get('/api/auth');
+        $response->assertStatus(200);
+        $this->assertSame('unauthenticated', $response->json());
+
+        $response = $this->postJson('/api/password/reset', [
+            'token' => $token,
+            'email' => $user->email,
+            'password' => 'Password123',
+            'password_confirmation' => 'Password123',
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'Your password has been reset!',
+        ]);
+
+        $response = $this->get('/api/auth');
+        $response->assertStatus(200);
+        $this->assertSame('authenticated', $response->json());
+
+        $this->assertTrue(Hash::check('Password123', DB::table('users')->where('email', $user->email)->first()->password));
+        $this->assertFalse(Hash::check('password', DB::table('users')->where('email', $user->email)->first()->password));
     }
 }
