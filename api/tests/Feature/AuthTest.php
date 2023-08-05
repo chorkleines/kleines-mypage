@@ -80,4 +80,20 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
         $this->assertSame('authenticated', $response->json());
     }
+
+    public function test_check_if_forgot_password_email_is_successfully_sent()
+    {
+        $user = \App\Models\User::factory()->create([
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password is password
+            'status' => 'PRESENT',
+        ]);
+        \App\Models\Profile::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->postJson('/api/password/forgot', [
+            'email' => $user->email,
+        ]);
+        $response->assertStatus(200);
+    }
 }

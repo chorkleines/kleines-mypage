@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountingsController;
 use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndividualAccountingsController;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::get('auth', [AuthController::class, 'auth'])->withoutMiddleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'password'], function () {
+    Route::post('forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])->withoutMiddleware('auth');
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'home'], function () {
