@@ -9,6 +9,7 @@ import {
   faWallet,
   faMoneyCheckDollar,
   faYenSign,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -21,6 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     faWallet,
     faMoneyCheckDollar,
     faYenSign,
+    faCircleCheck,
   );
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon);
 });
