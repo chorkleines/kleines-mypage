@@ -7,6 +7,7 @@ use App\Enums\UserStatus;
 use App\Models\AccountingRecord;
 use App\Models\IndividualAccountingRecord;
 use App\Models\Profile;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -118,5 +119,16 @@ class User extends Authenticatable
             get: fn ($value) => array_filter(explode(',', $value), [$this, 'is_role']),
             set: fn ($value) => implode(',', $value),
         );
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }

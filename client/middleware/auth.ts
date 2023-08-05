@@ -4,15 +4,19 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   });
   const isAuthenticated = data.value === "authenticated";
 
-  if (!isAuthenticated && to.path !== "/login") {
+  const guestRoutes = ["/login", "/forgot-password", "/reset-password"];
+
+  const isGuestRoute = guestRoutes.some((route) => to.path.startsWith(route));
+
+  if (!isAuthenticated && !isGuestRoute) {
     return navigateTo("/login");
   }
 
-  if (!process.client && to.path !== "/login") {
+  if (!process.client && !isGuestRoute) {
     return navigateTo("/login");
   }
 
-  if (isAuthenticated && to.path === "/login") {
+  if (isAuthenticated && isGuestRoute) {
     return navigateTo("/");
   }
 });

@@ -70,6 +70,11 @@
             ログイン
           </button>
         </div>
+        <div class="mt-3">
+          <NuxtLink to="/forgot-password" class="btn btn-link btn-sm w-full">
+            パスワードを忘れた方はこちら
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
