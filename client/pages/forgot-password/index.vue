@@ -1,5 +1,5 @@
 <template>
-    <div class="toast toast-top toast-end" v-if="isResetPasswordSuccessful">
+    <div class="toast toast-top toast-end" v-if="isForgotPasswordSuccessful">
         <div class="alert alert-success text-xs sm:text-sm">
             <span>
                 <font-awesome-icon icon="circle-check" class="me-2" />
@@ -23,11 +23,11 @@
                     </label>
                     <input id="email" name="email" type="email" autocomplete="email" required autofocus v-model="data.email"
                         class="input w-full input-bordered" :class="{
-                            'input-bordered input-error': failedResetPassword,
+                            'input-bordered input-error': failedForgotPassword,
                         }" />
-                    <label class="label" v-if="failedResetPassword">
+                    <label class="label" v-if="failedForgotPassword">
                         <span class="label-text-alt text-error">
-                            {{ resetPasswordFailureMessage }}
+                            {{ forgotPasswordFailureMessage }}
                         </span>
                     </label>
                 </div>
@@ -35,9 +35,9 @@
                 <div class="mt-5">
                     <button id="login" type="submit" class="btn btn-primary w-full" @click="submit" :class="{
                         'btn-disabled':
-                            isLoadingResetPassword || isResetPasswordSuccessful,
+                            isLoadingForgotPassword || isForgotPasswordSuccessful,
                     }">
-                        <span class="loading loading-spinner" v-if="isLoadingResetPassword"></span>
+                        <span class="loading loading-spinner" v-if="isLoadingForgotPassword"></span>
                         リンクを送信
                     </button>
                 </div>
@@ -53,19 +53,19 @@
 
 <script setup lang="ts">
 const {
-    resetPassword,
-    isLoadingResetPassword,
-    failedResetPassword,
-    resetPasswordFailureMessage,
-    isResetPasswordSuccessful,
-} = useResetPassword();
+    forgotPassword,
+    isLoadingForgotPassword,
+    failedForgotPassword,
+    forgotPasswordFailureMessage,
+    isForgotPasswordSuccessful,
+} = useForgotPassword();
 
 const data = reactive({
     email: "",
 });
 
 const submit = async () => {
-    await resetPassword(data.email);
+    await forgotPassword(data.email);
 };
 
 definePageMeta({
