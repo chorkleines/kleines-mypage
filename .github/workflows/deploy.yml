@@ -51,3 +51,34 @@ jobs:
           source: client/.output/public/*
           target: ${{ secrets.APPLICATION_PATH }}
           strip_components: 3
+
+  api:
+    name: Deploy API Application
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy API Application
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: api
+          target: ${{ secrets.APPLICATION_PATH }}
+      - name: Migrate Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: APPLICATION_PATH
+          script: |
+            cd $APPLICATION_PATH
+            cp .env api/
+            cd api
+            php artisan migrate
+
