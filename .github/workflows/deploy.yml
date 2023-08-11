@@ -21,12 +21,12 @@ jobs:
         working-directory: ./client
       - name: Deploy Client Application
         uses: appleboy/scp-action@v0.1.4
-        working-directory: ./client/.output/public
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./"
+          source: client/.output/public/*
           target: ${{ secrets.CLIENT_PATH }}
+          strip_components: 3
           rm: true
