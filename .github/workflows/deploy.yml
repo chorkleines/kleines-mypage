@@ -82,4 +82,5 @@ jobs:
             cd $APPLICATION_PATH
             cp .env api/
             cd api
+            composer install
             php artisan migrate
