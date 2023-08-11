@@ -1,0 +1,87 @@
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete Old Application
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          APPLICATION_PATH: ${{ secrets.APPLICATION_PATH }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: APPLICATION_PATH
+          script: |
+            cd $APPLICATION_PATH
+            # check if $APPLICATION_PATH is under kleines-mypage directory
+            if [[ "$(pwd)" == *"kleines-mypage/"* ]]; then
+              rm -rf $(ls)
+            fi
+
+  client:
+    name: Deploy Client Application
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./client
+      - name: Build Client Application
+        run: npm run generate
+        working-directory: ./client
+      - name: Deploy Client Application
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: client/.output/public/*
+          target: ${{ secrets.APPLICATION_PATH }}
+          strip_components: 3
+
+  api:
+    name: Deploy API Application
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy API Application
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: api
+          target: ${{ secrets.APPLICATION_PATH }}
+      - name: Migrate Server
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          APPLICATION_PATH: ${{ secrets.APPLICATION_PATH }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: APPLICATION_PATH
+          script: |
+            cd $APPLICATION_PATH
+            cp .env api/
+            cd api
+            ~/local/composer/composer.phar install
+            php artisan migrate
