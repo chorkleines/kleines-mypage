@@ -22,7 +22,7 @@ jobs:
           script: |
             cd $APPLICATION_PATH
             # check if $APPLICATION_PATH is under kleines-mypage directory
-            if [[ "$(pwd)" == *"kleines-mypage/"* ]]; then
+            if [[ "$(pwd)" == *"kleines-mypage"* ]]; then
               rm -rf $(ls)
             fi
 
