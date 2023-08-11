@@ -2,8 +2,6 @@ name: Deploy Application
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: ["*"]
 
 jobs:
   prepare:
@@ -24,7 +22,7 @@ jobs:
           script: |
             cd $APPLICATION_PATH
             # check if $APPLICATION_PATH is under kleines-mypage directory
-            if [[ "$(pwd)" == *"kleines-mypaga/"* ]]; then
+            if [[ "$(pwd)" == *"kleines-mypage/"* ]]; then
               rm -rf $(ls)
             fi
 
