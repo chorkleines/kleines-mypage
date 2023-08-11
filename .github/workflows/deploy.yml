@@ -23,8 +23,10 @@ jobs:
           envs: APPLICATION_PATH
           script: |
             cd $APPLICATION_PATH
-            pwd | grep kleines-mypaga/  # check if $APPLICATION_PATH is under kleines-mypage directory
-            rm -rf $(ls)
+            # check if $APPLICATION_PATH is under kleines-mypage directory
+            if [[ "$(pwd)" == *"kleines-mypaga/"* ]]; then
+              rm -rf $(ls)
+            fi
 
   client:
     name: Deploy Client Application
