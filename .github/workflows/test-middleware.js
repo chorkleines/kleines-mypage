@@ -1,7 +1,14 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
-async function checkUrl(url, email, password) {
+async function testUrl(page, url) {
+  await page.goto(url);
+  await page.waitForNavigation({ waitUntil: "networkidle0" });
+  const redirectUrl = page.url();
+  return redirectUrl;
+}
+
+async function testUser(user, routes) {
   const browser = await puppeteer.launch({
     headless: "new",
   });
@@ -16,12 +23,26 @@ async function checkUrl(url, email, password) {
     await page.waitForSelector("#login:not(.btn-disabled)");
   }
 
-  await login(email, password);
-  await page.goto(url);
-  await page.waitForNavigation({ waitUntil: "networkidle0" });
-  const redirectUrl = page.url();
+  await login(user.email, user.password);
+
+  const results = {};
+  for (const route of routes) {
+    const url = `http://localhost:3000${route.uri}`;
+    const expectedUrl = `http://localhost:3000${route.expected[user.id]}`;
+    console.error(`Checking ${route.uri} for ${user.id}`);
+    const actualUrl = await testUrl(page, url);
+    results[route.uri] = {
+      name: route.name,
+      route: route.uri,
+      status: actualUrl === expectedUrl ? "success" : "fail",
+      allowed: url === actualUrl,
+      actualUri: actualUrl.replace("http://localhost:3000", ""),
+      expectedUri: expectedUrl.replace("http://localhost:3000", ""),
+    };
+  }
+
   await browser.close();
-  return redirectUrl;
+  return results;
 }
 
 async function getResults() {
@@ -31,26 +52,11 @@ async function getResults() {
 
   const results = {};
   results.users = middlewareList.users;
-  results.routes = [];
-  for (const route of middlewareList.routes) {
-    const result = {};
-    result.name = route.name;
-    result.route = route.uri;
-    result.users = {};
-    for (const user of middlewareList.users) {
-      console.error(`Checking ${route.uri} for ${user.id}`);
-      const url = `http://localhost:3000${route.uri}`;
-      const expectedUrl = `http://localhost:3000${route.expected[user.id]}`;
-      const actualUrl = await checkUrl(url, user.email, user.password);
-      result.users[user.id] = {
-        status: actualUrl === expectedUrl ? "success" : "fail",
-        allowed: url === actualUrl,
-        uri: route.uri,
-        actualUri: actualUrl.replace("http://localhost:3000", ""),
-        expectedUri: expectedUrl.replace("http://localhost:3000", ""),
-      };
-    }
-    results.routes.push(result);
+  results.routes = middlewareList.routes;
+  results.results = {};
+  for (const user of middlewareList.users) {
+    const result = await testUser(user, middlewareList.routes);
+    results.results[user.id] = result;
   }
   return results;
 }
