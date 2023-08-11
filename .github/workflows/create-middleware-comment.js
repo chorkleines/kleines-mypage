@@ -17,14 +17,14 @@ function formatMiddlewareMessage(middlewareResultText) {
   for (const route of middlewareResult.routes) {
     output += `| ${route.name} | ${route.route} |`;
     for (const user of middlewareResult.users) {
-      const mark = route.users[user.id].allowed ? "✅" : "❌";
+      const mark = route.results[user.id][route.route].allowed ? "✅" : "❌";
       output += ` ${mark} |`;
-      if (route.users[user.id].status === "fail") {
+      if (route.results[user.id][route.route].status === "fail") {
         error += `* Route \`${
-          route.users[user.id].expectedUri
+          route.results[user.id][route.route].expectedUri
         }\` expected for user \`${user.id}\` when accessing \`${
-          route.users[user.id].uri
-        }\` but got \`${route.users[user.id].actualUri}\`\n`;
+          route.results[user.id][route.route].uri
+        }\` but got \`${route.results[user.id][route.route].actualUri}\`\n`;
       }
     }
     output += "\n";
