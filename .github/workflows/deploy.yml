@@ -70,6 +70,8 @@ jobs:
           target: ${{ secrets.APPLICATION_PATH }}
       - name: Migrate Server
         uses: appleboy/ssh-action@v1.0.0
+        env:
+          APPLICATION_PATH: ${{ secrets.APPLICATION_PATH }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -81,4 +83,3 @@ jobs:
             cp .env api/
             cd api
             php artisan migrate
-
