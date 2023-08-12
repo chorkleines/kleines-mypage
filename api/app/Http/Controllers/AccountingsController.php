@@ -100,6 +100,9 @@ class AccountingsController extends Controller
             ->where('user_id', auth()->user()->id)
             ->where('accounting_list_id', $id)
             ->first();
+        if ($accounting === null) {
+            abort(404);
+        }
 
         return response()->json($accounting);
     }
