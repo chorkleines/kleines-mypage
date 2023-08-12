@@ -9,7 +9,7 @@
                     <NuxtLink to="/accountings">集金記録</NuxtLink>
                 </li>
                 <li>
-                    {{ accounting.name }}
+                    {{ accounting.accountingList.name }}
                 </li>
             </ul>
         </div>
@@ -17,7 +17,7 @@
         <div class="block bg-base-100 rounded-lg w-full h-full p-4 mt-2">
             <div class="flex flex-col gap-2 py-2">
                 <div class="font-extrabold truncate text-center">
-                    {{ accounting.name }}
+                    {{ accounting.accountingList.name }}
                 </div>
                 <div class="font-extrabold text-xl text-center">
                     {{ accounting.priceFormatted }}
@@ -74,7 +74,6 @@ definePageMeta({
 });
 
 const route = useRoute();
-const router = useRouter();
 const { id } = route.params;
 const { accounting, getAccounting } = useAccounting();
 await getAccounting(id);
