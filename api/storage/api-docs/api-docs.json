@@ -20,7 +20,6 @@
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -36,7 +35,8 @@
                                                         "type": "object"
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "property": null
                                         }
                                     ]
                                 }
@@ -122,12 +122,32 @@
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
                                                     {
                                                         "$ref": "#/components/schemas/User"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "profile": {
+                                                                "allOf": [
+                                                                    {
+                                                                        "$ref": "#/components/schemas/Profile"
+                                                                    },
+                                                                    {
+                                                                        "properties": {
+                                                                            "birthday": {
+                                                                                "type": "string",
+                                                                                "example": "2000-01-01"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
                                                     },
                                                     {
                                                         "properties": {
@@ -137,18 +157,10 @@
                                                             }
                                                         },
                                                         "type": "object"
-                                                    },
-                                                    {
-                                                        "properties": {
-                                                            "birthday": {
-                                                                "type": "string",
-                                                                "example": "2000-01-01"
-                                                            }
-                                                        },
-                                                        "type": "object"
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "property": null
                                         }
                                     ]
                                 }
@@ -422,6 +434,51 @@
                                         },
                                         {
                                             "properties": {
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "山田"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "太郎"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "name_kana": {
+                                                    "type": "string",
+                                                    "example": "ヤマダタロウ"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "grade": {
+                                                    "type": "integer",
+                                                    "example": 18
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "part": {
+                                                    "type": "string",
+                                                    "example": "T"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
                                                 "email": {
                                                     "type": "string",
                                                     "example": "admin@chorkleines.com"
@@ -568,7 +625,6 @@
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -616,7 +672,8 @@
                                                         "type": "object"
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "property": null
                                         }
                                     ]
                                 }
@@ -641,15 +698,23 @@
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
                                                     {
                                                         "$ref": "#/components/schemas/User"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "profile": {
+                                                                "$ref": "#/components/schemas/Profile"
+                                                            }
+                                                        },
+                                                        "type": "object"
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "property": null
                                         }
                                     ]
                                 }
@@ -751,23 +816,8 @@
                 },
                 "type": "object"
             },
-            "User": {
+            "Profile": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "status": {
-                        "type": "string",
-                        "example": "PRESENT"
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "example": "MASTER"
-                        }
-                    },
                     "last_name": {
                         "type": "string",
                         "example": "山田"
@@ -787,6 +837,26 @@
                     "part": {
                         "type": "string",
                         "example": "T"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "PRESENT"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "MASTER"
+                        }
                     }
                 },
                 "type": "object"

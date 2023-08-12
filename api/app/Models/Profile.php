@@ -7,6 +7,36 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="Profile",
+ *     @OA\Property(
+ *         property="last_name",
+ *         type="string",
+ *         example="山田",
+ *     ),
+ *     @OA\Property(
+ *         property="first_name",
+ *         type="string",
+ *         example="太郎",
+ *     ),
+ *     @OA\Property(
+ *         property="name_kana",
+ *         type="string",
+ *         example="ヤマダタロウ",
+ *     ),
+ *     @OA\Property(
+ *         property="grade",
+ *         type="integer",
+ *         example=18,
+ *     ),
+ *     @OA\Property(
+ *         property="part",
+ *         type="string",
+ *         example="T",
+ *     ),
+ * )
+ */
 class Profile extends Model
 {
     use HasFactory;

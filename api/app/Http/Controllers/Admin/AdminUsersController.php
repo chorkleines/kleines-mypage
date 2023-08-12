@@ -37,16 +37,24 @@ class AdminUsersController extends Controller
      *                              @OA\Schema(ref="#/components/schemas/User"),
      *                              @OA\Schema(
      *                                  @OA\Property(
-     *                                      property="email",
-     *                                      type="string",
-     *                                      example="admin@chorkleines.com",
+     *                                      property="profile",
+     *                                      allOf={
+     *                                          @OA\Schema(ref="#/components/schemas/Profile"),
+     *                                          @OA\Schema(
+     *                                              @OA\Property(
+     *                                                  property="birthday",
+     *                                                  type="string",
+     *                                                  example="2000-01-01",
+     *                                              ),
+     *                                          ),
+     *                                      },
      *                                  ),
      *                              ),
      *                              @OA\Schema(
      *                                  @OA\Property(
-     *                                      property="birthday",
+     *                                      property="email",
      *                                      type="string",
-     *                                      example="2000-01-01",
+     *                                      example="admin@chorkleines.com",
      *                                  ),
      *                              ),
      *                          },
