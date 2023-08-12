@@ -310,6 +310,40 @@
                 }
             }
         },
+        "/api/home/payment-info": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Get payment information of the authenticated user",
+                "description": "Get the payment information of the authenticated user.",
+                "operationId": "734e700c76f5610775f8b18a59ea5835",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "arrears": {
+                                                    "type": "number"
+                                                },
+                                                "balance": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [

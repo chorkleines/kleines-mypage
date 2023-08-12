@@ -5,7 +5,7 @@ export const usePaymentInfo = () => {
   });
 
   async function getPaymentInfo() {
-    const { data } = await useApiFetch("/api/home/payment_info", {
+    const { data } = await useApiFetch("/api/home/payment-info", {
       method: "GET",
     });
     paymentInfo.value = data.value;

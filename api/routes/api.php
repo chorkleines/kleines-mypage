@@ -32,7 +32,7 @@ Route::group(['prefix' => 'password'], function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'home'], function () {
-    Route::get('payment_info', [HomeController::class, 'getPaymentInfo']);
+    Route::get('payment-info', [HomeController::class, 'getPaymentInfo']);
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'users'], function () {
