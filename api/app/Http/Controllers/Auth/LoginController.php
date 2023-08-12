@@ -30,6 +30,33 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
  *         response=204,
  *         description="Success",
  *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Failed",
+ *         @OA\JsonContent(
+ *             allOf={
+ *                 @OA\Schema(
+ *                     @OA\Property(
+ *                         property="message", 
+ *                         type="string", 
+ *                         example="These credentials do not match our records.",
+ *                     ),
+ *                     @OA\Property(
+ *                         property="errors", 
+ *                         type="object", 
+ *                         @OA\Property(
+ *                             property="email", 
+ *                             type="array", 
+ * 	   	                       @OA\Items(
+ * 	                               type="string",
+ * 	                               example="These credentials do not match our records.",
+ * 	                           ),
+ *                         ),
+ *                     ),
+ *                 ),
+ *             }
+ *         ),
+ *     ),
  * )
  *
  * @OA\Post(
