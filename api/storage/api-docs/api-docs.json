@@ -20,6 +20,7 @@
                                 "schema": {
                                     "oneOf": [
                                         {
+                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -35,8 +36,7 @@
                                                         "type": "object"
                                                     }
                                                 ]
-                                            },
-                                            "property": null
+                                            }
                                         }
                                     ]
                                 }
@@ -122,6 +122,7 @@
                                 "schema": {
                                     "oneOf": [
                                         {
+                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -147,8 +148,7 @@
                                                         "type": "object"
                                                     }
                                                 ]
-                                            },
-                                            "property": null
+                                            }
                                         }
                                     ]
                                 }
@@ -202,6 +202,55 @@
                                                 "detail": {
                                                     "type": "string",
                                                     "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/password/forgot": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send reset password email",
+                "description": "Send a reset link to the given user.",
+                "operationId": "abe9fdb53611864716b0fab0c488ce0e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "We have emailed your password reset link!"
                                                 }
                                             },
                                             "type": "object"
@@ -289,6 +338,66 @@
                 "responses": {
                     "204": {
                         "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/password/reset": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset password",
+                "description": "Reset the given user's password.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    },
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com",
+                                    "password": "password",
+                                    "password_confirmation": "password",
+                                    "token": "token"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Your password has been reset!"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -459,6 +568,7 @@
                                 "schema": {
                                     "oneOf": [
                                         {
+                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -506,8 +616,7 @@
                                                         "type": "object"
                                                     }
                                                 ]
-                                            },
-                                            "property": null
+                                            }
                                         }
                                     ]
                                 }
@@ -532,6 +641,7 @@
                                 "schema": {
                                     "oneOf": [
                                         {
+                                            "property": null,
                                             "type": "array",
                                             "items": {
                                                 "allOf": [
@@ -539,8 +649,7 @@
                                                         "$ref": "#/components/schemas/User"
                                                     }
                                                 ]
-                                            },
-                                            "property": null
+                                            }
                                         }
                                     ]
                                 }
