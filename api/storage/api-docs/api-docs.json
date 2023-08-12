@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Kleines Mypage API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth": {
+            "get": {
+                "summary": "Checks if the user is authenticated",
+                "description": "Check if the user is authenticated.",
+                "operationId": "8dc8678b529196181575ee5879e946e7",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "authenticated": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                },
+                                "examples": {
+                                    "authenticated": {
+                                        "summary": "User is authenticated",
+                                        "value": {
+                                            "authenticated": true
+                                        }
+                                    },
+                                    "not authenticated": {
+                                        "summary": "User is not authenticated",
+                                        "value": {
+                                            "authenticated": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

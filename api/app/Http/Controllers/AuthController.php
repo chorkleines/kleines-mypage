@@ -35,6 +35,24 @@ class AuthController extends Controller
      * Check if the user is authenticated.
      *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="/api/auth",
+     *     summary="Checks if the user is authenticated",
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="authenticated", type="boolean")
+     *                 ),
+     *             },
+     *             @OA\Examples(example="authenticated", value={"authenticated": true}, summary="User is authenticated"),
+     *             @OA\Examples(example="not authenticated", value={"authenticated": false}, summary="User is not authenticated"),
+     *         )
+     *     )
+     * )
      */
     public function auth(Request $request)
     {
