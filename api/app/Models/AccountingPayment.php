@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(
  *         property="method",
  *         type="string",
- *         example="CASH",
+ *         example="INDIVIDUAL_ACCOUNTING",
  *     ),
  * )
  */

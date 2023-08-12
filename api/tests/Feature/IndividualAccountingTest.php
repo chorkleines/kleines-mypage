@@ -34,7 +34,7 @@ class IndividualAccountingTest extends TestCase
             'datetime' => '2019-12-31 13:20:32',
         ]);
 
-        $response = $this->get('/api/individual_accountings');
+        $response = $this->get('/api/individual-accountings');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
@@ -115,7 +115,7 @@ class IndividualAccountingTest extends TestCase
             'datetime' => '2022-06-01 12:34:56',
         ]);
 
-        $response = $this->get('/api/individual_accountings');
+        $response = $this->get('/api/individual-accountings');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [

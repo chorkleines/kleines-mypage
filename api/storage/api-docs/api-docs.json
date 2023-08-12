@@ -445,6 +445,78 @@
                 }
             }
         },
+        "/api/individual-accountings": {
+            "get": {
+                "tags": [
+                    "Individual Accountings"
+                ],
+                "summary": "Get individual accountings of the authenticated user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/IndividualAccountingRecord"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "individual_accounting_list": {
+                                                                "$ref": "#/components/schemas/IndividualAccountingList"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "accounting_payment": {
+                                                                "allOf": [
+                                                                    {
+                                                                        "$ref": "#/components/schemas/AccountingPayment"
+                                                                    },
+                                                                    {
+                                                                        "properties": {
+                                                                            "accounting_record": {
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "$ref": "#/components/schemas/AccountingRecord"
+                                                                                    },
+                                                                                    {
+                                                                                        "properties": {
+                                                                                            "accounting_list": {
+                                                                                                "$ref": "#/components/schemas/AccountingList"
+                                                                                            }
+                                                                                        },
+                                                                                        "type": "object"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            },
+                                            "property": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -514,7 +586,7 @@
                     },
                     "method": {
                         "type": "string",
-                        "example": "CASH"
+                        "example": "INDIVIDUAL_ACCOUNTING"
                     }
                 },
                 "type": "object"
@@ -536,6 +608,36 @@
                     "datetime": {
                         "type": "string",
                         "example": "2023-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "IndividualAccountingList": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "2022年度引き継ぎ"
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "IndividualAccountingRecord": {
+                "properties": {
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
                     }
                 },
                 "type": "object"
