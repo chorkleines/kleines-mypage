@@ -37,16 +37,16 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
  *             allOf={
  *                 @OA\Schema(
  *                     @OA\Property(
- *                         property="message", 
- *                         type="string", 
+ *                         property="message",
+ *                         type="string",
  *                         example="These credentials do not match our records.",
  *                     ),
  *                     @OA\Property(
- *                         property="errors", 
- *                         type="object", 
+ *                         property="errors",
+ *                         type="object",
  *                         @OA\Property(
- *                             property="email", 
- *                             type="array", 
+ *                             property="email",
+ *                             type="array",
  * 	   	                       @OA\Items(
  * 	                               type="string",
  * 	                               example="These credentials do not match our records.",
