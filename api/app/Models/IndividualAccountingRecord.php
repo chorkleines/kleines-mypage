@@ -6,7 +6,6 @@ use App\Models\IndividualAccountingList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * @OA\Schema(
  *     schema="IndividualAccountingRecord",
