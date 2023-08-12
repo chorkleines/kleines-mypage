@@ -91,7 +91,10 @@ export const useAuth = () => {
 
   async function getCsrfToken() {
     await useFetch("/sanctum/csrf-cookie", {
-      baseURL: "http://localhost:8000",
+      baseURL:
+        process.env.NODE_ENV == "development"
+          ? "http://localhost:8000"
+          : "https://mypage.chorkleines.com/api/public",
       method: "GET",
       mode: "cors",
       credentials: "include",
