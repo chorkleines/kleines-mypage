@@ -70,7 +70,7 @@ class AuthTest extends TestCase
         $response = $this->get('/api/auth');
 
         $response->assertStatus(200);
-        $this->assertSame('unauthenticated', $response->json());
+        $this->assertSame(['authenticated' => false], $response->json());
     }
 
     public function test_check_if_authenticated_using_authenticated_user()
@@ -82,7 +82,7 @@ class AuthTest extends TestCase
         $response = $this->get('/api/auth');
 
         $response->assertStatus(200);
-        $this->assertSame('authenticated', $response->json());
+        $this->assertSame(['authenticated' => true], $response->json());
     }
 
     public function test_check_if_forgot_password_email_is_successfully_sent()
@@ -128,7 +128,7 @@ class AuthTest extends TestCase
 
         $response = $this->get('/api/auth');
         $response->assertStatus(200);
-        $this->assertSame('unauthenticated', $response->json());
+        $this->assertSame(['authenticated' => false], $response->json());
 
         $response = $this->postJson('/api/password/reset', [
             'token' => $token,
@@ -143,7 +143,7 @@ class AuthTest extends TestCase
 
         $response = $this->get('/api/auth');
         $response->assertStatus(200);
-        $this->assertSame('authenticated', $response->json());
+        $this->assertSame(['authenticated' => true], $response->json());
 
         $this->assertTrue(Hash::check('Password123', DB::table('users')->where('email', $user->email)->first()->password));
         $this->assertFalse(Hash::check('password', DB::table('users')->where('email', $user->email)->first()->password));

@@ -39,9 +39,9 @@ class AuthController extends Controller
     public function auth(Request $request)
     {
         if ($request->user('sanctum')) {
-            return response()->json('authenticated');
+            return response()->json(['authenticated' => true]);
         } else {
-            return response()->json('unauthenticated');
+            return response()->json(['authenticated' => false]);
         }
     }
 }
