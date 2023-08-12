@@ -5,8 +5,112 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login the user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com",
+                                    "password": "password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout the user",
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get the authenticated user",
+                "description": "Get the authenticated user.",
+                "operationId": "9d9bc556f927575aa492a88c28fe5908",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth": {
             "get": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Checks if the user is authenticated",
                 "description": "Check if the user is authenticated.",
                 "operationId": "8dc8678b529196181575ee5879e946e7",
@@ -20,7 +124,8 @@
                                         {
                                             "properties": {
                                                 "authenticated": {
-                                                    "type": "boolean"
+                                                    "type": "boolean",
+                                                    "example": true
                                                 }
                                             },
                                             "type": "object"
@@ -45,6 +150,58 @@
                         }
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "admin@chorkleines.com"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "PRESENT"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "MASTER"
+                        }
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "example": "山田"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "example": "太郎"
+                    },
+                    "name_kana": {
+                        "type": "string",
+                        "example": "ヤマダタロウ"
+                    },
+                    "grade": {
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "part": {
+                        "type": "string",
+                        "example": "T"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "example": "2000-01-01"
+                    }
+                },
+                "type": "object"
             }
         }
     }

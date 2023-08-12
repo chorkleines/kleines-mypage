@@ -18,9 +18,37 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Get the authenticated user.
      *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="/api/me",
+     *     summary="Get the authenticated user",
+     *     tags={"Auth"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(ref="#/components/schemas/User"),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Unauthorized"),
+     *                     @OA\Property(property="status", type="integer", example=401),
+     *                     @OA\Property(property="detail", type="string", example="Unauthorized"),
+     *                 ),
+     *             },
+     *         )
+     *     )
+     * )
      */
     public function me()
     {
