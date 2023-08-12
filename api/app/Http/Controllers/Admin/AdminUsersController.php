@@ -19,6 +19,70 @@ class AdminUsersController extends Controller
         $this->middleware(['auth:sanctum', 'role:master,manager,accountant,camp']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/admin/users",
+     *     summary="Get active users",
+     *     description="Get active users with emails and birthdays for `MASTER` and `MANAGER`. Otherwise, emails and birthdays are hidden",
+     *     tags={"Admin"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             oneOf={
+     *                 @OA\Property(
+     *                     type="array",
+     *                     @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/User"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      example="admin@chorkleines.com",
+     *                                  ),
+     *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="birthday",
+     *                                      type="string",
+     *                                      example="2000-01-01",
+     *                                  ),
+     *                              ),
+     *                          },
+     *                     ),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Unauthorized"),
+     *                     @OA\Property(property="status", type="integer", example=401),
+     *                     @OA\Property(property="detail", type="string", example="Unauthorized"),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Forbidden"),
+     *                     @OA\Property(property="status", type="integer", example=403),
+     *                     @OA\Property(property="detail", type="string", example="Forbidden"),
+     *                 ),
+     *             },
+     *         )
+     *     )
+     * )
+     */
     public function getUsers()
     {
         if (auth()->user()->hasAnyRole([Role::MASTER, Role::MANAGER])) {

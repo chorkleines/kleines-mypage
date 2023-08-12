@@ -32,6 +32,20 @@ class AuthController extends Controller
      *         @OA\JsonContent(
      *             allOf={
      *                 @OA\Schema(ref="#/components/schemas/User"),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="email",
+     *                             type="string",
+     *                             example="admin@chorkleines.com",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="birthday",
+     *                             type="string",
+     *                             example="2000-01-01",
+     *                         ),
+     *                     ),
      *             },
      *         )
      *     ),

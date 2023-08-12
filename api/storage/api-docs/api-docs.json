@@ -5,6 +5,114 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get active users",
+                "description": "Get active users with emails and birthdays for `MASTER` and `MANAGER`. Otherwise, emails and birthdays are hidden",
+                "operationId": "a997c6684c9c4fcdcb1e968f60dfedb5",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/User"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "admin@chorkleines.com"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "birthday": {
+                                                                "type": "string",
+                                                                "example": "2000-01-01"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            },
+                                            "property": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -101,6 +209,24 @@
                                     "allOf": [
                                         {
                                             "$ref": "#/components/schemas/User"
+                                        },
+                                        {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "admin@chorkleines.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "example": "2000-01-01"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     ]
                                 }
@@ -193,10 +319,6 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "email": {
-                        "type": "string",
-                        "example": "admin@chorkleines.com"
-                    },
                     "status": {
                         "type": "string",
                         "example": "PRESENT"
@@ -227,10 +349,6 @@
                     "part": {
                         "type": "string",
                         "example": "T"
-                    },
-                    "birthday": {
-                        "type": "string",
-                        "example": "2000-01-01"
                     }
                 },
                 "type": "object"
