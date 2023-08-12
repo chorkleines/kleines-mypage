@@ -84,4 +84,3 @@ jobs:
             cp .env api/
             cd api
             ~/local/composer/composer.phar install
-            php artisan migrate
