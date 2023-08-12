@@ -2,7 +2,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const { data } = await useApiFetch("/api/auth", {
     method: "GET",
   });
-  const isAuthenticated = data.value === "authenticated";
+  const isAuthenticated = data.value.authenticated;
 
   const guestRoutes = ["/login", "/forgot-password", "/reset-password"];
 

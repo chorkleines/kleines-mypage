@@ -18,9 +18,51 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Get the authenticated user.
      *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="/api/me",
+     *     summary="Get the authenticated user",
+     *     tags={"Auth"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(ref="#/components/schemas/User"),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="email",
+     *                             type="string",
+     *                             example="admin@chorkleines.com",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="birthday",
+     *                             type="string",
+     *                             example="2000-01-01",
+     *                         ),
+     *                     ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Unauthorized"),
+     *                     @OA\Property(property="status", type="integer", example=401),
+     *                     @OA\Property(property="detail", type="string", example="Unauthorized"),
+     *                 ),
+     *             },
+     *         )
+     *     )
+     * )
      */
     public function me()
     {
@@ -35,13 +77,32 @@ class AuthController extends Controller
      * Check if the user is authenticated.
      *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="/api/auth",
+     *     summary="Checks if the user is authenticated",
+     *     tags={"Auth"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="authenticated", type="boolean", example=true)
+     *                 ),
+     *             },
+     *             @OA\Examples(example="authenticated", value={"authenticated": true}, summary="User is authenticated"),
+     *             @OA\Examples(example="not authenticated", value={"authenticated": false}, summary="User is not authenticated"),
+     *         )
+     *     )
+     * )
      */
     public function auth(Request $request)
     {
         if ($request->user('sanctum')) {
-            return response()->json('authenticated');
+            return response()->json(['authenticated' => true]);
         } else {
-            return response()->json('unauthenticated');
+            return response()->json(['authenticated' => false]);
         }
     }
 }

@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="IndividualAccountingList",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1,
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         example="2022年度引き継ぎ",
+ *     ),
+ *     @OA\Property(
+ *         property="datetime",
+ *         type="string",
+ *         example="2023-01-01 00:00:00",
+ *     ),
+ * )
+ */
 class IndividualAccountingList extends Model
 {
     use HasFactory;

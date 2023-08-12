@@ -17,7 +17,7 @@ class HomeTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->getJson('/api/home/payment_info');
+        $response = $this->getJson('/api/home/payment-info');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'arrears',

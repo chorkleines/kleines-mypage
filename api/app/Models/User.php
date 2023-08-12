@@ -14,6 +14,54 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1,
+ *     ),
+ *     @OA\Property(
+ *         property="status",
+ *         type="string",
+ *         example="PRESENT",
+ *     ),
+ *     @OA\Property(
+ *         property="roles",
+ *         type="array",
+ *         @OA\Items(
+ *             type="string",
+ *             example="MASTER",
+ *         ),
+ *     ),
+ *     @OA\Property(
+ *         property="last_name",
+ *         type="string",
+ *         example="山田",
+ *     ),
+ *     @OA\Property(
+ *         property="first_name",
+ *         type="string",
+ *         example="太郎",
+ *     ),
+ *     @OA\Property(
+ *         property="name_kana",
+ *         type="string",
+ *         example="ヤマダタロウ",
+ *     ),
+ *     @OA\Property(
+ *         property="grade",
+ *         type="integer",
+ *         example=18,
+ *     ),
+ *     @OA\Property(
+ *         property="part",
+ *         type="string",
+ *         example="T",
+ *     ),
+ * )
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;

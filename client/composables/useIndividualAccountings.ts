@@ -117,7 +117,7 @@ export const useIndividualAccountings = () => {
   const individualAccountings = ref([]);
 
   async function getIndividualAccountings() {
-    const { data } = await useApiFetch("/api/individual_accountings", {
+    const { data } = await useApiFetch("/api/individual-accountings", {
       method: "GET",
     });
     data.value.forEach((a) => {

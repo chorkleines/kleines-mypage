@@ -32,7 +32,7 @@ Route::group(['prefix' => 'password'], function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'home'], function () {
-    Route::get('payment_info', [HomeController::class, 'getPaymentInfo']);
+    Route::get('payment-info', [HomeController::class, 'getPaymentInfo']);
 });
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'users'], function () {
@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'accountings'], functi
     Route::get('/{id}', [AccountingsController::class, 'getAccounting'])->where('id', '[0-9]+');
 });
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'individual_accountings'], function () {
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'individual-accountings'], function () {
     Route::get('/', [IndividualAccountingsController::class, 'getIndividualAccountings']);
 });
 

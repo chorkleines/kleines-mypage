@@ -1,0 +1,796 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Kleines Mypage API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/accountings": {
+            "get": {
+                "tags": [
+                    "Accountings"
+                ],
+                "summary": "Get accountings of the authenticated user",
+                "operationId": "e2bf3ee73867b41e37ef300ff32a6a8f",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "property": null,
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/AccountingRecord"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "accounting_list": {
+                                                                "$ref": "#/components/schemas/AccountingList"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/accountings/{id}": {
+            "get": {
+                "tags": [
+                    "Accountings"
+                ],
+                "summary": "Get accountings of the authenticated user",
+                "operationId": "e615ba382c4927ed2c6cdb7bd8695398",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Accounting List ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AccountingRecord"
+                                        },
+                                        {
+                                            "properties": {
+                                                "accounting_list": {
+                                                    "$ref": "#/components/schemas/AccountingList"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "accounting_payments": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "#/components/schemas/AccountingPayment"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get active users",
+                "description": "Get active users with emails and birthdays for `MASTER` and `MANAGER`. Otherwise, emails and birthdays are hidden",
+                "operationId": "a997c6684c9c4fcdcb1e968f60dfedb5",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "property": null,
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/User"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "admin@chorkleines.com"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "birthday": {
+                                                                "type": "string",
+                                                                "example": "2000-01-01"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/password/forgot": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send reset password email",
+                "description": "Send a reset link to the given user.",
+                "operationId": "abe9fdb53611864716b0fab0c488ce0e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "We have emailed your password reset link!"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login the user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com",
+                                    "password": "password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "These credentials do not match our records."
+                                                },
+                                                "errors": {
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": "These credentials do not match our records."
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout the user",
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/password/reset": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset password",
+                "description": "Reset the given user's password.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    },
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@chorkleines.com",
+                                    "password": "password",
+                                    "password_confirmation": "password",
+                                    "token": "token"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Your password has been reset!"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get the authenticated user",
+                "description": "Get the authenticated user.",
+                "operationId": "9d9bc556f927575aa492a88c28fe5908",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "admin@chorkleines.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "example": "2000-01-01"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Checks if the user is authenticated",
+                "description": "Check if the user is authenticated.",
+                "operationId": "8dc8678b529196181575ee5879e946e7",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "authenticated": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                },
+                                "examples": {
+                                    "authenticated": {
+                                        "summary": "User is authenticated",
+                                        "value": {
+                                            "authenticated": true
+                                        }
+                                    },
+                                    "not authenticated": {
+                                        "summary": "User is not authenticated",
+                                        "value": {
+                                            "authenticated": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/home/payment-info": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Get payment information of the authenticated user",
+                "description": "Get the payment information of the authenticated user.",
+                "operationId": "734e700c76f5610775f8b18a59ea5835",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "arrears": {
+                                                    "type": "number"
+                                                },
+                                                "balance": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/individual-accountings": {
+            "get": {
+                "tags": [
+                    "Individual Accountings"
+                ],
+                "summary": "Get individual accountings of the authenticated user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "property": null,
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/IndividualAccountingRecord"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "individual_accounting_list": {
+                                                                "$ref": "#/components/schemas/IndividualAccountingList"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "accounting_payment": {
+                                                                "allOf": [
+                                                                    {
+                                                                        "$ref": "#/components/schemas/AccountingPayment"
+                                                                    },
+                                                                    {
+                                                                        "properties": {
+                                                                            "accounting_record": {
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "$ref": "#/components/schemas/AccountingRecord"
+                                                                                    },
+                                                                                    {
+                                                                                        "properties": {
+                                                                                            "accounting_list": {
+                                                                                                "$ref": "#/components/schemas/AccountingList"
+                                                                                            }
+                                                                                        },
+                                                                                        "type": "object"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get users",
+                "operationId": "6d5b72038ed4abf362868c76845f5d14",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "property": null,
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/User"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AccountingList": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "2023年度団費集金"
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    },
+                    "admin": {
+                        "type": "string",
+                        "example": "GENERAL"
+                    }
+                },
+                "type": "object"
+            },
+            "AccountingPayment": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "method": {
+                        "type": "string",
+                        "example": "INDIVIDUAL_ACCOUNTING"
+                    }
+                },
+                "type": "object"
+            },
+            "AccountingRecord": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "is_paid": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "IndividualAccountingList": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "2022年度引き継ぎ"
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "IndividualAccountingRecord": {
+                "properties": {
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "PRESENT"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "MASTER"
+                        }
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "example": "山田"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "example": "太郎"
+                    },
+                    "name_kana": {
+                        "type": "string",
+                        "example": "ヤマダタロウ"
+                    },
+                    "grade": {
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "part": {
+                        "type": "string",
+                        "example": "T"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

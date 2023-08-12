@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="AccountingPayment",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1,
+ *     ),
+ *     @OA\Property(
+ *         property="price",
+ *         type="integer",
+ *         example=0,
+ *     ),
+ *     @OA\Property(
+ *         property="method",
+ *         type="string",
+ *         example="INDIVIDUAL_ACCOUNTING",
+ *     ),
+ * )
+ */
 class AccountingPayment extends Model
 {
     use HasFactory;

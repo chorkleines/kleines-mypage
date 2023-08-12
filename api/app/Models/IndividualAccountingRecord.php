@@ -6,6 +6,21 @@ use App\Models\IndividualAccountingList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="IndividualAccountingRecord",
+ *     @OA\Property(
+ *         property="datetime",
+ *         type="string",
+ *         example="2023-01-01 00:00:00",
+ *     ),
+ *     @OA\Property(
+ *         property="price",
+ *         type="integer",
+ *         example=0,
+ *     ),
+ * )
+ */
 class IndividualAccountingRecord extends Model
 {
     use HasFactory;

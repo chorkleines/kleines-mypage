@@ -274,7 +274,7 @@ class AccountingTest extends TestCase
             ]],
         ]);
 
-        $response = $this->get('/api/individual_accountings');
+        $response = $this->get('/api/individual-accountings');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
@@ -400,7 +400,7 @@ class AccountingTest extends TestCase
             ],
         ]);
 
-        $response = $this->get('/api/individual_accountings');
+        $response = $this->get('/api/individual-accountings');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [

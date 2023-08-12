@@ -5,6 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="AccountingRecord",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1,
+ *     ),
+ *     @OA\Property(
+ *         property="price",
+ *         type="integer",
+ *         example=0,
+ *     ),
+ *     @OA\Property(
+ *         property="is_paid",
+ *         type="boolean",
+ *         example=true,
+ *     ),
+ *     @OA\Property(
+ *         property="datetime",
+ *         type="string",
+ *         example="2023-01-01 00:00:00",
+ *     ),
+ * )
+ */
 class AccountingRecord extends Model
 {
     use HasFactory;

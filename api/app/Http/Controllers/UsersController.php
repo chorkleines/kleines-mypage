@@ -17,6 +17,29 @@ class UsersController extends Controller
         $this->middleware('auth:sanctum');
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Get users",
+     *     tags={"Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             oneOf={
+     *                 @OA\Property(
+     *                     type="array",
+     *                     @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/User"),
+     *                          },
+     *                     ),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     * )
+     */
     public function getUsers()
     {
         $users = User::with('profile')
