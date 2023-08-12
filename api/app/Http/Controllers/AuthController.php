@@ -39,13 +39,14 @@ class AuthController extends Controller
      * @OA\Get(
      *     path="/api/auth",
      *     summary="Checks if the user is authenticated",
+     *     tags={"Auth"},
      *     @OA\Response(
      *         response=200,
      *         description="OK",
      *         @OA\JsonContent(
      *             allOf={
      *                 @OA\Schema(
-     *                     @OA\Property(property="authenticated", type="boolean")
+     *                     @OA\Property(property="authenticated", type="boolean", example=true)
      *                 ),
      *             },
      *             @OA\Examples(example="authenticated", value={"authenticated": true}, summary="User is authenticated"),
