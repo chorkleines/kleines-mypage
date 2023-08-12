@@ -1,5 +1,5 @@
 type User = {
-  userId: number;
+  id: number;
   status: string;
   profile: Profile;
   statusFormatted?: string;
@@ -21,7 +21,7 @@ const createUser = (u) => {
     user = null;
   } else {
     user = {
-      userId: u.user_id,
+      id: u.id,
       status: u.status,
       profile: {
         grade: u.profile.grade,
