@@ -5,6 +5,107 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/accountings": {
+            "get": {
+                "tags": [
+                    "Accountings"
+                ],
+                "summary": "Get accountings of the authenticated user",
+                "operationId": "e2bf3ee73867b41e37ef300ff32a6a8f",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/AccountingRecord"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "accounting_list": {
+                                                                "$ref": "#/components/schemas/AccountingList"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            },
+                                            "property": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/accountings/{id}": {
+            "get": {
+                "tags": [
+                    "Accountings"
+                ],
+                "summary": "Get accountings of the authenticated user",
+                "operationId": "e615ba382c4927ed2c6cdb7bd8695398",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Accounting List ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AccountingRecord"
+                                        },
+                                        {
+                                            "properties": {
+                                                "accounting_list": {
+                                                    "$ref": "#/components/schemas/AccountingList"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "accounting_payments": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "#/components/schemas/AccountingPayment"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/admin/users": {
             "get": {
                 "tags": [
@@ -380,6 +481,65 @@
     },
     "components": {
         "schemas": {
+            "AccountingList": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "2023年度団費集金"
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    },
+                    "admin": {
+                        "type": "string",
+                        "example": "GENERAL"
+                    }
+                },
+                "type": "object"
+            },
+            "AccountingPayment": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "method": {
+                        "type": "string",
+                        "example": "CASH"
+                    }
+                },
+                "type": "object"
+            },
+            "AccountingRecord": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "is_paid": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "example": "2023-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "properties": {
                     "id": {

@@ -6,6 +6,31 @@ use App\Enums\AccountingType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="AccountingList",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1,
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         example="2023年度団費集金",
+ *     ),
+ *     @OA\Property(
+ *         property="deadline",
+ *         type="string",
+ *         example="2023-01-01 00:00:00",
+ *     ),
+ *     @OA\Property(
+ *         property="admin",
+ *         type="string",
+ *         example="GENERAL",
+ *     ),
+ * )
+ */
 class AccountingList extends Model
 {
     use HasFactory;
