@@ -83,9 +83,19 @@ export const useAccounting = () => {
   });
 
   async function getAccounting(id: number) {
-    const { data } = await useApiFetch(`/api/accountings/${id}`, {
-      method: "GET",
-    });
+    const { status, data, error } = await useApiFetch(
+      `/api/accountings/${id}`,
+      {
+        method: "GET",
+      },
+    );
+
+    if (status.value === "error") {
+      if (error.value?.statusCode === 404) {
+        accounting.value = null;
+        return;
+      }
+    }
 
     accounting.value = createAccounting(data.value);
     accounting.value.priceFormatted = new Intl.NumberFormat("ja-JP", {

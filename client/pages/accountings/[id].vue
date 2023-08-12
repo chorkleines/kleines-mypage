@@ -74,7 +74,15 @@ definePageMeta({
 });
 
 const route = useRoute();
+const router = useRouter();
 const { id } = route.params;
 const { accounting, getAccounting } = useAccounting();
 await getAccounting(id);
+if (accounting.value === null) {
+    throw createError({
+        statusCode: 404,
+        message: "集金記録が見つかりませんでした。",
+        fatal: true,
+    });
+}
 </script>
