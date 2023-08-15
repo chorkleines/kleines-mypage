@@ -226,6 +226,130 @@
                 }
             }
         },
+        "/api/admin/users/{id}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get user by ID",
+                "description": "Get user by ID. For `MASTER` and `MANAGER` emails and birthdays are given. They can also access resigned users. For `ACCOUNTANT` and `CAMP`, emails and birthdays are hidden.",
+                "operationId": "1481db092b9ab391ad4af4792de8ef3e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        {
+                                            "properties": {
+                                                "profile": {
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Profile"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "birthday": {
+                                                                    "type": "string",
+                                                                    "example": "2000-01-01"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "admin@chorkleines.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/password/forgot": {
             "post": {
                 "tags": [
