@@ -76,7 +76,6 @@ export const useUsers = () => {
           user.profile.partFormatted = "";
           break;
       }
-      users.value.push(user);
     });
   }
 
