@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2">
-    <div class="join">
+    <div class="join" v-if="currentPerPage != -1">
       <div v-for="(paginationLabel, _paginationIndex) in paginationLabels">
         <button
           class="join-item btn btn-sm"
@@ -50,8 +50,11 @@
       </div>
     </div>
     <div class="text-sm">
-      {{ total }} 件中 {{ currentPageIndex * perPage + 1 }} 〜
-      {{ Math.min((currentPageIndex + 1) * perPage, total) }} 件
+      <span v-if="currentPerPage != -1">
+        {{ total }} 件中 {{ currentPageIndex * currentPerPage + 1 }} 〜
+        {{ Math.min((currentPageIndex + 1) * currentPerPage, total) }} 件
+      </span>
+      <span v-else> {{ total }} 件中 1 〜 {{ total }} 件 </span>
     </div>
   </div>
 </template>
@@ -62,18 +65,15 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  perPage: {
-    type: Number,
-    required: true,
-  },
 });
 
 const currentPageIndex = useState<Number>("currentPageIndex");
+const currentPerPage = useState<Number>("currentPerPage");
 
 const paginationLabels = computed(() => {
   const paginationLabels = [];
   const pageIndex = currentPageIndex.value;
-  const perPage = props.perPage;
+  const perPage = currentPerPage.value;
   const total = props.total;
   const pageTotal = Math.ceil(total / perPage);
 

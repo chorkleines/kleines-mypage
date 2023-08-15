@@ -10,7 +10,7 @@
       </ul>
     </div>
     <h1 class="text-2xl">団員リスト</h1>
-    <div class="overflow-x-auto max-w-lg not-prose">
+    <div class="max-w-lg not-prose">
       <Table
         :columns="columns"
         :rows="users"
@@ -18,6 +18,7 @@
           { field: 'profile.grade', type: 'asc' },
           { field: 'profile.partFormatted', type: 'asc' },
         ]"
+        :initialPerPage="10"
       />
     </div>
   </div>

@@ -1,6 +1,7 @@
 <template>
-  <div class="overflow-x-auto not-prose">
-    <table class="table mb-3">
+  <TableForm class="mb-3" />
+  <div class="overflow-x-auto not-prose mb-3">
+    <table class="table">
       <thead>
         <tr>
           <th
@@ -39,18 +40,21 @@
         </tr>
       </tbody>
     </table>
-    <TablePagination :total="rows.length" :perPage="perPage" />
   </div>
+  <TablePagination :total="rows.length" />
 </template>
 
 <script setup lang="ts">
-import { TablePagination } from "#components";
+import { TablePagination, TableForm } from "#components";
 
 const currentPageIndex = useState<Number>("currentPageIndex", () => {
   return 0;
 });
 currentPageIndex.value = 0;
-const perPage = ref(10);
+const currentPerPage = useState<Number>("currentPerPage", () => {
+  return 0;
+});
+currentPerPage.value = 10;
 
 const props = defineProps({
   columns: {
@@ -65,6 +69,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  initialPerPage: {
+    type: Number,
+    default: 10,
+  },
 });
 
 onMounted(() => {
@@ -72,6 +80,7 @@ onMounted(() => {
   props.initialSort.forEach((sort) => {
     sortField(props.rows, sort.field, sort.type);
   });
+  currentPerPage.value = props.initialPerPage;
 });
 
 const sortProps = reactive({
@@ -126,8 +135,8 @@ function setSortProps(field) {
 
 const paginationRows = computed(() => {
   return sortedRows.value.slice(
-    currentPageIndex.value * perPage.value,
-    (currentPageIndex.value + 1) * perPage.value,
+    currentPageIndex.value * currentPerPage.value,
+    (currentPageIndex.value + 1) * currentPerPage.value,
   );
 });
 
