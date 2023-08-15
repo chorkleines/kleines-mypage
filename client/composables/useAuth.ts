@@ -102,6 +102,11 @@ export const useAuth = () => {
     });
   }
 
+  function hasRoles(roles: string[]) {
+    if (user.value == null) return false;
+    return roles.some((role) => user.value!.roles.includes(role));
+  }
+
   return {
     user,
     isLoggedIn,
@@ -111,5 +116,6 @@ export const useAuth = () => {
     failedLogin,
     loginFailureMessage,
     isLoadingLogin,
+    hasRoles,
   };
 };

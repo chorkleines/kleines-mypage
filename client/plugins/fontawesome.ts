@@ -16,6 +16,7 @@ import {
   faSort,
   faSortUp,
   faSortDown,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -35,6 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     faSort,
     faSortUp,
     faSortDown,
+    faPenToSquare,
   );
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon);
 });
