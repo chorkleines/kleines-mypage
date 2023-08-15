@@ -281,6 +281,7 @@ class UsersTest extends TestCase
             ],
         ]);
     }
+
     public function test_get_user_by_id_using_accountant()
     {
         $this->postJson('/login', [
@@ -317,6 +318,7 @@ class UsersTest extends TestCase
             ],
         ]);
     }
+
     public function test_get_user_by_id_using_camp()
     {
         $this->postJson('/login', [
