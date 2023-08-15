@@ -24,6 +24,7 @@
           <td
             v-for="(column, _columnIndex) in columns"
             :class="column.bodyClass"
+            class="whitespace-nowrap"
           >
             <span
               v-if="column.route !== undefined && column.route !== null"

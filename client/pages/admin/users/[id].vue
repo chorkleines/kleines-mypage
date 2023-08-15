@@ -22,7 +22,7 @@
         >
       </div>
       <div class="overflow-x-auto">
-        <table class="table table-sm my-0">
+        <table class="table table-sm my-0 whitespace-nowrap">
           <tbody>
             <tr>
               <th class="w-36">名前（姓）</th>
