@@ -98,6 +98,7 @@ export const useAuth = () => {
       method: "GET",
       mode: "cors",
       credentials: "include",
+      initialCache: false,
     });
   }
 
