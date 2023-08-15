@@ -7,7 +7,7 @@ use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 
-class AdminUsersController extends Controller
+class UsersController extends Controller
 {
     /**
      * Create a new controller instance.

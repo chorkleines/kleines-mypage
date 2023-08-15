@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountingsController;
-use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
