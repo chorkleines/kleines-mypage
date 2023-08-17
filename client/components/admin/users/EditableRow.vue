@@ -97,7 +97,7 @@ const updateValue = (value) => {
 
 const createAlert = async (message, type) => {
   props.alerts.push({ message, type });
-  await new Promise((r) => setTimeout(r, 10000));
+  await new Promise((r) => setTimeout(r, 3000));
   const idx = props.alerts.map((e) => e.message).indexOf(message);
   if (idx > -1) {
     props.alerts.splice(idx, 1);
