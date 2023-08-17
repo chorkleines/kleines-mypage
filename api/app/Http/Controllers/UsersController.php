@@ -32,6 +32,12 @@ class UsersController extends Controller
      *                     @OA\Items(
      *                          allOf={
      *                              @OA\Schema(ref="#/components/schemas/User"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="profile",
+     *                                      ref="#/components/schemas/Profile",
+     *                                  ),
+     *                              ),
      *                          },
      *                     ),
      *                 ),

@@ -34,6 +34,41 @@ class AuthController extends Controller
      *                 @OA\Schema(ref="#/components/schemas/User"),
      *                     @OA\Schema(
      *                         @OA\Property(
+     *                             property="last_name",
+     *                             type="string",
+     *                             example="山田",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="first_name",
+     *                             type="string",
+     *                             example="太郎",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="name_kana",
+     *                             type="string",
+     *                             example="ヤマダタロウ",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="grade",
+     *                             type="integer",
+     *                             example=18,
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
+     *                             property="part",
+     *                             type="string",
+     *                             example="T",
+     *                         ),
+     *                     ),
+     *                     @OA\Schema(
+     *                         @OA\Property(
      *                             property="email",
      *                             type="string",
      *                             example="admin@chorkleines.com",

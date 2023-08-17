@@ -45,7 +45,7 @@
 
             requestInterceptor: async function(request) {
                 if (!document.cookie.includes('XSRF-TOKEN')) {
-                    await fetch('/sanctum/csrf-cookie');
+                    await fetch('{{ config('app.url') }}/sanctum/csrf-cookie');
                 }
                 request.headers['X-XSRF-TOKEN'] = unescape(document.cookie
                     .split('; ')

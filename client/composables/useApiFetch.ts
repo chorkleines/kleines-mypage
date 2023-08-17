@@ -11,6 +11,7 @@ export const useApiFetch = (path, opts) => {
       "X-XSRF-TOKEN": xsrfToken,
       Accept: "application/json",
     },
+    initialCache: false,
     ...opts,
   });
 };

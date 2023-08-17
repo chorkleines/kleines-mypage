@@ -10,6 +10,16 @@ import {
   faMoneyCheckDollar,
   faYenSign,
   faCircleCheck,
+  faEllipsis,
+  faChevronLeft,
+  faChevronRight,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faPenToSquare,
+  faPlus,
+  faFloppyDisk,
+  faBan,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -23,6 +33,16 @@ export default defineNuxtPlugin((nuxtApp) => {
     faMoneyCheckDollar,
     faYenSign,
     faCircleCheck,
+    faEllipsis,
+    faChevronLeft,
+    faChevronRight,
+    faSort,
+    faSortUp,
+    faSortDown,
+    faPenToSquare,
+    faPlus,
+    faFloppyDisk,
+    faBan,
   );
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon);
 });

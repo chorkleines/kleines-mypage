@@ -35,31 +35,6 @@ use Laravel\Sanctum\HasApiTokens;
  *             example="MASTER",
  *         ),
  *     ),
- *     @OA\Property(
- *         property="last_name",
- *         type="string",
- *         example="山田",
- *     ),
- *     @OA\Property(
- *         property="first_name",
- *         type="string",
- *         example="太郎",
- *     ),
- *     @OA\Property(
- *         property="name_kana",
- *         type="string",
- *         example="ヤマダタロウ",
- *     ),
- *     @OA\Property(
- *         property="grade",
- *         type="integer",
- *         example=18,
- *     ),
- *     @OA\Property(
- *         property="part",
- *         type="string",
- *         example="T",
- *     ),
  * )
  */
 class User extends Authenticatable

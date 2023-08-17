@@ -98,7 +98,13 @@ export const useAuth = () => {
       method: "GET",
       mode: "cors",
       credentials: "include",
+      initialCache: false,
     });
+  }
+
+  function hasRoles(roles: string[]) {
+    if (user.value == null) return false;
+    return roles.some((role) => user.value!.roles.includes(role));
   }
 
   return {
@@ -110,5 +116,6 @@ export const useAuth = () => {
     failedLogin,
     loginFailureMessage,
     isLoadingLogin,
+    hasRoles,
   };
 };
