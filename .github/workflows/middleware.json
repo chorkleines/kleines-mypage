@@ -111,6 +111,18 @@
       }
     },
     {
+      "uri": "/admin/users/add",
+      "name": "管理者 ＞ 団員リスト ＞ 追加",
+      "expected": {
+        "MASTER": "/admin/users/add",
+        "MANAGER": "/admin/users/add",
+        "ACCOUNTANT": "/",
+        "CAMP": "/",
+        "PRESENT": "/",
+        "UNAUTHORIZED": "/login"
+      }
+    },
+    {
       "uri": "/admin/accountings",
       "name": "管理者 ＞ 集金リスト",
       "expected": {
