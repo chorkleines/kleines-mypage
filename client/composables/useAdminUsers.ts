@@ -96,8 +96,26 @@ export const useAdminUsers = () => {
     ).toLocaleDateString();
   }
 
+  const updateUser = async (id: number, body) => {
+    const { status, error } = await useApiFetch(`/api/admin/users/${id}`, {
+      method: "PUT",
+      body,
+    });
+    return { status, error };
+  };
+
+  const updateProfile = async (id: number, body) => {
+    const { status, error } = await useApiFetch(`/api/admin/profiles/${id}`, {
+      method: "PUT",
+      body,
+    });
+    return { status, error };
+  };
+
   return {
     user,
     getUser,
+    updateUser,
+    updateProfile,
   };
 };

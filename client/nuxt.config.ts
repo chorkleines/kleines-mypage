@@ -6,6 +6,10 @@ export default defineNuxtConfig({
         },
     },
     ssr: false,
+    components: [
+        { path: "~/components/admin/users", prefix: "AdminUsers" },
+        "~/components",
+    ],
     modules: ["@nuxtjs/tailwindcss"],
     css: [
         "@/assets/styles/app.scss",

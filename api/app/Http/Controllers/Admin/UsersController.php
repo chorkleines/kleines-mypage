@@ -6,6 +6,9 @@ use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -200,5 +203,122 @@ class UsersController extends Controller
         $user->profile->makeHidden(['birthday']);
 
         return response()->json($user);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/admin/users/{id}",
+     *     summary="Update user by ID",
+     *     description="Update user by ID. Only `MASTER` and `MANAGER` are allowed to update users.",
+     *     tags={"Admin"},
+     *     @OA\Parameter(
+     *         description="User ID",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1),
+     *     ),
+     *     @OA\RequestBody(
+     *         description="User object that needs to be updated",
+     *         required=true,
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="email", type="string", example="example@chorkleines.com"),
+     *                     @OA\Property(property="status", type="string", example="PRESENT"),
+     *                     @OA\Property(
+     *                         property="roles",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             type="string",
+     *                             example="MASTER",
+     *                         ),
+     *                     ),
+     *                 )
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Success",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Bad Request"),
+     *                     @OA\Property(property="status", type="integer", example=400),
+     *                     @OA\Property(
+     *                         property="detail",
+     *                         allOf={
+     *                             @OA\Schema(
+     *                                 @OA\Property(
+     *                                     property="roles.0",
+     *                                     type="array",
+     *                                     @OA\Items(type="string", example="The selected roles.0 is invalid."),
+     *                                 ),
+     *                             ),
+     *                         },
+     *                     ),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Unauthorized"),
+     *                     @OA\Property(property="status", type="integer", example=401),
+     *                     @OA\Property(property="detail", type="string", example="Unauthorized"),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Forbidden"),
+     *                     @OA\Property(property="status", type="integer", example=403),
+     *                     @OA\Property(property="detail", type="string", example="Forbidden"),
+     *                 ),
+     *             },
+     *         )
+     *     )
+     * )
+     */
+    public function editUser(Request $request, $id)
+    {
+        if (! auth()->user()->hasAnyRole([Role::MASTER, Role::MANAGER])) {
+            abort(403);
+        }
+
+        $user = User::where('id', $id)
+            ->firstOrFail();
+
+        $validator = Validator::make($request->all(), [
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
+            'status' => ['string', Rule::in(UserStatus::PRESENT, UserStatus::ABSENT, UserStatus::RESIGNED)],
+            'roles.*' => ['string', Rule::in(Role::MASTER, Role::MANAGER, Role::ACCOUNTANT, Role::CAMP)],
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'title' => 'Bad Request',
+                'status' => 400,
+                'detail' => $validator->errors(),
+            ], 400);
+        }
+
+        $validated = $validator->validated();
+        $user->update($validated);
+
+        return response()->json(null, 204);
     }
 }
