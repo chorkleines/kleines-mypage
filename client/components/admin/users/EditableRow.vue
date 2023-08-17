@@ -2,7 +2,11 @@
   <tr>
     <th class="w-36">
       {{ name }}
-      <span class="text-error" v-if="required">*</span>
+      <span
+        class="text-error"
+        v-if="required && hasRoles(['MASTER', 'MANAGER'])"
+        >*</span
+      >
     </th>
     <td v-if="!edit && !isLoading">
       <span
@@ -22,7 +26,7 @@
     <td v-else class="py-0">
       <slot :updateValue="updateValue" :newValue="newValue" />
     </td>
-    <td class="py-0 w-20 text-right">
+    <td class="py-0 w-20 text-right" v-if="hasRoles(['MASTER', 'MANAGER'])">
       <a
         class="btn btn-sm"
         v-if="!edit"
@@ -85,6 +89,7 @@ const edit = ref(false);
 const isLoading = ref(false);
 const newValue = ref(getField(props.user, props.field));
 const { updateUser, updateProfile } = useAdminUsers();
+const { hasRoles } = useAuth();
 
 const updateValue = (value) => {
   newValue.value = value;
