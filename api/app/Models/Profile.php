@@ -68,9 +68,4 @@ class Profile extends Model
         'part',
         'birthday',
     ];
-
-    public function user()
-    {
-        return $this->hasOne(User::class, 'user_id');
-    }
 }
