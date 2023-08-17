@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Part;
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
@@ -320,5 +321,161 @@ class UsersController extends Controller
         $user->update($validated);
 
         return response()->json(null, 204);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/admin/users",
+     *     summary="Create user",
+     *     description="Create user. Only `MASTER` and `MANAGER` are allowed to create users.",
+     *     tags={"Admin"},
+     *     @OA\RequestBody(
+     *         description="User object",
+     *         required=true,
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(ref="#/components/schemas/User"),
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="profile",
+     *                         allOf={
+     *                             @OA\Schema(ref="#/components/schemas/Profile"),
+     *                             @OA\Schema(
+     *                                 @OA\Property(
+     *                                     property="birthday",
+     *                                     type="string",
+     *                                     example="2000-01-01",
+     *                                 ),
+     *                             ),
+     *                         },
+     *                     ),
+     *                 ),
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="email",
+     *                         type="string",
+     *                         example="admin@chorkleines.com",
+     *                     ),
+     *                 ),
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(ref="#/components/schemas/User"),
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="profile",
+     *                         allOf={
+     *                             @OA\Schema(ref="#/components/schemas/Profile"),
+     *                             @OA\Schema(
+     *                                 @OA\Property(
+     *                                     property="birthday",
+     *                                     type="string",
+     *                                     example="2000-01-01",
+     *                                 ),
+     *                             ),
+     *                         },
+     *                     ),
+     *                 ),
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="email",
+     *                         type="string",
+     *                         example="admin@chorkleines.com",
+     *                     ),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Bad Request"),
+     *                     @OA\Property(property="status", type="integer", example=400),
+     *                     @OA\Property(
+     *                         property="detail",
+     *                         allOf={
+     *                             @OA\Schema(
+     *                                 @OA\Property(
+     *                                     property="roles.0",
+     *                                     type="array",
+     *                                     @OA\Items(type="string", example="The selected roles.0 is invalid."),
+     *                                 ),
+     *                             ),
+     *                         },
+     *                     ),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Unauthorized"),
+     *                     @OA\Property(property="status", type="integer", example=401),
+     *                     @OA\Property(property="detail", type="string", example="Unauthorized"),
+     *                 ),
+     *             },
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             allOf={
+     *                 @OA\Schema(
+     *                     @OA\Property(property="title", type="string", example="Forbidden"),
+     *                     @OA\Property(property="status", type="integer", example=403),
+     *                     @OA\Property(property="detail", type="string", example="Forbidden"),
+     *                 ),
+     *             },
+     *         )
+     *     )
+     * )
+     */
+    public function createUser(Request $request)
+    {
+        if (! auth()->user()->hasAnyRole([Role::MASTER, Role::MANAGER])) {
+            abort(403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'email' => ['string', 'email', 'max:255', 'unique:users', 'required'],
+            'status' => ['string', Rule::in(UserStatus::PRESENT, UserStatus::ABSENT, UserStatus::RESIGNED), 'required'],
+            'roles.*' => ['string', Rule::in(Role::MASTER, Role::MANAGER, Role::ACCOUNTANT, Role::CAMP)],
+            'profile.last_name' => ['string', 'max:255', 'required'],
+            'profile.first_name' => ['string', 'max:255', 'required'],
+            'profile.name_kana' => ['string', 'max:255', 'nullable'],
+            'profile.grade' => ['int', 'required'],
+            'profile.part' => ['string', Rule::in(Part::SOPRANO, Part::ALTO, Part::TENOR, Part::BASS), 'required'],
+            'profile.birthday' => ['date', 'nullable'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'title' => 'Bad Request',
+                'status' => 400,
+                'detail' => $validator->errors(),
+            ], 400);
+        }
+        $validated = $validator->validated();
+
+        $user = User::create($validated);
+        $user->profile()->create($validated['profile']);
+
+        $newUser = User::where('id', $user->id)
+            ->with('profile')
+            ->firstOrFail();
+
+        return response()->json($newUser, 200);
     }
 }

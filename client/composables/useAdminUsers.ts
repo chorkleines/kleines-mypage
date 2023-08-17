@@ -112,10 +112,19 @@ export const useAdminUsers = () => {
     return { status, error };
   };
 
+  const addUser = async (body) => {
+    const { data, status, error } = await useApiFetch(`/api/admin/users`, {
+      method: "POST",
+      body,
+    });
+    return { data, status, error };
+  };
+
   return {
     user,
     getUser,
     updateUser,
     updateProfile,
+    addUser,
   };
 };

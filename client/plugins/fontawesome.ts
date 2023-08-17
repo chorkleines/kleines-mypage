@@ -17,6 +17,7 @@ import {
   faSortUp,
   faSortDown,
   faPenToSquare,
+  faPlus,
   faFloppyDisk,
   faBan,
 } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +40,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     faSortUp,
     faSortDown,
     faPenToSquare,
+    faPlus,
     faFloppyDisk,
     faBan,
   );

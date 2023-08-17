@@ -362,6 +362,201 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create user",
+                "description": "Create user. Only `MASTER` and `MANAGER` are allowed to create users.",
+                "operationId": "5cecf733b932fe7475eff981201d412b",
+                "requestBody": {
+                    "description": "User object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/User"
+                                    },
+                                    {
+                                        "properties": {
+                                            "profile": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Profile"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "birthday": {
+                                                                "type": "string",
+                                                                "example": "2000-01-01"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "admin@chorkleines.com"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        {
+                                            "properties": {
+                                                "profile": {
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Profile"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "birthday": {
+                                                                    "type": "string",
+                                                                    "example": "2000-01-01"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "admin@chorkleines.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Bad Request"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 400
+                                                },
+                                                "detail": {
+                                                    "allOf": [
+                                                        {
+                                                            "properties": {
+                                                                "roles.0": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "string",
+                                                                        "example": "The selected roles.0 is invalid."
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/admin/users/{id}": {

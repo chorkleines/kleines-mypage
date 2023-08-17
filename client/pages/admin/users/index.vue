@@ -11,6 +11,13 @@
     </div>
     <h1 class="text-2xl">団員リスト</h1>
     <div class="max-w-lg not-prose">
+      <div class="flex justify-end mb-3" v-if="hasRoles(['MASTER', 'MANAGER'])">
+        <NuxtLink
+          to="/admin/users/add"
+          class="btn btn-outline btn-primary btn-sm"
+          ><font-awesome-icon icon="plus" />新規追加</NuxtLink
+        >
+      </div>
       <Table
         :columns="columns"
         :rows="users"
@@ -42,6 +49,7 @@ definePageMeta({
 
 import { Table } from "#components";
 const { users, getUsers } = useUsers();
+const { hasRoles } = useAuth();
 await getUsers();
 
 const columns = [
