@@ -91,9 +91,10 @@ export const useAdminUsers = () => {
         user.value.profile.partFormatted = "";
         break;
     }
-    user.value.profile.birthdayFormatted = new Date(
+    const { dateToString } = useDatetimeFormatter();
+    user.value.profile.birthdayFormatted = dateToString(
       user.value.profile.birthday,
-    ).toLocaleDateString();
+    );
   }
 
   const updateUser = async (id: number, body) => {
