@@ -62,5 +62,6 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function () 
     });
     Route::group(['middleware' => 'role:master,accountant', 'prefix' => 'individual-accountings'], function () {
         Route::get('/', [AdminIndividualAccountingsController::class, 'getIndividualAccountings']);
+        Route::get('/{id}', [AdminIndividualAccountingsController::class, 'getIndividualAccounting'])->where('id', '[0-9]+');
     });
 });

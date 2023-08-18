@@ -49,6 +49,6 @@ class IndividualAccountingList extends Model
 
     public function individual_accounting_records()
     {
-        return $this->hasMany(IndividualAccountingRecord::class, 'list_id');
+        return $this->hasMany(IndividualAccountingRecord::class, 'individual_accounting_list_id');
     }
 }
