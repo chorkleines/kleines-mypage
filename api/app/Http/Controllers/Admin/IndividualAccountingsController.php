@@ -21,7 +21,7 @@ class IndividualAccountingsController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/admin/individual-accountings",
+     *     path="/api/admin/individual-accountings/list",
      *     summary="Get individual accounting lists",
      *     description="Get individual accounting lists. This API is available only for `MASTER` and `ACCOUNTANT`.",
      *     tags={"Admin"},
@@ -69,7 +69,7 @@ class IndividualAccountingsController extends Controller
      *     )
      * )
      */
-    public function getIndividualAccountings()
+    public function getIndividualAccountingLists()
     {
         $individualAccountingList = IndividualAccountingList::all();
         return response()->json($individualAccountingList);
@@ -77,7 +77,7 @@ class IndividualAccountingsController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/admin/individual-accountings/{id}",
+     *     path="/api/admin/individual-accountings/list/{id}",
      *     summary="Get individual accounting records by list id",
      *     description="Get individual accounting records by list id. This API is available only for `MASTER` and `ACCOUNTANT`.",
      *     tags={"Admin"},
@@ -150,7 +150,7 @@ class IndividualAccountingsController extends Controller
      *     )
      * )
      */
-    public function getIndividualAccounting($id)
+    public function getIndividualAccountingList($id)
     {
         $list = IndividualAccountingList::with(['individual_accounting_records', 'individual_accounting_records.user', 'individual_accounting_records.user.profile'])
             ->where('id', $id)
