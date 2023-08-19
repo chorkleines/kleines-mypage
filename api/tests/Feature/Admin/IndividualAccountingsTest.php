@@ -16,7 +16,7 @@ class IndividualAccountingsTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->getJson('/api/admin/individual-accountings');
+        $response = $this->getJson('/api/admin/individual-accountings/lists');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
@@ -39,7 +39,7 @@ class IndividualAccountingsTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->getJson('/api/admin/individual-accountings/1');
+        $response = $this->getJson('/api/admin/individual-accountings/lists/1');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',

@@ -96,7 +96,7 @@ export const useAdminIndividualAccountings = () => {
 
   async function getIndividualAccountingLists() {
     const { data } = await useApiFetch(
-      "/api/admin/individual-accountings/list",
+      "/api/admin/individual-accountings/lists",
       {
         method: "GET",
       },
@@ -116,7 +116,7 @@ export const useAdminIndividualAccountings = () => {
 
   async function getIndividualAccountingList(id: number) {
     const { data } = await useApiFetch(
-      `/api/admin/individual-accountings/list/${id}`,
+      `/api/admin/individual-accountings/lists/${id}`,
       {
         method: "GET",
       },
