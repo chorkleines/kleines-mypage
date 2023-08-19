@@ -1,6 +1,9 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2">
-    <div class="join" v-if="currentPerPage != -1">
+    <div
+      class="join"
+      v-if="currentPerPage != -1 && Math.ceil(total / currentPerPage) != 1"
+    >
       <div v-for="(paginationLabel, _paginationIndex) in paginationLabels">
         <button
           class="join-item btn btn-sm"
