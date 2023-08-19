@@ -22,13 +22,13 @@ class IndividualAccountingsTest extends TestCase
             '*' => [
                 'id',
                 'name',
-                'datetime'
+                'datetime',
             ],
         ]);
         $response->assertJsonFragment([
             'id' => 1,
             'name' => '2020年度引き継ぎ',
-            'datetime' => '2020-12-31 12:00:00'
+            'datetime' => '2020-12-31 12:00:00',
         ]);
     }
 
@@ -58,15 +58,15 @@ class IndividualAccountingsTest extends TestCase
                             'name_kana',
                             'grade',
                             'part',
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
             ],
         ]);
         $response->assertJsonFragment([
             'id' => 1,
             'name' => '2020年度引き継ぎ',
-            'datetime' => '2020-12-31 12:00:00'
+            'datetime' => '2020-12-31 12:00:00',
         ]);
     }
 }

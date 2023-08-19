@@ -72,6 +72,7 @@ class IndividualAccountingsController extends Controller
     public function getIndividualAccountingLists()
     {
         $individualAccountingList = IndividualAccountingList::all();
+
         return response()->json($individualAccountingList);
     }
 
@@ -160,6 +161,7 @@ class IndividualAccountingsController extends Controller
             $individual_accounting_record->user->profile->makeHidden(['birthday']);
         });
         $data = collect($list)->only(['id', 'name', 'datetime'])->union(['individual_accounting_records' => $records]);
+
         return response()->json($data->all());
     }
 }
