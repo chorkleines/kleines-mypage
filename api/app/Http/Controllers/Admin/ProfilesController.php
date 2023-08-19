@@ -110,7 +110,7 @@ class ProfilesController extends Controller
             'name_kana' => ['string', 'max:255', 'nullable'],
             'grade' => ['int'],
             'part' => ['string', Rule::in(Part::SOPRANO, Part::ALTO, Part::TENOR, Part::BASS)],
-            'birthday' => ['string', 'date'],
+            'birthday' => ['string', 'date', 'nullable'],
         ]);
         if ($validator->fails()) {
             return response()->json([
