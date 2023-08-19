@@ -106,14 +106,14 @@
                 }
             }
         },
-        "/api/admin/individual-accountings": {
+        "/api/admin/individual-accountings/list": {
             "get": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Get individual accounting lists",
                 "description": "Get individual accounting lists. This API is available only for `MASTER` and `ACCOUNTANT`.",
-                "operationId": "77978e40bb19e624949058a03dc8be04",
+                "operationId": "c29cacbeeb0c2e71ac703644f3e0d869",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -196,14 +196,14 @@
                 }
             }
         },
-        "/api/admin/individual-accountings/{id}": {
+        "/api/admin/individual-accountings/list/{id}": {
             "get": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Get individual accounting records by list id",
                 "description": "Get individual accounting records by list id. This API is available only for `MASTER` and `ACCOUNTANT`.",
-                "operationId": "8093e95fcf8189c77e800067a6e715d1",
+                "operationId": "0a515b46d3a16da1254a61564f9fe063",
                 "parameters": [
                     {
                         "name": "id",

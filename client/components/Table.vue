@@ -15,7 +15,8 @@
             ]"
             @click="setSortProps(column.field)"
           >
-            {{ column.label }}
+            {{ column.label
+            }}<span v-if="column.sortable !== false">&emsp;</span>
           </th>
         </tr>
       </thead>
