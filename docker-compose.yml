@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: ./docker/api/Dockerfile
+    container_name: api
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    links:
+      - database
+  client:
+    build: ./docker/client
+    container_name: client
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./client:/usr/src/app
+    command: sh -c 'npm install && npm run dev'
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+      - database
+  database:
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+      - ./docker/database/my.conf:/etc/mysql/conf.d/my.conf
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kleines_mypage
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
