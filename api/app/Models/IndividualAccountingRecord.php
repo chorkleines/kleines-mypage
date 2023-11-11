@@ -46,6 +46,7 @@ class IndividualAccountingRecord extends Model
         'price',
         'individual_accounting_list',
         'accounting_payment',
+        'user',
     ];
 
     protected $primaryKey = null;
@@ -60,5 +61,10 @@ class IndividualAccountingRecord extends Model
     public function accounting_payment()
     {
         return $this->belongsTo(AccountingPayment::class, 'accounting_payment_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

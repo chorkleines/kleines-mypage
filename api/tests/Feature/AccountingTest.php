@@ -435,4 +435,25 @@ class AccountingTest extends TestCase
             ],
         ]);
     }
+
+    public function test_non_existing_accounting()
+    {
+        $this->postJson('/login', [
+            'email' => 'admin@chorkleines.com',
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/api/accountings/9999');
+        $response->assertStatus(404);
+        $response->assertJsonStructure([
+            'title',
+            'status',
+            'detail',
+        ]);
+        $response->assertJson([
+            'title' => 'Not Found',
+            'status' => 404,
+            'detail' => 'Not Found',
+        ]);
+    }
 }

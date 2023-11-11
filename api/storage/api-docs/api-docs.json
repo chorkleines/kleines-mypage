@@ -106,6 +106,230 @@
                 }
             }
         },
+        "/api/admin/individual-accountings/list": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get individual accounting lists",
+                "description": "Get individual accounting lists. This API is available only for `MASTER` and `ACCOUNTANT`.",
+                "operationId": "c29cacbeeb0c2e71ac703644f3e0d869",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/IndividualAccountingList"
+                                                    }
+                                                ]
+                                            },
+                                            "property": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/individual-accountings/list/{id}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get individual accounting records by list id",
+                "description": "Get individual accounting records by list id. This API is available only for `MASTER` and `ACCOUNTANT`.",
+                "operationId": "0a515b46d3a16da1254a61564f9fe063",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Individual accounting list id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/IndividualAccountingList"
+                                        },
+                                        {
+                                            "properties": {
+                                                "individual_accounting_records": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "#/components/schemas/IndividualAccountingRecord"
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "user": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer",
+                                                                                "example": 1
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string",
+                                                                                "example": "PRESENT"
+                                                                            },
+                                                                            "profile": {
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "$ref": "#/components/schemas/Profile"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 403
+                                                },
+                                                "detail": {
+                                                    "type": "string",
+                                                    "example": "Forbidden"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/admin/profiles/{id}": {
             "put": {
                 "tags": [

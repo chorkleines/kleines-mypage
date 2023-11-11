@@ -15,7 +15,8 @@
             ]"
             @click="setSortProps(column.field)"
           >
-            {{ column.label }}
+            {{ column.label
+            }}<span v-if="column.sortable !== false">&emsp;</span>
           </th>
         </tr>
       </thead>
@@ -135,6 +136,7 @@ function setSortProps(field) {
 }
 
 const paginationRows = computed(() => {
+  if (currentPerPage.value == -1) return sortedRows.value;
   return sortedRows.value.slice(
     currentPageIndex.value * currentPerPage.value,
     (currentPageIndex.value + 1) * currentPerPage.value,

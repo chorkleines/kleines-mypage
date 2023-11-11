@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountingsController;
+use App\Http\Controllers\Admin\IndividualAccountingsController as AdminIndividualAccountingsController;
 use App\Http\Controllers\Admin\ProfilesController as AdminProfilesController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -58,5 +59,9 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function () 
     });
     Route::group(['middleware' => 'role:master,manager', 'prefix' => 'profiles'], function () {
         Route::put('/{id}', [AdminProfilesController::class, 'editProfile'])->where('id', '[0-9]+');
+    });
+    Route::group(['middleware' => 'role:master,accountant', 'prefix' => 'individual-accountings'], function () {
+        Route::get('/lists', [AdminIndividualAccountingsController::class, 'getIndividualAccountingLists']);
+        Route::get('/lists/{id}', [AdminIndividualAccountingsController::class, 'getIndividualAccountingList'])->where('id', '[0-9]+');
     });
 });
