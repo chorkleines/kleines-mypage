@@ -53,22 +53,12 @@
 
 ## 開発環境構築
 
-### レポジトリのフォーク
-
-https://github.com/chorkleines/kleines-mypage をフォークしてください。
-
 ### レポジトリのクローン
 
-フォークしたレポジトリをクローンします。
+レポジトリをクローンします。
 
 ```sh
-git clone git@github.com:<your-user-name>/kleines-mypage.git
-```
-
-リモートに大元のレポジトリを追加します。
-
-```sh
-git remote add upstream git@github.com:chorkleines/kleines-mypage.git
+git clone git@github.com:chorkleines/kleines-mypage.git
 ```
 
 ### API (Laravel)
@@ -177,12 +167,33 @@ npm run dev
 
 無事ログインができたら開発環境構築は完了です！
 
+### Docker を使う方法
+
+[Docker](https://www.docker.com) を利用した環境構築の方法も記しておきます。
+この方法はアプリケーションを実行する上では使いやすいですが、開発時の利用はお勧めしません。
+[Docker Desktop](https://www.docker.com/products/docker-desktop/) をダウンロードしてインストールしてください。
+
+#### アプリケーションの起動
+
+以下のコマンドを実行して API サーバー・クライアントを起動します。
+
+```sh
+docker-compose up -d --build
+```
+
+デフォルトでは以下のユーザーが作成されています。
+
+> Email: admin@chorkleines.com  
+> Password: password
+
+http://localhost:3000 にアクセスして上記のユーザーでログインしてください。
+無事ログインができたら開発環境構築は完了です！
+
 ## Pull Request
 
 コードを修正する場合は Pull Request (PR) を作成してください。
 
-PR を作成する際には、[chorkleines/kleines-mypage](https://github.com/chorkleines/kleines-mypage) に大量のブランチが生成されることを防止するために、フォーク先のレポジトリから作成して下さい。
-また原則として、PR を merge する前に他のメンバーから approve をもらってください。
+PR を merge する前には、原則として PR を merge する前に他のメンバーから approve をもらってください。
 そのため、Reviewer にメンバーを誰か指定してください。Assignees には自分を指定し、Labels は適切なものを選択してください。
 
 細かい PR は Issue を立てずに提出しても問題ありません。
